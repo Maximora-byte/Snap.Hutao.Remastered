@@ -20,6 +20,7 @@ public sealed partial class ServiceRecipientMediaPlayerElementPresenterBehavior 
     private readonly CancellationTokenSource unloadCts = new();
 
     private IBackgroundMediaPlayerService? backgroundMediaPlayerService;
+    private ILogger<ServiceRecipientMediaPlayerElementPresenterBehavior>? logger;
     private AppWindow? appWindow;
     private OverlappedPresenterState previousState = OverlappedPresenterState.Restored;
 
@@ -33,6 +34,7 @@ public sealed partial class ServiceRecipientMediaPlayerElementPresenterBehavior 
         if (AssociatedObject.XamlRoot.XamlContext()?.ServiceProvider is { } serviceProvider)
         {
             backgroundMediaPlayerService = serviceProvider.GetRequiredService<IBackgroundMediaPlayerService>();
+            logger = serviceProvider.GetRequiredService<ILogger<ServiceRecipientMediaPlayerElementPresenterBehavior>>();
             IMessenger messenger = serviceProvider.GetRequiredService<IMessenger>();
             messenger.Register<Snap.Hutao.Remastered.Service.BackgroundMediaPlayer.Message.BackgroundMediaOptionsChangedMessage>(this);
             PrivateUpdateMediaPlayerElementAsync(unloadCts.Token).SafeForget();
@@ -90,13 +92,15 @@ public sealed partial class ServiceRecipientMediaPlayerElementPresenterBehavior 
             switch (presenter.State)
             {
                 case OverlappedPresenterState.Minimized:
-                    backgroundMediaPlayerService?.Stop();
+                    // Detach the element from its player first: Stop() disposes the player, and the
+                    // element must not touch it afterwards.
                     if (AssociatedObject is { } mediaElement)
                     {
                         mediaElement.Source = null;
                         mediaElement.SetMediaPlayer(null);
                     }
 
+                    backgroundMediaPlayerService?.Stop();
                     break;
                 case OverlappedPresenterState.Restored:
                 case OverlappedPresenterState.Maximized:
@@ -157,9 +161,11 @@ public sealed partial class ServiceRecipientMediaPlayerElementPresenterBehavior 
                 .StartAsync(mediaElement, token)
                 .ConfigureAwait(false);
         }
-        catch (COMException)
+        catch (COMException ex)
         {
-            // ignore
+            // 0x8001010E The given object has already been closed / disposed and may no longer be used.
+            // Happens when the window closes or the element is detached while the source is applied.
+            logger?.LogWarning(ex, "Failed to update the background media player element");
         }
     }
 
