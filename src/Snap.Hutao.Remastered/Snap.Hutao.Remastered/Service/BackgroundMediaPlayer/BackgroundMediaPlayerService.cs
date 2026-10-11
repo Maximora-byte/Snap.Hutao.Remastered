@@ -151,7 +151,6 @@ public sealed partial class BackgroundMediaPlayerService : IBackgroundMediaPlaye
             return null;
         }
 
-        // Ensure the local file path uses the file:// scheme for MediaSource.
         return new Uri(Path.GetFullPath(selected));
     }
 
