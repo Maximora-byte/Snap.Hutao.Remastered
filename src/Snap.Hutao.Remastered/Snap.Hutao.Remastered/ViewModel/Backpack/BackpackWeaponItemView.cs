@@ -21,12 +21,14 @@ public sealed partial class BackpackWeaponItemView : BackpackItemView
 
     public bool IsLocked => Entity.IsLocked;
 
-    public string WeaponTypeName => Weapon.WeaponType.GetLocalizedDescriptionOrDefault(SH.ResourceManager, CultureInfo.CurrentCulture)!;
+    public string WeaponTypeName { get; private set; } = string.Empty;
 
     public string LevelRefinementInfo => SH.FormatViewPageBackpackWeaponInfo(Level, RefinementRank);
 
     public static BackpackWeaponItemView Create(BackpackItem entity, BackpackServiceMetadataContext context, Weapon weapon)
     {
+        string weaponTypeName = weapon.WeaponType.GetLocalizedDescriptionOrDefault(SH.ResourceManager, CultureInfo.CurrentCulture)!;
+
         BackpackWeaponItemView view = new()
         {
             Entity = entity,
@@ -34,7 +36,8 @@ public sealed partial class BackpackWeaponItemView : BackpackItemView
             Weapon = weapon,
             Name = weapon.Name,
             Description = weapon.Description,
-            TypeDescription = weapon.WeaponType.GetLocalizedDescriptionOrDefault(SH.ResourceManager, CultureInfo.CurrentCulture)!,
+            TypeDescription = weaponTypeName,
+            WeaponTypeName = weaponTypeName,
             IconUri = EquipIconConverter.IconNameToUri(weapon.Icon),
             Quality = weapon.RankLevel,
         };

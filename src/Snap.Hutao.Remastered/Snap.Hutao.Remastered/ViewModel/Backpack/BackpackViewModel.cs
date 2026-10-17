@@ -48,6 +48,8 @@ public sealed partial class BackpackViewModel : Abstraction.ViewModel
         BackpackItemCategory.Furniture,
     ];
 
+    private static readonly ImmutableArray<BackpackItemCategory> AllCategories = [.. Enum.GetValues<BackpackItemCategory>()];
+
     [GeneratedConstructor]
     public partial BackpackViewModel(IServiceProvider serviceProvider);
 
@@ -336,7 +338,7 @@ public sealed partial class BackpackViewModel : Abstraction.ViewModel
         // Pre-build token dictionaries for all categories (on background thread)
         ImmutableDictionary<BackpackItemCategory, FrozenDictionary<string, SearchToken>>.Builder tokenBuilder =
             ImmutableDictionary.CreateBuilder<BackpackItemCategory, FrozenDictionary<string, SearchToken>>();
-        foreach (BackpackItemCategory cat in Enum.GetValues<BackpackItemCategory>())
+        foreach (BackpackItemCategory cat in AllCategories)
         {
             ImmutableArray<BackpackItemView> catItems = categoryItems.GetValueOrDefault(cat, []);
             tokenBuilder.Add(cat, BackpackFilterTokenBuilder.Build(cat, catItems));
@@ -396,6 +398,11 @@ public sealed partial class BackpackViewModel : Abstraction.ViewModel
 
     private static ImmutableArray<BackpackItemView> ApplyDefaultSort(ImmutableArray<BackpackItemView> items, BackpackItemCategory category)
     {
+        if (items.Length is 0)
+        {
+            return [];
+        }
+
         return category switch
         {
             BackpackItemCategory.Weapon => [.. items
@@ -415,15 +422,34 @@ public sealed partial class BackpackViewModel : Abstraction.ViewModel
 
     private static ImmutableDictionary<BackpackItemCategory, ImmutableArray<BackpackItemView>> BuildCategoryViews(ImmutableArray<BackpackItemView> all)
     {
+        // Single pass over the whole inventory: bucket every item by its own category instead of
+        // re-scanning the full list once per category.
+        Dictionary<BackpackItemCategory, ImmutableArray<BackpackItemView>.Builder> buckets = [];
+        foreach (BackpackItemView item in all)
+        {
+            BackpackItemCategory category = item.Category;
+            if (!IsCorrectType(item, category))
+            {
+                continue;
+            }
+
+            if (!buckets.TryGetValue(category, out ImmutableArray<BackpackItemView>.Builder? bucket))
+            {
+                bucket = ImmutableArray.CreateBuilder<BackpackItemView>();
+                buckets.Add(category, bucket);
+            }
+
+            bucket.Add(item);
+        }
+
         ImmutableDictionary<BackpackItemCategory, ImmutableArray<BackpackItemView>>.Builder builder =
             ImmutableDictionary.CreateBuilder<BackpackItemCategory, ImmutableArray<BackpackItemView>>();
 
-        foreach (BackpackItemCategory cat in Enum.GetValues<BackpackItemCategory>())
+        foreach (BackpackItemCategory category in AllCategories)
         {
-            ImmutableArray<BackpackItemView> items = [.. all
-                .Where(item => item.Category == cat && IsCorrectType(item, cat))];
-
-            builder.Add(cat, ApplyDefaultSort(items, cat));
+            builder.Add(category, buckets.TryGetValue(category, out ImmutableArray<BackpackItemView>.Builder? bucketBuilder)
+                ? ApplyDefaultSort(bucketBuilder.ToImmutable(), category)
+                : []);
         }
 
         return builder.ToImmutable();

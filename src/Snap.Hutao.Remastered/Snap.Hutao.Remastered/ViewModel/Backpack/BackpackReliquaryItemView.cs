@@ -9,19 +9,26 @@ using Snap.Hutao.Remastered.Model.Metadata.Reliquary;
 using Snap.Hutao.Remastered.Service.Backpack;
 using System.Collections.Immutable;
 using System.Globalization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Snap.Hutao.Remastered.ViewModel.Backpack;
 
 [WinRT.GeneratedBindableCustomProperty]
 public sealed partial class BackpackReliquaryItemView : BackpackItemView
 {
+    /// <summary>
+    /// Shared read-only options for the sub affix id lists. A single read-only instance keeps the STJ
+    /// <c>uint[]</c> type info cached across the whole inventory instead of resolving it per item.
+    /// </summary>
+    private static readonly JsonSerializerOptions SubAffixIdListJsonOptions = CreateSubAffixIdListJsonOptions();
+
     public Reliquary Reliquary { get; private set; } = default!;
 
     public string? SetName { get; private set; }
 
     public Uri? SetIconUri { get; private set; }
 
-    public string EquipTypeName => Reliquary.EquipType.GetLocalizedDescriptionOrDefault(SH.ResourceManager, CultureInfo.CurrentCulture)!;
+    public string EquipTypeName { get; private set; } = string.Empty;
 
     public uint Level => Entity.Level > 0 ? Entity.Level - 1 : 0;
 
@@ -53,15 +60,14 @@ public sealed partial class BackpackReliquaryItemView : BackpackItemView
     /// </summary>
     public ImmutableArray<BackpackReliquarySubStatView> PaddedSubStats { get; private set; } = [];
 
-    /// <summary>
-    /// Gets the properties defined by 祝圣之霜 when the reliquary was crafted with it. Empty for every other reliquary.
-    /// </summary>
     public ImmutableArray<string> PurchasedAppendPropNames { get; private set; } = [];
 
     public bool HasPurchasedAppendProp => PurchasedAppendPropNames.Length > 0;
 
     public static BackpackReliquaryItemView Create(BackpackItem entity, BackpackServiceMetadataContext context, Reliquary reliquary)
     {
+        string equipTypeName = reliquary.EquipType.GetLocalizedDescriptionOrDefault(SH.ResourceManager, CultureInfo.CurrentCulture)!;
+
         BackpackReliquaryItemView view = new()
         {
             Entity = entity,
@@ -69,7 +75,8 @@ public sealed partial class BackpackReliquaryItemView : BackpackItemView
             Reliquary = reliquary,
             Name = reliquary.Name,
             Description = reliquary.Description,
-            TypeDescription = reliquary.EquipType.GetLocalizedDescriptionOrDefault(SH.ResourceManager, CultureInfo.CurrentCulture)!,
+            TypeDescription = equipTypeName,
+            EquipTypeName = equipTypeName,
             IconUri = ItemIconConverter.IconNameToUri(reliquary.Icon),
             Quality = reliquary.RankLevel,
         };
@@ -102,23 +109,13 @@ public sealed partial class BackpackReliquaryItemView : BackpackItemView
             }
         }
 
-        // Resolve main stat value from growth table
-        if (mainFightProp is { } prop)
+        if (mainFightProp is { } prop
+            && context.ReliquaryMainAffixLevelMap.TryGetValue((reliquary.RankLevel, entity.Level), out ReliquaryMainAffixLevel? mainAffixLevel)
+            && mainAffixLevel.Properties.GetValueOrDefault(prop) is float value and not 0)
         {
-            foreach (ref readonly ReliquaryMainAffixLevel level in context.ReliquaryMainAffixLevels.AsSpan())
-            {
-                if (level.Rank == reliquary.RankLevel && level.Level == entity.Level)
-                {
-                    if (level.Properties.GetValueOrDefault(prop) is float value and not 0)
-                    {
-                        view.MainPropValue = prop.IsFightPropPercent()
-                            ? value.ToString("P1", CultureInfo.CurrentCulture)
-                            : value.ToString("F0", CultureInfo.CurrentCulture);
-                    }
-
-                    break;
-                }
-            }
+            view.MainPropValue = prop.IsFightPropPercent()
+                ? value.ToString("P1", CultureInfo.CurrentCulture)
+                : value.ToString("F0", CultureInfo.CurrentCulture);
         }
 
         view.BuildSubStats(context);
@@ -260,7 +257,7 @@ public sealed partial class BackpackReliquaryItemView : BackpackItemView
 
         try
         {
-            return JsonSerializer.Deserialize<uint[]>(json);
+            return JsonSerializer.Deserialize<uint[]>(json, SubAffixIdListJsonOptions);
         }
         catch (JsonException ex)
         {
@@ -270,6 +267,19 @@ public sealed partial class BackpackReliquaryItemView : BackpackItemView
                 level: BreadcrumbLevel.Error);
             return null;
         }
+    }
+
+    private static JsonSerializerOptions CreateSubAffixIdListJsonOptions()
+    {
+        // A read-only instance keeps the resolved uint[] type info cached across the whole inventory.
+        // .NET 9+ refuses to mark options read-only unless a resolver is set explicitly.
+        JsonSerializerOptions options = new(JsonSerializerDefaults.General)
+        {
+            TypeInfoResolver = new DefaultJsonTypeInfoResolver(),
+        };
+
+        options.MakeReadOnly();
+        return options;
     }
 
     private static ReliquarySubStatState GetSubStatState(FightProperty prop, BackpackReliquaryScoreConfig scoreConfig)

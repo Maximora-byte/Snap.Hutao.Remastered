@@ -12,6 +12,7 @@ using Snap.Hutao.Remastered.Model.Primitive;
 using Snap.Hutao.Remastered.Service.Metadata.ContextAbstraction;
 using Snap.Hutao.Remastered.Service.Metadata.ContextAbstraction.ImmutableArray;
 using Snap.Hutao.Remastered.Service.Metadata.ContextAbstraction.ImmutableDictionary;
+using System.Collections.Frozen;
 using System.Collections.Immutable;
 
 namespace Snap.Hutao.Remastered.Service.Backpack;
@@ -29,6 +30,8 @@ public sealed class BackpackServiceMetadataContext : IMetadataContext,
     IMetadataDictionaryIdCookRecipeSource,
     IMetadataDictionaryIdAvatarWithPlayersSource
 {
+    private FrozenDictionary<(QualityType Rank, uint Level), ReliquaryMainAffixLevel>? reliquaryMainAffixLevelMap;
+
     public ImmutableDictionary<AvatarId, Avatar> IdAvatarMap { get; set; } = default!;
 
     public ImmutableDictionary<MaterialId, DisplayItem> IdDisplayItemAndMaterialMap { get; set; } = default!;
@@ -47,9 +50,26 @@ public sealed class BackpackServiceMetadataContext : IMetadataContext,
 
     public ImmutableArray<ReliquaryMainAffixLevel> ReliquaryMainAffixLevels { get; set; }
 
+    /// <summary>
+    /// Gets the reliquary main affix growth table indexed by rank and level.
+    /// </summary>
+    public FrozenDictionary<(QualityType Rank, uint Level), ReliquaryMainAffixLevel> ReliquaryMainAffixLevelMap
+        => reliquaryMainAffixLevelMap ??= BuildReliquaryMainAffixLevelMap();
+
     public ImmutableArray<CookRecipe> CookRecipes { get; set; }
 
     public ImmutableDictionary<CookRecipeId, CookRecipe> IdCookRecipeMap { get; set; } = default!;
 
     public BackpackReliquaryScoreConfig ReliquaryScoreConfig { get; set; } = default!;
+
+    private FrozenDictionary<(QualityType Rank, uint Level), ReliquaryMainAffixLevel> BuildReliquaryMainAffixLevelMap()
+    {
+        Dictionary<(QualityType Rank, uint Level), ReliquaryMainAffixLevel> map = [];
+        foreach (ReliquaryMainAffixLevel level in ReliquaryMainAffixLevels)
+        {
+            map.TryAdd((level.Rank, level.Level), level);
+        }
+
+        return map.ToFrozenDictionary();
+    }
 }
