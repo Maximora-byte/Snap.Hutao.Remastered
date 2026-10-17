@@ -69,7 +69,7 @@ public static class BackpackFilter
                         : SH.ViewPageBackpackFilterUnmarked)),
 
                 SearchTokenKind.BackpackEquippedState => tokens.Contains(
-                    item.Entity.EquippedAvatarId is not 0
+                    item.Entity.EquippedAvatarId is > 0
                         ? SH.ViewPageBackpackFilterEquipped
                         : SH.ViewPageBackpackFilterUnequipped),
 

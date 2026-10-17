@@ -99,12 +99,13 @@ public partial class BackpackItemView : ObservableObject
     /// </summary>
     protected void FillEquippedAvatar(BackpackServiceMetadataContext context)
     {
-        if (Entity.EquippedAvatarId is 0)
+        // null = 旧存档未记录装备状态（按未装备处理），0 = 未装备；两者都没有要显示的装备角色
+        if (Entity.EquippedAvatarId is not { } equippedAvatarId || equippedAvatarId is 0)
         {
             return;
         }
 
-        if (!context.IdAvatarMap.TryGetValue((AvatarId)Entity.EquippedAvatarId, out Avatar? avatar))
+        if (!context.IdAvatarMap.TryGetValue((AvatarId)equippedAvatarId, out Avatar? avatar))
         {
             return;
         }

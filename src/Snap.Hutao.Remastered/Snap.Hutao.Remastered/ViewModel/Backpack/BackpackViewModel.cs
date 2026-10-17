@@ -294,6 +294,11 @@ public sealed partial class BackpackViewModel : Abstraction.ViewModel
             return;
         }
 
+        await RebuildItemsAsync(archive, token).ConfigureAwait(false);
+    }
+
+    private async ValueTask RebuildItemsAsync(BackpackArchive archive, CancellationToken token)
+    {
         using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(token, CancellationToken);
         BackpackServiceMetadataContext context = await scopeContext.MetadataService
             .GetContextAsync<BackpackServiceMetadataContext>(linkedCts.Token)
@@ -302,9 +307,7 @@ public sealed partial class BackpackViewModel : Abstraction.ViewModel
         context.ReliquaryScoreConfig = scopeContext.BackpackService.GetActiveReliquaryScoreConfig();
         ScoreConfig = context.ReliquaryScoreConfig;
 
-        ImmutableArray<BackpackItemView> allItems = [.. scopeContext.BackpackService
-            .GetBackpackItemImmutableArrayByArchiveId(archive.InnerId)
-            .Select(item => BackpackItemView.Create(item, context))];
+        ImmutableArray<BackpackItemView> allItems = BuildItemViews(archive, context, out Exception? itemFailure);
 
         // Calculate scores for reliquary items
         foreach (BackpackItemView item in allItems)
@@ -351,10 +354,46 @@ public sealed partial class BackpackViewModel : Abstraction.ViewModel
         await scopeContext.TaskContext.SwitchToMainThreadAsync();
         token.ThrowIfCancellationRequested();
 
+        if (itemFailure is not null)
+        {
+            scopeContext.Messenger.Send(InfoBarMessage.Error(itemFailure));
+        }
+
         BackpackItemCategory category = GetSelectedCategory();
         BuildSearchData(category);
         BuildSortTokens(category);
         UpdateItemsFilter(category);
+    }
+
+    private ImmutableArray<BackpackItemView> BuildItemViews(BackpackArchive archive, BackpackServiceMetadataContext context, out Exception? itemFailure)
+    {
+        ImmutableArray<BackpackItem> entities = scopeContext.BackpackService.GetBackpackItemImmutableArrayByArchiveId(archive.InnerId);
+        ImmutableArray<BackpackItemView>.Builder builder = ImmutableArray.CreateBuilder<BackpackItemView>(entities.Length);
+        List<Exception>? failures = null;
+
+        foreach (ref readonly BackpackItem entity in entities.AsSpan())
+        {
+            try
+            {
+                builder.Add(BackpackItemView.Create(entity, context));
+            }
+            catch (Exception ex)
+            {
+                ex.Data["ItemId"] = entity.ItemId;
+                (failures ??= []).Add(ex);
+            }
+        }
+
+        itemFailure = failures is null
+            ? null
+            : new AggregateException($"{failures.Count} backpack item view(s) failed to build, {builder.Count} succeeded.", failures);
+
+        if (itemFailure is not null)
+        {
+            SentrySdk.CaptureException(itemFailure);
+        }
+
+        return builder.ToImmutable();
     }
 
     [Command("FilterCommand")]

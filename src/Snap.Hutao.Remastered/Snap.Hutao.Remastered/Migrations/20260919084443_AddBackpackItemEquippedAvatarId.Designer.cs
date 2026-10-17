@@ -140,7 +140,7 @@ namespace Snap.Hutao.Remastered.Migrations
                     b.Property<string>("DefiniteAppendPropIdListJson")
                         .HasColumnType("TEXT");
 
-                    b.Property<uint>("EquippedAvatarId")
+                    b.Property<uint?>("EquippedAvatarId")
                         .HasColumnType("INTEGER");
 
                     b.Property<ulong>("Guid")

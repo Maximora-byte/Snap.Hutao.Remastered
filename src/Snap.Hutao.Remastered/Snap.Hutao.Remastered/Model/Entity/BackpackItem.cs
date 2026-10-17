@@ -30,11 +30,7 @@ public sealed class BackpackItem
 
     public uint RefinementRank { get; set; }
 
-    /// <summary>
-    /// Gets or sets the id of the avatar this item is equipped by.
-    /// <c>0</c> means the item is not equipped.
-    /// </summary>
-    public uint EquippedAvatarId { get; set; }
+    public uint? EquippedAvatarId { get; set; }
 
     public uint? MainPropId { get; set; }
 

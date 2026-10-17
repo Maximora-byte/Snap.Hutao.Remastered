@@ -48,7 +48,7 @@ public sealed class BackpackServiceMetadataContext : IMetadataContext,
 
     public ImmutableDictionary<ReliquarySubAffixId, ReliquarySubAffix> IdReliquarySubAffixMap { get; set; } = default!;
 
-    public ImmutableArray<ReliquaryMainAffixLevel> ReliquaryMainAffixLevels { get; set; }
+    public ImmutableArray<ReliquaryMainAffixLevel> ReliquaryMainAffixLevels { get; set; } = [];
 
     /// <summary>
     /// Gets the reliquary main affix growth table indexed by rank and level.
@@ -56,7 +56,7 @@ public sealed class BackpackServiceMetadataContext : IMetadataContext,
     public FrozenDictionary<(QualityType Rank, uint Level), ReliquaryMainAffixLevel> ReliquaryMainAffixLevelMap
         => reliquaryMainAffixLevelMap ??= BuildReliquaryMainAffixLevelMap();
 
-    public ImmutableArray<CookRecipe> CookRecipes { get; set; }
+    public ImmutableArray<CookRecipe> CookRecipes { get; set; } = [];
 
     public ImmutableDictionary<CookRecipeId, CookRecipe> IdCookRecipeMap { get; set; } = default!;
 
@@ -65,7 +65,10 @@ public sealed class BackpackServiceMetadataContext : IMetadataContext,
     private FrozenDictionary<(QualityType Rank, uint Level), ReliquaryMainAffixLevel> BuildReliquaryMainAffixLevelMap()
     {
         Dictionary<(QualityType Rank, uint Level), ReliquaryMainAffixLevel> map = [];
-        foreach (ReliquaryMainAffixLevel level in ReliquaryMainAffixLevels)
+        // Iterate the span: an unassigned (default) ImmutableArray is a valid empty span,
+        // while foreach over the struct itself would throw a NullReferenceException and
+        // take the whole backpack inventory down with it
+        foreach (ref readonly ReliquaryMainAffixLevel level in ReliquaryMainAffixLevels.AsSpan())
         {
             map.TryAdd((level.Rank, level.Level), level);
         }
