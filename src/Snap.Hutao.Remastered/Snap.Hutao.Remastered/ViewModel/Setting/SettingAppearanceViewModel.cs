@@ -1,6 +1,7 @@
 // Copyright (c) DGP Studio. All rights reserved.
 // Licensed under the MIT license.
 
+using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using Snap.Hutao.Remastered.Factory.Picker;
@@ -29,6 +30,37 @@ public sealed partial class SettingAppearanceViewModel : Abstraction.ViewModel
     public partial BackgroundImageOptions BackgroundImageOptions { get; }
 
     public partial IMessenger Messenger { get; }
+
+    public int ControlMaterialState => (int)AppOptions.ControlMaterial.Value;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ControlMaterialState))]
+    public partial NameValue<ControlMaterial>? SelectedControlMaterial { get; set; }
+
+    partial void PostConstruct(IServiceProvider serviceProvider)
+    {
+        SelectedControlMaterial = AppOptions.ControlMaterials.Single(material => material.Value == AppOptions.ControlMaterial.Value);
+        AppOptions.ControlMaterial.PropertyChanged += OnControlMaterialChanged;
+    }
+
+    partial void OnSelectedControlMaterialChanged(NameValue<ControlMaterial>? value)
+    {
+        if (value is null || AppOptions.ControlMaterial.Value == value.Value) return;
+        AppOptions.ControlMaterial.Value = value.Value;
+        MaterialTheme.Apply(value.Value);
+    }
+
+    private void OnControlMaterialChanged(object? sender, PropertyChangedEventArgs args)
+    {
+        SelectedControlMaterial = AppOptions.ControlMaterials.Single(material => material.Value == AppOptions.ControlMaterial.Value);
+        OnPropertyChanged(nameof(ControlMaterialState));
+    }
+
+    public override void Dispose()
+    {
+        AppOptions.ControlMaterial.PropertyChanged -= OnControlMaterialChanged;
+        base.Dispose();
+    }
 
     // TODO: Replace with IObservableProperty
     public NameValue<BackgroundMediaType>? SelectedBackgroundMediaType

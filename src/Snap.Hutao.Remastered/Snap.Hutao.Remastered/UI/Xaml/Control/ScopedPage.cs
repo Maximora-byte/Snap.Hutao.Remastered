@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Markup;
 using Microsoft.UI.Xaml.Navigation;
 using Snap.Hutao.Remastered.Service.Navigation;
 using Snap.Hutao.Remastered.UI.Content;
+using Snap.Hutao.Remastered.UI.Xaml.Control.Theme;
 using Snap.Hutao.Remastered.ViewModel.Abstraction;
 using Snap.Hutao.Remastered.Win32.Foundation;
 
@@ -16,6 +17,16 @@ namespace Snap.Hutao.Remastered.UI.Xaml.Control;
 public partial class ScopedPage : Page
 {
     private readonly CancellationTokenSource viewCts = new();
+    private readonly PageResourceScope<ResourceDictionary> materialResources = new(
+        static () => new ResourceDictionary
+        {
+            Source = new Uri("ms-appx:///UI/Xaml/Control/Theme/VisualMaterials.xaml"),
+        },
+        static (owner, resources) =>
+        {
+            owner.MergedDictionaries.Add(resources);
+            MaterialTheme.Register(resources);
+        });
     private IServiceScope? scope;
 
     protected ScopedPage()
@@ -83,6 +94,10 @@ public partial class ScopedPage : Page
 
     protected override void OnNavigatedTo(NavigationEventArgs e)
     {
+        // The derived constructor's InitializeComponent has finished. Attach
+        // before the page enters the tree and its theme resources are consumed.
+        materialResources.EnsureAttached(Resources);
+
         // OnNavigatedTo is called before any FrameworkElement event on the page.
         if (e.Parameter is INavigationCompletionSource data)
         {
@@ -93,6 +108,10 @@ public partial class ScopedPage : Page
     private void OnLoading(FrameworkElement element, object e)
     {
         Loading -= OnLoading;
+
+        // Also covers pages hosted without Frame navigation. Never re-parent a
+        // dictionary attached before InitializeComponent replaced Page.Resources.
+        materialResources.EnsureAttached(Resources);
 
         XamlContext? context = element.XamlRoot.XamlContext();
         ArgumentNullException.ThrowIfNull(context);

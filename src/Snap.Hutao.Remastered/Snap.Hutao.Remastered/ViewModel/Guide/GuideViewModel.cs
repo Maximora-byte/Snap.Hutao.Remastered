@@ -14,6 +14,7 @@ using Snap.Hutao.Remastered.Factory.Picker;
 using Snap.Hutao.Remastered.Model;
 using Snap.Hutao.Remastered.Service;
 using Snap.Hutao.Remastered.Service.Notification;
+using Snap.Hutao.Remastered.UI.Xaml.Control.Theme;
 using Snap.Hutao.Remastered.ViewModel.Setting;
 using Snap.Hutao.Remastered.Web.Hoyolab;
 using Snap.Hutao.Remastered.Web.Hutao;
@@ -34,6 +35,7 @@ public sealed partial class GuideViewModel : Abstraction.ViewModel
     private readonly ITaskContext taskContext;
     private readonly IMessenger messenger;
     private readonly IShellLinkInterop shellLinkInterop;
+    private bool guideReady;
 
     [GeneratedConstructor]
     public partial GuideViewModel(IServiceProvider serviceProvider);
@@ -43,50 +45,74 @@ public sealed partial class GuideViewModel : Abstraction.ViewModel
         get => string.Join('+', CultureOptions.Cultures.Select(c => SH.GetString("GuideWindowTitle", c.Value)));
     }
 
-    public uint State
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(StepIndex), nameof(VisibleState))]
+    public partial uint State { get; set; }
+
+    partial void PostConstruct(IServiceProvider serviceProvider)
     {
-        get
+        State = GuideNavigation.Normalize((uint)UnsafeLocalSetting.Get(SettingKeys.GuideState, GuideState.Language));
+        SelectedControlMaterial = AppOptions.ControlMaterials.Single(material => material.Value == AppOptions.ControlMaterial.Value);
+        AppOptions.ControlMaterial.PropertyChanged += OnControlMaterialChanged;
+        ApplyGuideState((GuideState)State);
+    }
+
+    partial void OnStateChanged(uint value)
+    {
+        uint normalized = GuideNavigation.Normalize(value);
+        if (value != normalized)
         {
-            GuideState state = UnsafeLocalSetting.Get(SettingKeys.GuideState, GuideState.Language);
-
-            switch (state)
-            {
-                case GuideState.Document:
-                    IsTermOfServiceAgreed = false;
-                    IsPrivacyPolicyAgreed = false;
-                    IsIssueReportAgreed = false;
-                    IsOpenSourceLicenseAgreed = false;
-                    IsDownStreamAgreed = false;
-                    (NextOrCompleteButtonText, IsNextOrCompleteButtonEnabled) = (SH.ViewModelGuideActionNext, false);
-                    break;
-                case GuideState.StaticResourceBegin:
-                    (NextOrCompleteButtonText, IsNextOrCompleteButtonEnabled) = (SH.ViewModelGuideActionStaticResourceBegin, false);
-                    DownloadStaticResourceAsync().SafeForget();
-                    break;
-                case GuideState.Completed:
-                    (NextOrCompleteButtonText, IsNextOrCompleteButtonEnabled) = (SH.ViewModelGuideActionComplete, true);
-                    break;
-                default:
-                    (NextOrCompleteButtonText, IsNextOrCompleteButtonEnabled) = (SH.ViewModelGuideActionNext, true);
-                    break;
-            }
-
-            return (uint)state;
+            State = normalized;
+            return;
         }
 
-        set
+        LocalSetting.Set(SettingKeys.GuideState, value);
+        ApplyGuideState((GuideState)value);
+    }
+
+    public int StepIndex => GuideNavigation.StepIndex(State);
+
+    public uint VisibleState => GuideNavigation.VisibleState(State);
+
+    private void ApplyGuideState(GuideState state)
+    {
+        switch (state)
         {
-            value = Math.Clamp(value, 0, (uint)GuideState.Completed);
-            LocalSetting.Set(SettingKeys.GuideState, value);
-            OnPropertyChanged();
+            case GuideState.Document:
+                IsTermOfServiceAgreed = false;
+                IsPrivacyPolicyAgreed = false;
+                IsIssueReportAgreed = false;
+                IsOpenSourceLicenseAgreed = false;
+                IsDownStreamAgreed = false;
+                (NextOrCompleteButtonText, IsNextOrCompleteButtonEnabled) = (SH.ViewModelGuideActionNext, false);
+                break;
+            case GuideState.StaticResourceBegin:
+                (NextOrCompleteButtonText, IsNextOrCompleteButtonEnabled) = (SH.ViewModelGuideActionStaticResourceBegin, false);
+                if (guideReady && !IsDownloading)
+                {
+                    DownloadStaticResourceAsync().SafeForget();
+                }
+                break;
+            case GuideState.Material:
+                (NextOrCompleteButtonText, IsNextOrCompleteButtonEnabled) = (SH.ViewModelGuideActionComplete, true);
+                break;
+            case GuideState.Completed:
+                (NextOrCompleteButtonText, IsNextOrCompleteButtonEnabled) = (SH.ViewModelGuideActionComplete, true);
+                break;
+            default:
+                (NextOrCompleteButtonText, IsNextOrCompleteButtonEnabled) = (SH.ViewModelGuideActionNext, true);
+                break;
         }
     }
 
-    public string NextOrCompleteButtonText { get; set => SetProperty(ref field, value); } = SH.ViewModelGuideActionNext;
+    [ObservableProperty]
+    public partial string NextOrCompleteButtonText { get; set; } = SH.ViewModelGuideActionNext;
 
-    public bool IsNextOrCompleteButtonEnabled { get; set => SetProperty(ref field, value); } = true;
+    [ObservableProperty]
+    public partial bool IsNextOrCompleteButtonEnabled { get; set; } = true;
 
-    public bool IsSetDataFolderEnabled { get; set => SetProperty(ref field, value); } = true;
+    [ObservableProperty]
+    public partial bool IsSetDataFolderEnabled { get; set; } = true;
 
     public partial CultureOptions CultureOptions { get; }
 
@@ -95,6 +121,40 @@ public sealed partial class GuideViewModel : Abstraction.ViewModel
     public partial AppOptions AppOptions { get; }
 
     public partial StaticResourceOptions StaticResourceOptions { get; }
+
+    public int ControlMaterialState => (int)AppOptions.ControlMaterial.Value;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ControlMaterialState))]
+    public partial NameValue<ControlMaterial>? SelectedControlMaterial { get; set; }
+
+    partial void OnSelectedControlMaterialChanged(NameValue<ControlMaterial>? value)
+    {
+        if (value is not null && AppOptions.ControlMaterial.Value != value.Value)
+        {
+            AppOptions.ControlMaterial.Value = value.Value;
+            MaterialTheme.Apply(value.Value);
+        }
+    }
+
+    private void OnControlMaterialChanged(object? sender, PropertyChangedEventArgs args)
+    {
+        SelectedControlMaterial = AppOptions.ControlMaterials.Single(material => material.Value == AppOptions.ControlMaterial.Value);
+        OnPropertyChanged(nameof(ControlMaterialState));
+    }
+
+    public void SelectControlMaterial(int index)
+    {
+        if ((uint)index < (uint)AppOptions.ControlMaterials.Length)
+            SelectedControlMaterial = AppOptions.ControlMaterials[index];
+    }
+
+    public override void Dispose()
+    {
+        AppOptions.ControlMaterial.PropertyChanged -= OnControlMaterialChanged;
+        downloadCts?.Cancel();
+        base.Dispose();
+    }
 
     // TODO: Replace with IObservableProperty
     public NameCultureInfoValue? SelectedCulture
@@ -189,7 +249,8 @@ public sealed partial class GuideViewModel : Abstraction.ViewModel
 
     public bool AgreementUseGrid => CultureOptions.LocaleName.StartsWith("zh", StringComparison.OrdinalIgnoreCase);
 
-    public ObservableCollection<DownloadSummary>? DownloadSummaries { get; set => SetProperty(ref field, value); }
+    [ObservableProperty]
+    public partial ObservableCollection<DownloadSummary>? DownloadSummaries { get; set; }
 
     [ObservableProperty]
     public partial bool IsDownloading { get; set; }
@@ -198,8 +259,7 @@ public sealed partial class GuideViewModel : Abstraction.ViewModel
 
     private void OnAgreementStateChanged()
     {
-        // 使用底层存储获取状态，避免访问 State getter 导致的副作用（State getter 会重置同意项）
-        GuideState current = UnsafeLocalSetting.Get(SettingKeys.GuideState, GuideState.Language);
+        GuideState current = (GuideState)State;
         if (current == GuideState.Document)
         {
             IsNextOrCompleteButtonEnabled = IsTermOfServiceAgreed
@@ -208,16 +268,24 @@ public sealed partial class GuideViewModel : Abstraction.ViewModel
                 && IsOpenSourceLicenseAgreed
                 && IsDownStreamAgreed;
         }
-        else
-        {
-            IsNextOrCompleteButtonEnabled = IsTermOfServiceAgreed && IsPrivacyPolicyAgreed && IsIssueReportAgreed && IsOpenSourceLicenseAgreed;
-        }
     }
 
     [Command("NextOrCompleteCommand")]
     private void NextOrComplete()
     {
         SentrySdk.AddBreadcrumb(BreadcrumbFactory.CreateUI("Increase guide state", "GuideViewModel.Command"));
+
+        if (!IsNextOrCompleteButtonEnabled)
+        {
+            return;
+        }
+
+        if (GuideNavigation.IsFinalStep(State))
+        {
+            UnsafeLocalSetting.Set(SettingKeys.GuideState, GuideState.Completed);
+            AppInstance.Restart(string.Empty);
+            return;
+        }
 
         ++State;
     }
@@ -321,8 +389,9 @@ public sealed partial class GuideViewModel : Abstraction.ViewModel
             downloadCts = null;
         }
 
+        if (XamlApplicationLifetime.Exiting) return;
         StaticResource.FulfillAll();
-        UnsafeLocalSetting.Set(SettingKeys.GuideState, GuideState.Completed);
+        State = (uint)GuideState.Material;
         AppInstance.Restart(string.Empty);
     }
 
@@ -336,6 +405,11 @@ public sealed partial class GuideViewModel : Abstraction.ViewModel
 
     protected override async ValueTask<bool> LoadOverrideAsync(CancellationToken token)
     {
+        await taskContext.SwitchToMainThreadAsync();
+        guideReady = true;
+        MaterialTheme.Apply(AppOptions.ControlMaterial.Value);
+        ApplyGuideState((GuideState)State);
+
         using (IServiceScope scope = serviceProvider.CreateScope())
         {
             HutaoInfrastructureClient hutaoInfrastructureClient = scope.ServiceProvider.GetRequiredService<HutaoInfrastructureClient>();
