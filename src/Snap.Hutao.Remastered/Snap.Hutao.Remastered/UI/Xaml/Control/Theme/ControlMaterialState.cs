@@ -651,7 +651,7 @@ public sealed partial class ControlMaterialState : DependencyObject
             ManagedControls[element] = defaults;
         }
         ApplyOptics(defaults);
-        ApplyPointerLighting(element);
+        ApplyControlSettings(element);
     }
 
     // Detach without writing composition properties while the brush is disconnecting.
@@ -709,18 +709,22 @@ public sealed partial class ControlMaterialState : DependencyObject
     private static void ApplyOptics(BrushDefaults defaults) =>
         LiquidGlassProfiles.Get(defaults.Kind).Apply(defaults.Brush, defaults.Values);
 
-    private static void ApplyPointerLighting(FrameworkElement element)
+    private static void ApplyControlSettings(FrameworkElement element)
     {
         LiquidGlassProfile profile = LiquidGlassProfiles.Get(LibraryKind(element));
         LiquidGlassInteraction.SetPointerLightingEnabled(element, profile.PointerLightingEnabled);
         LiquidGlassInteraction.SetPointerLightInfluence(element, profile.PointerLightInfluence);
+        if (element is LiquidGlassToggleSwitch toggleSwitch)
+        {
+            toggleSwitch.SwitchScale = profile.SwitchScale;
+        }
     }
 
     internal static void RefreshManagedInteractions()
     {
         if (XamlApplicationLifetime.Exiting) return;
         foreach (FrameworkElement element in ManagedControls.Keys.ToArray())
-            if (element.IsLoaded) ApplyPointerLighting(element);
+            if (element.IsLoaded) ApplyControlSettings(element);
     }
 
     internal static void RefreshManagedOptics()

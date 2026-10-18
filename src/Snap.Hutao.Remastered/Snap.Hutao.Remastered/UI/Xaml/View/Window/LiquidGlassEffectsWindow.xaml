@@ -49,6 +49,44 @@
             </Grid.ColumnDefinitions>
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" HorizontalScrollMode="Disabled">
                 <StackPanel Spacing="12">
+                    <StackPanel
+                        Margin="0,0,12,16"
+                        Spacing="4"
+                        Visibility="{x:Bind SelectedProfile.SupportsSwitchScale, Mode=OneWay}">
+                        <Grid ColumnSpacing="12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Text="{shuxm:ResourceString Name=GlassParameterSwitchScale}"/>
+                            <Button
+                                Grid.Column="1"
+                                Click="{x:Bind SelectedProfile.ResetSwitchScale}"
+                                Content="{shuxm:ResourceString Name=GlassResetParameter}"/>
+                        </Grid>
+                        <TextBlock Text="{shuxm:ResourceString Name=GlassParameterSwitchScaleDescription}" TextWrapping="Wrap"/>
+                        <Grid ColumnSpacing="16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="64"/>
+                            </Grid.ColumnDefinitions>
+                            <Slider
+                                AutomationProperties.Name="{shuxm:ResourceString Name=GlassParameterSwitchScale}"
+                                Maximum="2"
+                                Minimum="0.25"
+                                StepFrequency="0.05"
+                                Value="{x:Bind SelectedProfile.SwitchScale, Mode=TwoWay}"/>
+                            <TextBlock
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Text="{x:Bind SelectedProfile.SwitchScaleDisplayValue, Mode=OneWay}"/>
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{shuxm:ResourceString Name=GlassDefaultValue}"/>
+                            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind SelectedProfile.SwitchScaleDefaultText, Mode=OneWay}"/>
+                        </StackPanel>
+                    </StackPanel>
                     <ToggleSwitch
                         Header="{shuxm:ResourceString Name=GlassPointerLighting}"
                         IsOn="{x:Bind SelectedProfile.PointerLightingEnabled, Mode=TwoWay}"/>

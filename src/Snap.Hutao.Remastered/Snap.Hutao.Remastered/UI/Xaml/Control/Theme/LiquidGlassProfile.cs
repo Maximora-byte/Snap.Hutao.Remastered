@@ -53,6 +53,8 @@ public sealed partial class LiquidGlassParameter : ObservableObject
 
 public sealed partial class LiquidGlassProfile : ObservableObject
 {
+    private const double DefaultSwitchScale = 0.7;
+
     private readonly LiquidGlassOverrideStore overrides;
     private string StorageKey => "LiquidGlass.Profiles.v1." + Key;
 
@@ -79,6 +81,28 @@ public sealed partial class LiquidGlassProfile : ObservableObject
     }
 
     public bool IsGlassActive => MaterialBindingSource.Current.Value == 1 && Enabled;
+
+    public bool SupportsSwitchScale => Key == "ToggleSwitch";
+    public double SwitchScale
+    {
+        get
+        {
+            double value = LocalSetting.Get(StorageKey + ".SwitchScale", DefaultSwitchScale);
+            return double.IsFinite(value) && value >= 0.25 && value <= 2.0 ? value : DefaultSwitchScale;
+        }
+        set
+        {
+            if (!SupportsSwitchScale || !double.IsFinite(value) || value < 0.25 || value > 2.0 || SwitchScale == value) return;
+            LocalSetting.Set(StorageKey + ".SwitchScale", value);
+            OnPropertyChanged();
+            OnPropertyChanged(nameof(SwitchScaleDisplayValue));
+            ControlMaterialState.RefreshManagedInteractions();
+        }
+    }
+
+    public string SwitchScaleDisplayValue => SwitchScale.ToString("0.00", CultureInfo.CurrentCulture);
+    public string SwitchScaleDefaultText => DefaultSwitchScale.ToString("0.00", CultureInfo.CurrentCulture);
+    public void ResetSwitchScale() => SwitchScale = DefaultSwitchScale;
 
     public bool PointerLightingEnabled
     {
@@ -117,6 +141,7 @@ public sealed partial class LiquidGlassProfile : ObservableObject
 
     public void Reset()
     {
+        ResetSwitchScale();
         PointerLightingEnabled = true;
         PointerLightInfluence = 1.0;
         overrides.Reset();
