@@ -1,7 +1,6 @@
 // Copyright (c) DGP Studio. All rights reserved.
 // Licensed under the MIT license.
 
-using CommunityToolkit.Mvvm.ComponentModel;
 using Snap.Hutao.Remastered.UI.Xaml.Data;
 using System.Collections.Immutable;
 

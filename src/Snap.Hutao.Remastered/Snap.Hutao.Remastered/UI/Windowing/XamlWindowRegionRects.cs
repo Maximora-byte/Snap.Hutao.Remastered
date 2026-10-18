@@ -5,7 +5,6 @@ using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Snap.Hutao.Remastered.Core.Graphics;
 using Snap.Hutao.Remastered.UI.Windowing.Abstraction;
-using Snap.Hutao.Remastered.UI.Xaml;
 using Windows.Foundation;
 using Windows.Graphics;
 
