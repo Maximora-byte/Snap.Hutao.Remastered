@@ -1,4 +1,4 @@
-﻿name: Snap Hutao Remastered Alpha
+name: Snap Hutao Remastered Alpha
 on:
   workflow_dispatch:
   push:
@@ -87,16 +87,9 @@ jobs:
         run: |
           $summary = "
           > [!WARNING]
-          > 该版本是由 CI 程序自动打包生成的 \`Alpha\` 测试版本，包含已经基本完工的新功能及问题修复
+          > 该版本是由 CI 程序自动打包生成的 Alpha 测试版本，包含已经基本完工的新功能及问题修复
 
           > [!IMPORTANT]
           > 直接旁加载 MSIX 时，请将 SnapHutaoRemasteringProject 工件中的证书安装到 **受信任的人员（TrustedPeople）** 存储
           "
           echo $summary >> $Env:GITHUB_STEP_SUMMARY
-
-      - name: Clean up
-        shell: pwsh
-        run: |
-          Write-Host "Cleaning up NuGet cache..."
-          Remove-Item -Recurse -Force "$env:USERPROFILE\.nuget\packages"
-          Write-Host "NuGet cache cleaned."

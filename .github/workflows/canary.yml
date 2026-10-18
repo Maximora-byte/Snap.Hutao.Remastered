@@ -1,4 +1,4 @@
-﻿name: Snap Hutao Remastered Canary
+name: Snap Hutao Remastered Canary
 on:
   workflow_dispatch:
   push:
@@ -18,6 +18,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -27,28 +30,57 @@ jobs:
 
       - name: Merge all branches into dev locally
         id: merge
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          $continue = $true
+          $repository = '${{ github.repository }}'
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+
           git fetch origin '+refs/heads/*:refs/remotes/origin/*'
+          if ($LASTEXITCODE -ne 0) { throw "git fetch failed with exit code $LASTEXITCODE" }
+
           git checkout origin/dev
-          $response = curl -s https://api.github.com/repos/SnapHutaoRemasteringProject/Snap.Hutao.Remastered/pulls?state=open
-          $refs = $response | ConvertFrom-Json | Where-Object { $_.draft -eq $false } | ForEach-Object { $_.head.ref }
-          if ($refs.Count -eq 0 -or ($refs.Count -eq 1 -and $refs -eq "l10n_dev")) {
-              echo "No PRs to merge"
-              $continue = $false
-              echo "continue=$continue" >> $Env:GITHUB_OUTPUT
-              exit
+          if ($LASTEXITCODE -ne 0) { throw "git checkout origin/dev failed with exit code $LASTEXITCODE" }
+
+          $headers = @{
+              Authorization = "Bearer $env:GH_TOKEN"
+              Accept        = 'application/vnd.github+json'
+          }
+          try {
+              $pulls = Invoke-RestMethod -Uri "https://api.github.com/repos/$repository/pulls?state=open&per_page=100" -Headers $headers
+          }
+          catch {
+              throw "Cannot list open pull requests of $repository (rate limited or insufficient permissions): $($_.Exception.Message)"
+          }
+
+          $refs = @()
+          foreach ($pull in $pulls) {
+              if ($pull.draft) { continue }
+              if ($pull.head.repo.full_name -ne $repository) {
+                  Write-Host "Skipping #$($pull.number): head branch lives in $($pull.head.repo.full_name), not in $repository"
+                  continue
+              }
+              $refs += $pull.head.ref
+          }
+
+          if ($refs.Count -eq 0 -or ($refs.Count -eq 1 -and $refs[0] -eq 'l10n_dev')) {
+              Write-Host "No PRs to merge"
+              "continue=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+              exit 0
           }
 
           foreach ($ref in $refs) {
-              echo "Merging $ref into dev"
+              Write-Host "Merging $ref into dev"
               git merge "origin/$ref" --strategy=ort --allow-unrelated-histories -m "Merge $ref into dev"
+              if ($LASTEXITCODE -ne 0) {
+                  throw "Merging origin/$ref into dev failed with exit code $LASTEXITCODE"
+              }
           }
 
-          echo "continue=$continue" >> $Env:GITHUB_OUTPUT
+          "continue=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
 
       - name: Setup .NET
         if: ${{ steps.merge.outputs.continue == 'true' }}
@@ -110,7 +142,7 @@ jobs:
         run: |
           $summary = "
           > [!WARNING]
-          > 该版本是由 CI 程序自动打包生成的 \`Canary\` 测试版本，包含新功能原型及问题修复
+          > 该版本是由 CI 程序自动打包生成的 Canary 测试版本，包含新功能原型及问题修复
 
           > [!IMPORTANT]
           > 直接旁加载 MSIX 时，请将 SnapHutaoRemasteringProject 工件中的证书安装到 **受信任的人员（TrustedPeople）** 存储
