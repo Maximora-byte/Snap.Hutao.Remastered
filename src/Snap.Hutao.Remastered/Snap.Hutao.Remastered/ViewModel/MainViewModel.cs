@@ -128,7 +128,7 @@ public sealed partial class MainViewModel : Abstraction.ViewModel, IDisposable
         CheckUpdateResult checkUpdateResult = await updateService.CheckUpdateAsync(timeout.Token).ConfigureAwait(false);
         token.ThrowIfCancellationRequested();
         if (XamlApplicationLifetime.Exiting || IsViewUnloaded.Value) return false;
-        await updateService.TriggerUpdateAsync(checkUpdateResult, token).ConfigureAwait(false);
+        await updateService.TriggerUpdateAsync(checkUpdateResult, isAutomatic: true, token: token).ConfigureAwait(false);
         return true;
     }
 

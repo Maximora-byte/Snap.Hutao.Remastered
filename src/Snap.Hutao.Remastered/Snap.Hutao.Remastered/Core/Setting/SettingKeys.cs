@@ -22,6 +22,7 @@ public static class SettingKeys
     public const string PendingRefreshAutoStartTaskAfterUpdate = "Snap::Hutao::Application::Update::StartupTask::PendingRefresh";
     public const string OverrideUpdateVersionComparison = "Snap::Hutao::Application::Update::VersionComparison::Override";
     public const string MirrorChyanCdk = "Snap::Hutao::Application::Update::MirrorChyanCdk";
+    public const string SkippedUpdateVersion = "Snap::Hutao::Application::Update::SkippedVersion";
 
     // Globalization
     public const string FirstDayOfWeek               = "Snap::Hutao::Globalization::FirstDayOfWeek";
