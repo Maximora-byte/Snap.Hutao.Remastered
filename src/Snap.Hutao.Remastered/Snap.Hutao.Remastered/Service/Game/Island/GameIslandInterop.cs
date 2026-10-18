@@ -171,6 +171,7 @@ public sealed class GameIslandInterop : IGameIslandInterop
         pIslandEnvironment->CombineHotkey = options.CombineMenuHotkey.Value;
         pIslandEnvironment->WeakMapCheck = options.WeakMapCheck.Value;
         pIslandEnvironment->FastSkipTalk = options.FastSkipTalk.Value;
+        pIslandEnvironment->RedirectCatherine = options.RedirectCatherine.Value;
 
         return pIslandEnvironment->View;
     }
@@ -237,6 +238,7 @@ public sealed class GameIslandInterop : IGameIslandInterop
                 {
                     unsafe
                     {
+                        // Size 由 DLL 写入（DLL 侧不再校验 Provider 的大小），这里只由 UI 判断版本是否匹配
                         if (view.State is IslandState.Started && view.Size < sizeof(IslandEnvironment))
                         {
                             HutaoException.Throw("IslandEnvironment size mismatch");

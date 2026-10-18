@@ -3309,6 +3309,36 @@
                                                 ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandFastSkipTalkDescription}"/>
                                         </cwc:Case>
                                     </cwc:SwitchPresenter>
+                                    <cwc:SwitchPresenter
+                                        x:Name="GlassPresenter_98621"
+                                        Grid.Row="9"
+                                        Grid.Column="0"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        IsTabStop="False"
+                                        Tag="LiquidGlass:ToggleSwitch"
+                                        Visibility="{x:Bind ((shvg:LaunchGameViewModel)DataContext).IsDeveloperAndLoggedIn, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}"
+                                        Value="{x:Bind shuxcth:MaterialBindingSource.Current.ToggleSwitchMaterial, Mode=OneWay}">
+                                        <cwc:Case>
+                                            <cwc:Case.Value>
+                                                <x:Int32>0</x:Int32>
+                                            </cwc:Case.Value>
+                                            <ToggleSwitch
+                                                Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineHeader}"
+                                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.RedirectCatherine.Value, Mode=TwoWay}"
+                                                ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineDescription}"/>
+                                        </cwc:Case>
+                                        <cwc:Case>
+                                            <cwc:Case.Value>
+                                                <x:Int32>1</x:Int32>
+                                            </cwc:Case.Value>
+                                            <wl:LiquidGlassToggleSwitch
+                                                shuxcth:ControlMaterialState.IsManaged="True"
+                                                Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineHeader}"
+                                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.RedirectCatherine.Value, Mode=TwoWay}"
+                                                ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineDescription}"/>
+                                        </cwc:Case>
+                                    </cwc:SwitchPresenter>
 
                                 </Grid>
                             </ContentControl>
