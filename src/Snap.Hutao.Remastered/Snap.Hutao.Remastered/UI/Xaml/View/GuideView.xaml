@@ -109,7 +109,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid shuxcth:MaterialBackground.NativeBrush="{ThemeResource CardBackgroundFillColorSecondaryBrush}" shuxcth:MaterialBackground.GlassBrush="{ThemeResource HutaoSurfaceBrush}">
+    <Grid shuxcth:MaterialBackground.GlassBrush="{ThemeResource HutaoSurfaceBrush}" shuxcth:MaterialBackground.NativeBrush="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="auto"/>
@@ -890,9 +890,10 @@
                             Text="{shuxm:ResourceString Name=ViewGuideMaterialDescription}"
                             TextAlignment="Center"
                             TextWrapping="Wrap"/>
-                        <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                        <ComboBox
                             MinWidth="220"
                             HorizontalAlignment="Center"
+                            shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                             Header="{shuxm:ResourceString Name=ViewPageSettingControlMaterialHeader}"
                             SelectedIndex="{x:Bind ((shvg:GuideViewModel)DataContext).ControlMaterialState, Mode=OneWay}"
                             SelectionChanged="OnControlMaterialSelectionChanged">
@@ -1318,8 +1319,7 @@
                             BorderThickness="0"
                             Command="{Binding NextOrCompleteCommand}"
                             Content="{Binding NextOrCompleteButtonText}"
-                            IsEnabled="{Binding IsNextOrCompleteButtonEnabled}"
-                            Style="{ThemeResource AccentButtonStyle}"/>
+                            IsEnabled="{Binding IsNextOrCompleteButtonEnabled}"/>
                     </cwc:Case>
                 </cwc:SwitchPresenter>
             </StackPanel>
