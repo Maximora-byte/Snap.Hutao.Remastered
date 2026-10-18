@@ -75,11 +75,13 @@ dotnet test src/Snap.Hutao.Remastered/Snap.Hutao.Remastered.slnx --filter "Fully
     `CopyContentForUnpackaged` target copies `Resource/` and `Assets/` next to the exe for the
     unpackaged mode.
 - **Test caveat (important)** — the test project has **no `ProjectReference` to the app**
-  (`CODE_REVIEW.md#BUG-02`). It compiles a hand-picked set of 15 production files through
-  `<Compile Include="..\Snap.Hutao.Remastered\...">` links and holds 99 `[TestMethod]`s across
+  (`CODE_REVIEW.md#BUG-02`). It compiles a hand-picked set of 29 production files through
+  `<Compile Include="..\Snap.Hutao.Remastered\...">` links and holds 125 `[TestMethod]`s across
   `BaseClassLibrary/`, `RuntimeBehavior/`, `IncomingFeature/` and `PlatformExtensions/`.
   Consequence: **a new test can only touch code that is already source-linked**; anything else
-  needs another `<Compile Include>` link (and that file must not pull in WinUI).
+  needs another `<Compile Include>` link. Windows dependencies must either be absent or supplied
+  by explicit test doubles, as in `UserInitializationThreadingTest` (real initialization service,
+  delayed HTTP responses and a dedicated UI-consumer thread; no real XAML controls).
 - **Prerequisites** — the .NET SDK pinned by `global.json`; the workloads and the Single-project MSIX
   packaging extension in `.vsconfig` (`ManagedDesktop`, `NativeDesktop`, `Universal`) for
   packaging/interop work; the WebView2 Runtime on the target machine (the app hosts WebView2 windows
@@ -384,7 +386,10 @@ the build fails with `CS9275`); write a normal constructor in that case.
 
 - **Branches** — `dev` is the integration branch and the target for all PRs (local and
   `origin/dev` exist; `alpha.yml` builds `dev` and PRs into `dev`, `canary.yml` builds everything
-  except `main`/`release`/`dependabot/**`). `main` is the default/release branch; do not open PRs
+  except `main`/`release`/`dependabot/**`). Canary uses `scripts/PrepareCanarySource.ps1` to merge
+  the exact triggering commit and other open, non-draft PR branches from this repository into
+  `dev`; it verifies trigger ancestry and records the compiled source commit in the run summary.
+  A feature-branch push is included even before its PR exists. `main` is the default/release branch; do not open PRs
   against `main`. `backup`/`main-backup` are archival.
 - **Ignore build output** — `bin/`, `obj/`, `TestResults/` and the stray
   `src/Snap.Hutao.Remastered/{Snap.Hutao.Plugin.SDK,TestPlugin}/{bin,obj}` directories are
@@ -411,7 +416,7 @@ ID — do not "fix" these by documenting them as if they were intended.
 | 3 | Repository-wide `internal` removal (0 occurrences left) + 12 `SH001` suppressions; `public` was mandated uniformly, which is what caused #1/#2 | whole repo | BUG-10 |
 | 4 | Two ViewModel lifecycle state machines (`ViewModel` vs `ViewModelSlim`), derived classes assign `IsInitialized` on their own | `ViewModel/Abstraction/*` | ARCH-03 |
 | 5 | Analyzer severities are advisory: 54 `suggestion`, 18 `none`, 2 `warning`, **0** `error`; no `TreatWarningsAsErrors`/`AnalysisLevel`; `NoWarn` swallows `CA2012`; `SA1404` disabled | `src/Snap.Hutao.Remastered/.editorconfig`, app csproj | ENG-01, ENG-02 |
-| 6 | Test project cannot reference the app (0 `ProjectReference`, 15 source links, TFM `net11.0` vs `net11.0-windows…`) | `Snap.Hutao.Remastered.Test.csproj` | BUG-02 |
+| 6 | Test project cannot reference the app (0 `ProjectReference`, 29 source links, TFM `net11.0` vs `net11.0-windows…`) | `Snap.Hutao.Remastered.Test.csproj` | BUG-02 |
 | 7 | Manifest allows Windows 10 `10.0.19041.0` while the public support statement says Windows 10 22H2 (Jan-2025) / Windows 11 22H2 — reconcile one of the two | `Package*.appxmanifest`, project docs site | — |
 | 8 | No CI quality gate: none of the 8 workflows runs `dotnet test` or `dotnet format --verify-no-changes` | `.github/workflows/` | ENG-05 |
 | 9 | No central package management (`Directory.Build.props` / `Directory.Packages.props` absent, 61 `PackageReference`s across the 4 csproj files carry inline versions) | `src/**/*.csproj` | ENG-04 |
@@ -429,4 +434,6 @@ ID — do not "fix" these by documenting them as if they were intended.
 
 | Date | Change |
 |---|---|
+| 2026-10-18 | Document Canary's explicit trigger-commit merge, ancestry verification and compiled-source summary, including pushes made before a PR exists. |
+| 2026-10-18 | Recounted source-linked production files and test methods after adding account-initialization thread-affinity regression tests; documented their explicit Windows dependency doubles. |
 | 2026-10-11 | Full "spec vs reality" audit (`CODE_REVIEW.md#ENG-10`): .NET 10→11, `[RelayCommand]`→`[Command("…")]`, observable partial properties, both ViewModel base classes, `develop`→`dev`, accurate `RetryHttpHandler` semantics, plugin/ALC section, DI attribute matrix, localization mechanism, build quirks, test-project caveat, visibility rule rewritten, §8 Known drift added. |
