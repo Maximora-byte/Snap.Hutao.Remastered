@@ -24,9 +24,10 @@
             Spacing="12">
             <TextBlock Text="{shuxm:ResourceString Name=GlassEffectsIntro}" TextWrapping="Wrap"/>
             <StackPanel Orientation="Horizontal" Spacing="16">
-                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                <ComboBox
                     x:Name="TypeSelector"
                     MinWidth="230"
+                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                     ItemsSource="{x:Bind Profiles}"
                     Loaded="SelectorLoaded"
                     SelectionChanged="TypeChanged">
@@ -87,9 +88,7 @@
                             <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind SelectedProfile.SwitchScaleDefaultText, Mode=OneWay}"/>
                         </StackPanel>
                     </StackPanel>
-                    <ToggleSwitch
-                        Header="{shuxm:ResourceString Name=GlassPointerLighting}"
-                        IsOn="{x:Bind SelectedProfile.PointerLightingEnabled, Mode=TwoWay}"/>
+                    <ToggleSwitch Header="{shuxm:ResourceString Name=GlassPointerLighting}" IsOn="{x:Bind SelectedProfile.PointerLightingEnabled, Mode=TwoWay}"/>
                     <TextBlock Text="{shuxm:ResourceString Name=GlassPointerLightingDescription}" TextWrapping="Wrap"/>
                     <TextBlock Text="{shuxm:ResourceString Name=GlassPointerLightInfluence}"/>
                     <Slider
@@ -130,6 +129,11 @@
                                             VerticalAlignment="Center"
                                             Text="{x:Bind DisplayValue, Mode=OneWay}"/>
                                     </Grid>
+                                    <TextBlock
+                                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                        Text="{x:Bind ErrorMessage, Mode=OneWay}"
+                                        TextWrapping="Wrap"
+                                        Visibility="{x:Bind HasError, Mode=OneWay}"/>
                                     <StackPanel Orientation="Horizontal" Spacing="8">
                                         <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{shuxm:ResourceString Name=GlassDefaultValue}"/>
                                         <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind DefaultText}"/>

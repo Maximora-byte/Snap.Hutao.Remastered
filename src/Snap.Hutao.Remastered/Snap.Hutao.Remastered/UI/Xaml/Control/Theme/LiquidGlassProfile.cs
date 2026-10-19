@@ -4,15 +4,24 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Snap.Hutao.Remastered.Core.Setting;
 using Snap.Hutao.Remastered.Service;
+using System.Diagnostics;
 using System.Globalization;
 using WinUI.Composition.Hlsl;
 
 namespace Snap.Hutao.Remastered.UI.Xaml.Control.Theme;
 
+internal enum LiquidGlassApplyResult
+{
+    Applied,
+    Recovered,
+    Unsupported,
+}
+
 public sealed partial class LiquidGlassParameter : ObservableObject
 {
     private readonly LiquidGlassProfile profile;
     private readonly LiquidGlassDescriptor descriptor;
+    private string? errorMessage;
 
     internal LiquidGlassParameter(LiquidGlassProfile profile, LiquidGlassDescriptor descriptor, double defaultValue)
     {
@@ -32,8 +41,18 @@ public sealed partial class LiquidGlassParameter : ObservableObject
         get => profile.ReadOverride(Key);
         set
         {
-            if (!double.IsFinite(value) || value < Minimum || value > Maximum || value == Value) return;
-            profile.WriteOverride(this, value);
+            if (value == Value) return;
+            try
+            {
+                profile.WriteOverride(this, value);
+                SetError(null);
+            }
+            catch (ArgumentException exception)
+            {
+                Reject(exception);
+                LiquidGlassProfiles.ReportFailure(exception,
+                    FormattableString.Invariant($"Profile={profile.Key}; Parameter={Key}; RejectedInput={value:R}"));
+            }
             Refresh();
         }
     }
@@ -41,7 +60,23 @@ public sealed partial class LiquidGlassParameter : ObservableObject
     public string DisplayValue => Value.ToString("0.00", CultureInfo.CurrentCulture);
     public string DefaultText => DefaultValue.ToString("0.00", CultureInfo.CurrentCulture);
     public bool IsDefault => Value == DefaultValue;
-    public void Reset() => Value = DefaultValue;
+    public string? ErrorMessage => errorMessage;
+    public bool HasError => errorMessage is not null;
+    public void Reset()
+    {
+        SetError(null);
+        Value = DefaultValue;
+    }
+
+    internal void Reject(Exception exception) => SetError(exception.Message);
+
+    private void SetError(string? message)
+    {
+        if (errorMessage == message) return;
+        errorMessage = message;
+        OnPropertyChanged(nameof(ErrorMessage));
+        OnPropertyChanged(nameof(HasError));
+    }
 
     internal void Refresh()
     {
@@ -56,6 +91,8 @@ public sealed partial class LiquidGlassProfile : ObservableObject
     private const double DefaultSwitchScale = 0.7;
 
     private readonly LiquidGlassOverrideStore overrides;
+    private string persistedOverrides;
+    private bool initializing = true;
     private string StorageKey => "LiquidGlass.Profiles.v1." + Key;
 
     internal LiquidGlassProfile(string key)
@@ -63,9 +100,21 @@ public sealed partial class LiquidGlassProfile : ObservableObject
         Key = key;
         LiquidGlassBrush defaults = LiquidGlassOptics.Defaults(key);
         Parameters = LiquidGlassOptics.Descriptors.Select(d => new LiquidGlassParameter(this, d, d.Read(defaults))).ToArray();
-        overrides = new(LocalSetting.Get(StorageKey, "{}"),
+        persistedOverrides = LocalSetting.Get(StorageKey, "{}");
+        overrides = new(persistedOverrides,
             Parameters.Select(static parameter => new LiquidGlassParameterRange(
-                parameter.Key, parameter.Minimum, parameter.Maximum, parameter.DefaultValue)));
+                parameter.Key, parameter.Minimum, parameter.Maximum, parameter.DefaultValue)),
+            (exception, parameter, value) =>
+            {
+                Parameters.FirstOrDefault(item => item.Key == parameter)?.Reject(exception);
+                LiquidGlassProfiles.ReportFailure(exception,
+                    FormattableString.Invariant($"Profile={Key}; Parameter={parameter}; RejectedSavedValue={value:R}"));
+            });
+        // Establish the saved baseline through the real native setters before
+        // it can be used to recover a later edit. Do not commit from Apply itself.
+        Apply(defaults, LiquidGlassOptics.Capture(defaults));
+        initializing = false;
+        CommitChanges();
     }
 
     public string Key { get; }
@@ -130,13 +179,44 @@ public sealed partial class LiquidGlassProfile : ObservableObject
     internal double ReadOverride(string key) => overrides.Get(key);
     internal void WriteOverride(LiquidGlassParameter parameter, double value)
     {
-        if (overrides.TrySet(parameter.Key, value)) Save();
+        if (overrides.Stage(parameter.Key, value)) LiquidGlassProfiles.RefreshOptics();
     }
 
-    private void Save()
+    internal long Revision => overrides.Revision;
+
+    internal void ValidatePendingChanges()
     {
-        LocalSetting.Set(StorageKey, overrides.Serialize());
-        LiquidGlassProfiles.RefreshOptics();
+        if (!overrides.HasPendingChanges) return;
+        LiquidGlassBrush brush = LiquidGlassOptics.Defaults(Key);
+        if (Apply(brush, LiquidGlassOptics.Capture(brush)) == LiquidGlassApplyResult.Unsupported)
+            throw new InvalidOperationException("The liquid glass library rejected its own preset.");
+    }
+
+    internal void CommitChanges()
+    {
+        string serialized = overrides.Serialize();
+        if (serialized != persistedOverrides)
+        {
+            LocalSetting.Set(StorageKey, serialized);
+            persistedOverrides = serialized;
+        }
+
+        overrides.Commit();
+    }
+
+    private void PersistCommittedRecovery()
+    {
+        if (initializing) return;
+        string serialized = overrides.SerializeCommitted();
+        if (serialized == persistedOverrides) return;
+        LocalSetting.Set(StorageKey, serialized);
+        persistedOverrides = serialized;
+    }
+
+    internal void RollbackChanges()
+    {
+        overrides.Rollback();
+        foreach (LiquidGlassParameter parameter in Parameters) parameter.Refresh();
     }
 
     public void Reset()
@@ -145,21 +225,63 @@ public sealed partial class LiquidGlassProfile : ObservableObject
         PointerLightingEnabled = true;
         PointerLightInfluence = 1.0;
         overrides.Reset();
-        Save();
+        LiquidGlassProfiles.RefreshOptics();
         foreach (LiquidGlassParameter parameter in Parameters) parameter.Refresh();
     }
 
-    internal void Apply(LiquidGlassBrush brush, double[] defaults)
+    internal LiquidGlassApplyResult Apply(LiquidGlassBrush brush, double[] defaults)
     {
         // Restore only optical slots. The actual library control still owns
         // geometry, corner radius, DPI and interaction animation.
+        LiquidGlassApplyResult result = LiquidGlassApplyResult.Applied;
         for (int index = 0; index < LiquidGlassOptics.Descriptors.Length; index++)
         {
             LiquidGlassDescriptor descriptor = LiquidGlassOptics.Descriptors[index];
             LiquidGlassParameter parameter = Parameters[index];
-            double value = overrides.Get(descriptor.Key);
-            descriptor.Write(brush, value == parameter.DefaultValue ? defaults[index] : value);
+            long revision = overrides.Revision;
+            double cachedDefault = defaults[index];
+            LiquidGlassApplyResult parameterResult = ApplyParameter(brush, descriptor, parameter, cachedDefault);
+            if (parameterResult > result) result = parameterResult;
+            if (overrides.Revision != revision) parameter.Refresh();
         }
+
+        // A library that rejects even its own preset must leave this brush on fallback.
+        if (result == LiquidGlassApplyResult.Unsupported) brush.IsEnabled = false;
+        return result;
+    }
+
+    private LiquidGlassApplyResult ApplyParameter(LiquidGlassBrush brush, LiquidGlassDescriptor descriptor,
+        LiquidGlassParameter parameter, double cachedDefault)
+    {
+        double value = overrides.Get(descriptor.Key);
+        double effective = value == parameter.DefaultValue ? cachedDefault : value;
+        bool recovered = false;
+        for (int attempt = 0; attempt < 3; attempt++)
+        {
+            try
+            {
+                // Keep native validation intact. A rejected setter throws before
+                // changing its property; never clamp or replace the attempted value first.
+                descriptor.Write(brush, effective);
+                return recovered ? LiquidGlassApplyResult.Recovered : LiquidGlassApplyResult.Applied;
+            }
+            catch (Exception exception) when (exception.HResult == unchecked((int)0x80070057))
+            {
+                recovered = true;
+                parameter.Reject(exception);
+                LiquidGlassProfiles.ReportFailure(exception,
+                    FormattableString.Invariant($"Profile={Key}; Parameter={descriptor.Key}; RejectedValue={effective:R}; Override={value:R}; Preset={parameter.DefaultValue:R}; CachedDefault={cachedDefault:R}"));
+                if (value == parameter.DefaultValue && effective == parameter.DefaultValue)
+                    return LiquidGlassApplyResult.Unsupported;
+                overrides.RestoreRejected(descriptor.Key);
+                // Persist only the corrected baseline, never other pending edits.
+                PersistCommittedRecovery();
+                value = overrides.Get(descriptor.Key);
+                effective = value;
+            }
+        }
+
+        return LiquidGlassApplyResult.Unsupported;
     }
 
     internal void RefreshSelection()
@@ -213,10 +335,95 @@ public static class LiquidGlassProfiles
     {
         if (refreshPending || XamlApplicationLifetime.Exiting) return;
         refreshPending = true;
-        if (!MaterialBindingSource.Current.DispatcherQueue.TryEnqueue(() =>
+        try
+        {
+            if (MaterialBindingSource.Current.DispatcherQueue.TryEnqueue(RefreshOpticsCallback)) return;
+        }
+        catch (Exception exception)
+        {
+            ReportFailure(exception, "Enqueue optical refresh");
+        }
+
+        refreshPending = false;
+        RollbackChanges();
+    }
+
+    private static void RefreshOpticsCallback()
+    {
+        try
+        {
+            if (XamlApplicationLifetime.Exiting)
+            {
+                RollbackChanges();
+                return;
+            }
+
+            foreach (LiquidGlassProfile profile in All) profile.ValidatePendingChanges();
+            // Recovery can change a shared profile after an earlier brush was updated.
+            // Reapply until all brushes agree before persisting any remaining edits.
+            for (int attempt = 0; attempt < 3; attempt++)
+            {
+                long[] revisions = All.Select(static profile => profile.Revision).ToArray();
+                ControlMaterialState.RefreshManagedOptics();
+                if (!revisions.SequenceEqual(All.Select(static profile => profile.Revision))) continue;
+                foreach (LiquidGlassProfile profile in All) profile.CommitChanges();
+                return;
+            }
+
+            throw new InvalidOperationException("Liquid glass parameters did not stabilize after recovery.");
+        }
+        catch (Exception exception)
+        {
+            ReportFailure(exception, "Apply optical refresh");
+            RollbackChanges();
+            try
+            {
+                if (!XamlApplicationLifetime.Exiting) ControlMaterialState.RefreshManagedOptics();
+            }
+            catch (Exception recoveryException)
+            {
+                ReportFailure(recoveryException, "Restore optical refresh");
+            }
+        }
+        finally
         {
             refreshPending = false;
-            if (!XamlApplicationLifetime.Exiting) ControlMaterialState.RefreshManagedOptics();
-        })) refreshPending = false;
+        }
+    }
+
+    private static void RollbackChanges()
+    {
+        if (profiles is null) return;
+        foreach (LiquidGlassProfile profile in profiles)
+        {
+            try
+            {
+                profile.RollbackChanges();
+            }
+            catch (Exception exception)
+            {
+                ReportFailure(exception, "Rollback optical profile " + profile.Key);
+            }
+        }
+    }
+
+    internal static void ReportFailure(Exception exception, string context)
+    {
+        // Diagnostics are also inside the native callback boundary and must not throw.
+        try
+        {
+            Trace.TraceError($"Liquid glass failure: {context}; HRESULT={exception.HResult:X8}; {exception}");
+        }
+        catch (Exception)
+        {
+        }
+
+        try
+        {
+            SentrySdk.CaptureException(exception, scope => scope.SetExtra("LiquidGlass.Context", context));
+        }
+        catch (Exception)
+        {
+        }
     }
 }

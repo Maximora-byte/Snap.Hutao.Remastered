@@ -706,8 +706,8 @@ public sealed partial class ControlMaterialState : DependencyObject
         };
     }
 
-    private static void ApplyOptics(BrushDefaults defaults) =>
-        LiquidGlassProfiles.Get(defaults.Kind).Apply(defaults.Brush, defaults.Values);
+    private static bool ApplyOptics(BrushDefaults defaults) =>
+        LiquidGlassProfiles.Get(defaults.Kind).Apply(defaults.Brush, defaults.Values) != LiquidGlassApplyResult.Unsupported;
 
     private static void ApplyControlSettings(FrameworkElement element)
     {
@@ -735,11 +735,11 @@ public sealed partial class ControlMaterialState : DependencyObject
         MaterialTheme.Apply(currentMaterial);
     }
 
-    internal static void ConfigureSurface(LiquidGlassBrush brush)
+    internal static bool ConfigureSurface(LiquidGlassBrush brush)
     {
         BrushDefaults defaults = SurfaceDefaults.GetValue(brush, value =>
             new("Card", value, LiquidGlassOptics.Capture(LiquidGlassOptics.Defaults("Card"))));
-        ApplyOptics(defaults);
+        return ApplyOptics(defaults);
     }
 
     private sealed record BrushDefaults(string Kind, LiquidGlassBrush Brush, double[] Values);

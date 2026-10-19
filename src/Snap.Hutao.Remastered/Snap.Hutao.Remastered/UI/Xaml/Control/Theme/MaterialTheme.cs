@@ -68,8 +68,8 @@ public static class MaterialTheme
             {
                 if (variant.TryGetValue(key, out object? resource) && resource is LiquidGlassBrush brush)
                 {
-                    ControlMaterialState.ConfigureSurface(brush);
-                    brush.IsEnabled = material is ControlMaterial.LiquidGlass && LocalSetting.Get("LiquidGlass.CardEnabled", true);
+                    bool supported = ControlMaterialState.ConfigureSurface(brush);
+                    brush.IsEnabled = supported && material is ControlMaterial.LiquidGlass && LocalSetting.Get("LiquidGlass.CardEnabled", true);
                 }
             }
         }

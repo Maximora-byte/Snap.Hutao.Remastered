@@ -10,7 +10,6 @@
 
     <Style x:Key="DefaultSanctifyingElixirIconStyle" TargetType="shuxc:SanctifyingElixirIcon">
         <Setter Property="Height" Value="80"/>
-        <Setter Property="Width" Value="80"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="shuxc:SanctifyingElixirIcon">
@@ -24,6 +23,7 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Width" Value="80"/>
     </Style>
 
 </ResourceDictionary>
