@@ -5,13 +5,14 @@ using CommunityToolkit.WinUI.Collections;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Runtime.CompilerServices;
 
 namespace Snap.Hutao.Remastered.UI.Xaml.Data;
 
 // Compiled bindings inspect this declared type, not the runtime implementation.
 // CurrentItem/Count changes must expose the notification contract here as well.
-public interface IAdvancedCollectionView<T> : ICollectionView, INotifyPropertyChanged
+public interface IAdvancedCollectionView<T> : ICollectionView, INotifyPropertyChanged, INotifyCollectionChanged
     where T : class
 {
     object? ICollectionView.CurrentItem
@@ -28,6 +29,8 @@ public interface IAdvancedCollectionView<T> : ICollectionView, INotifyPropertyCh
     ObservableCollection<SortDescription> SortDescriptions { get; }
 
     IList<T> Source { get; set; }
+
+    int SourceCount { get; }
 
     IReadOnlyList<T> View { get; }
 
