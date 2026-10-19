@@ -35,19 +35,20 @@
                     <cwc:Case.Value>
                         <x:Int32>0</x:Int32>
                     </cwc:Case.Value>
-                    <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                    <ComboBox
                         x:Name="PresetComboBox"
+                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_1097}"
                         DataContext="{x:Bind GlassPresenter_1097.DataContext, Mode=OneWay}"
                         DisplayMemberPath="DisplayName"
                         Header="{shuxm:ResourceString Name=ViewDialogBackpackReliquaryScoreConfigPresetHeader}"
-                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_1097}"
                         SelectionChanged="OnPresetComboBoxSelectionChanged"/>
                 </cwc:Case>
                 <cwc:Case>
                     <cwc:Case.Value>
                         <x:Int32>1</x:Int32>
                     </cwc:Case.Value>
-                    <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                    <wl:LiquidGlassComboBox
                         x:Name="PresetComboBoxGlass"
                         Width="{x:Bind PresetComboBox.Width, Mode=OneWay}"
                         Height="{x:Bind PresetComboBox.Height, Mode=OneWay}"
@@ -56,6 +57,7 @@
                         MaxWidth="{x:Bind PresetComboBox.MaxWidth, Mode=OneWay}"
                         MaxHeight="{x:Bind PresetComboBox.MaxHeight, Mode=OneWay}"
                         Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(PresetComboBox.Padding), Mode=OneWay}"
+                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                         shuxcth:ControlMaterialState.IsManaged="True"
                         shuxcth:ControlMaterialState.NativeControl="{x:Bind PresetComboBox, Mode=OneWay}"
                         shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -120,12 +122,12 @@
                         </cwc:Case.Value>
                         <Button
                             x:Name="DeleteButton"
+                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_1699}"
                             Background="{ThemeResource SystemFillColorCriticalBrush}"
                             Click="OnDeleteConfigClick"
                             Content="{shuxm:ResourceString Name=ViewDialogBackpackReliquaryScoreConfigDeleteConfig}"
                             DataContext="{x:Bind GlassPresenter_1699.DataContext, Mode=OneWay}"
                             Foreground="White"
-                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_1699}"
                             Visibility="Collapsed"/>
                     </cwc:Case>
                     <cwc:Case>
@@ -176,9 +178,9 @@
                 </cwc:Case.Value>
                 <TextBox
                     x:Name="NameTextBox"
+                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_2141}"
                     DataContext="{x:Bind GlassPresenter_2141.DataContext, Mode=OneWay}"
                     Header="{shuxm:ResourceString Name=ViewDialogBackpackReliquaryScoreConfigNameHeader}"
-                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_2141}"
                     TextChanged="OnNameTextChanged"/>
             </cwc:Case>
             <cwc:Case>
@@ -207,7 +209,6 @@
                     FontWeight="{x:Bind NameTextBox.FontWeight, Mode=OneWay}"
                     Header="{x:Bind NameTextBox.Header, Mode=OneWay}"
                     HeaderTemplate="{x:Bind NameTextBox.HeaderTemplate, Mode=OneWay}"
-                    InputScope="{x:Bind NameTextBox.InputScope, Mode=OneWay}"
                     IsEnabled="{x:Bind NameTextBox.IsEnabled, Mode=OneWay}"
                     IsReadOnly="{x:Bind NameTextBox.IsReadOnly, Mode=OneWay}"
                     MaxLength="{x:Bind NameTextBox.MaxLength, Mode=OneWay}"
@@ -259,10 +260,10 @@
                     </cwc:Case.Value>
                     <Slider
                         x:Name="CritSlider"
+                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_3360}"
                         DataContext="{x:Bind GlassPresenter_3360.DataContext, Mode=OneWay}"
                         Maximum="1.0"
                         Minimum="0"
-                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_3360}"
                         StepFrequency="0.1"
                         ValueChanged="OnSliderValueChanged"/>
                 </cwc:Case>
@@ -332,10 +333,10 @@
                     </cwc:Case.Value>
                     <Slider
                         x:Name="CritHurtSlider"
+                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_4086}"
                         DataContext="{x:Bind GlassPresenter_4086.DataContext, Mode=OneWay}"
                         Maximum="1.0"
                         Minimum="0"
-                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_4086}"
                         StepFrequency="0.1"
                         ValueChanged="OnSliderValueChanged"/>
                 </cwc:Case>
@@ -405,10 +406,10 @@
                     </cwc:Case.Value>
                     <Slider
                         x:Name="AttackPercentSlider"
+                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_4820}"
                         DataContext="{x:Bind GlassPresenter_4820.DataContext, Mode=OneWay}"
                         Maximum="1.0"
                         Minimum="0"
-                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_4820}"
                         StepFrequency="0.1"
                         ValueChanged="OnSliderValueChanged"/>
                 </cwc:Case>
@@ -478,10 +479,10 @@
                     </cwc:Case.Value>
                     <Slider
                         x:Name="ChargeEfficiencySlider"
+                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_5565}"
                         DataContext="{x:Bind GlassPresenter_5565.DataContext, Mode=OneWay}"
                         Maximum="1.0"
                         Minimum="0"
-                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_5565}"
                         StepFrequency="0.1"
                         ValueChanged="OnSliderValueChanged"/>
                 </cwc:Case>
@@ -551,10 +552,10 @@
                     </cwc:Case.Value>
                     <Slider
                         x:Name="ElementalMasterySlider"
+                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_6316}"
                         DataContext="{x:Bind GlassPresenter_6316.DataContext, Mode=OneWay}"
                         Maximum="1.0"
                         Minimum="0"
-                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_6316}"
                         StepFrequency="0.1"
                         ValueChanged="OnSliderValueChanged"/>
                 </cwc:Case>
@@ -624,10 +625,10 @@
                     </cwc:Case.Value>
                     <Slider
                         x:Name="HpPercentSlider"
+                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_7061}"
                         DataContext="{x:Bind GlassPresenter_7061.DataContext, Mode=OneWay}"
                         Maximum="1.0"
                         Minimum="0"
-                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_7061}"
                         StepFrequency="0.1"
                         ValueChanged="OnSliderValueChanged"/>
                 </cwc:Case>
@@ -697,10 +698,10 @@
                     </cwc:Case.Value>
                     <Slider
                         x:Name="DefensePercentSlider"
+                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_7798}"
                         DataContext="{x:Bind GlassPresenter_7798.DataContext, Mode=OneWay}"
                         Maximum="1.0"
                         Minimum="0"
-                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_7798}"
                         StepFrequency="0.1"
                         ValueChanged="OnSliderValueChanged"/>
                 </cwc:Case>

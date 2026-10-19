@@ -35,11 +35,11 @@
                 </cwc:Case.Value>
                 <TextBox
                     x:Name="UserNameTextBox"
+                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_1035}"
                     DataContext="{x:Bind GlassPresenter_1035.DataContext, Mode=OneWay}"
                     InputScope="EmailSmtpAddress"
                     IsSpellCheckEnabled="False"
                     PlaceholderText="{shuxm:ResourceString Name=ViewPageHutaoPassportUserNameHint}"
-                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_1035}"
                     Text="{x:Bind UserName, Mode=TwoWay}"/>
             </cwc:Case>
             <cwc:Case>
@@ -68,7 +68,7 @@
                     FontWeight="{x:Bind UserNameTextBox.FontWeight, Mode=OneWay}"
                     Header="{x:Bind UserNameTextBox.Header, Mode=OneWay}"
                     HeaderTemplate="{x:Bind UserNameTextBox.HeaderTemplate, Mode=OneWay}"
-                    InputScope="{x:Bind UserNameTextBox.InputScope, Mode=OneWay}"
+                    InputScope="EmailSmtpAddress"
                     IsEnabled="{x:Bind UserNameTextBox.IsEnabled, Mode=OneWay}"
                     IsReadOnly="{x:Bind UserNameTextBox.IsReadOnly, Mode=OneWay}"
                     IsSpellCheckEnabled="False"
@@ -154,12 +154,12 @@
                     </cwc:Case.Value>
                     <PasswordBox
                         x:Name="GlassNative_2155"
+                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_2155}"
                         DataContext="{x:Bind GlassPresenter_2155.DataContext, Mode=OneWay}"
                         IsEnabled="{x:Bind VerifyCode, Converter={StaticResource EmptyStringToBoolConverter}, Mode=OneWay}"
                         Password="{x:Bind Password, Mode=TwoWay}"
                         PasswordChar="*"
-                        PlaceholderText="{shuxm:ResourceString Name=ViewPageHutaoPassportPasswordHint}"
-                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_2155}"/>
+                        PlaceholderText="{shuxm:ResourceString Name=ViewPageHutaoPassportPasswordHint}"/>
                 </cwc:Case>
                 <cwc:Case>
                     <cwc:Case.Value>

@@ -373,13 +373,13 @@
     <PackageReference Include="CommunityToolkit.Labs.WinUI.TransitionHelper" Version="0.1.260915-build.2673" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
     <PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.3.260804-build.1839" />
-    <PackageReference Include="CommunityToolkit.WinUI.Collections" Version="8.2.251219" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.HeaderedControls" Version="8.2.251219" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.251219" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.251219" />
-    <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.251219" />
+    <PackageReference Include="CommunityToolkit.WinUI.Collections" Version="8.3.260804-build.1839" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.HeaderedControls" Version="8.3.260804-build.1839" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.3.260804-build.1839" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.3.260804-build.1839" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.3.260804-build.1839" />
     <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.3.260804-build.1839" />
-    <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.251219" />
+    <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.3.260804-build.1839" />
     <PackageReference Include="DevWinUI" Version="10.8.0" />
     <PackageReference Include="Google.Protobuf" Version="3.36.2" />
     <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" />
@@ -409,7 +409,8 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.29648.1000-preview" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.5.4-experimental" />
     <PackageReference Include="QRCoder" Version="1.8.1" />
-    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="4.5.1" />
+    <PackageReference Include="Quartz" Version="4.6.0" />
+    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="4.6.0" />
     <PackageReference Include="Sentry.Extensions.Logging" Version="6.12.1" />
     <PackageReference Include="Snap.HPatch" Version="0.0.2">
       <PrivateAssets>all</PrivateAssets>

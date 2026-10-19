@@ -44,10 +44,10 @@
                             x:Name="GlassPresenter_1296_State"
                             Width="48"
                             MinWidth="0"
+                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_1296}"
                             CornerRadius="4,0,0,4"
                             DataContext="{x:Bind GlassPresenter_1296.DataContext, Mode=OneWay}"
                             IsEnabled="False"
-                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_1296}"
                             Style="{StaticResource DefaultTextBoxStyle}"
                             Text="+86"/>
                     </cwc:Case>
@@ -78,7 +78,6 @@
                             FontWeight="{x:Bind GlassPresenter_1296_State.FontWeight, Mode=OneWay}"
                             Header="{x:Bind GlassPresenter_1296_State.Header, Mode=OneWay}"
                             HeaderTemplate="{x:Bind GlassPresenter_1296_State.HeaderTemplate, Mode=OneWay}"
-                            InputScope="{x:Bind GlassPresenter_1296_State.InputScope, Mode=OneWay}"
                             IsEnabled="{x:Bind GlassPresenter_1296_State.IsEnabled, Mode=OneWay}"
                             IsReadOnly="{x:Bind GlassPresenter_1296_State.IsReadOnly, Mode=OneWay}"
                             MaxLength="{x:Bind GlassPresenter_1296_State.MaxLength, Mode=OneWay}"
@@ -168,13 +167,13 @@
                 </cwc:Case.Value>
                 <PasswordBox
                     x:Name="GlassNative_2301"
+                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_2301}"
                     DataContext="{x:Bind GlassPresenter_2301.DataContext, Mode=OneWay}"
                     KeyDown="OnTextKeyDown"
                     KeyUp="OnTextKeyUp"
                     Password="{x:Bind Captcha, Mode=TwoWay}"
                     PasswordChar="*"
-                    PlaceholderText="{shuxm:ResourceString Name=ViewDialogUserMobileCaptchaCaptchaHint}"
-                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_2301}"/>
+                    PlaceholderText="{shuxm:ResourceString Name=ViewDialogUserMobileCaptchaCaptchaHint}"/>
             </cwc:Case>
             <cwc:Case>
                 <cwc:Case.Value>
