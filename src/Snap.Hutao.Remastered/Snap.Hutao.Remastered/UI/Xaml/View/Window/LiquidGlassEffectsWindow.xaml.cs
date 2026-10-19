@@ -1,6 +1,7 @@
 // Copyright (c) Millennium-Science-Technology-R-D-Inst. All rights reserved.
 // Licensed under the MIT license.
 
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Snap.Hutao.Remastered.UI.Windowing;
@@ -19,6 +20,13 @@ public sealed partial class LiquidGlassEffectsWindow : Microsoft.UI.Xaml.Window,
     public LiquidGlassEffectsWindow(IServiceProvider serviceProvider)
     {
         InitializeComponent();
+        if (AppWindow.Presenter is OverlappedPresenter presenter)
+        {
+            SizeInt32 minSize = ScaledSizeInt32.CreateForWindow(500, 350, this);
+            presenter.PreferredMinimumWidth = minSize.Width;
+            presenter.PreferredMinimumHeight = minSize.Height;
+        }
+
         IServiceScope scope = serviceProvider.CreateScope();
         this.InitializeController(scope.ServiceProvider);
         Title = LiquidGlassOptics.Text("LiquidGlassEffectsWindowTitle", "Liquid glass effects");

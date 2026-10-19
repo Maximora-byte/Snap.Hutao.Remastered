@@ -254,7 +254,7 @@
                                     Description="{shuxm:ResourceString Name=ViewPageSettingAutoStartDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingAutoStartHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE7E8;}"
-                                    IsEnabled="{shuxm:IsProcessElevated}">
+                                    IsEnabled="{x:Bind ((shvs:SettingViewModel)DataContext).IsStartupSettingsEnabled, Mode=OneWay}">
                                     <cwc:SettingsExpander.Items>
                                         <cwc:SettingsCard
                                             Header="{shuxm:ResourceString Name=ViewPageSettingAutoStartEnableCardHeader}"
@@ -570,7 +570,7 @@
                                     Description="{shuxm:ResourceString Name=ViewPageSettingAutoStartDescription}"
                                     Header="{shuxm:ResourceString Name=ViewPageSettingAutoStartHeader}"
                                     HeaderIcon="{shuxm:FontIcon Glyph=&#xE7E8;}"
-                                    IsEnabled="{shuxm:IsProcessElevated}"
+                                    IsEnabled="{x:Bind ((shvs:SettingViewModel)DataContext).IsStartupSettingsEnabled, Mode=OneWay}"
                                     IsExpanded="True">
                                     <cwc:SettingsExpander.Items>
                                         <!--  当前用户自启动  -->
@@ -686,19 +686,20 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_23859_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_23859}"
                                                     DataContext="{x:Bind GlassPresenter_23859.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind shs:CultureOptions.Cultures}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_23859}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedCulture, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_23859_StateGlass"
                                                     Width="{x:Bind GlassPresenter_23859_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_23859_State.Height, Mode=OneWay}"
@@ -707,6 +708,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_23859_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_23859_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_23859_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_23859_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -748,19 +750,20 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_24747_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_24747}"
                                                     DataContext="{x:Bind GlassPresenter_24747.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.CultureOptions.DayOfWeeks, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_24747}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedFirstDayOfWeek, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_24747_StateGlass"
                                                     Width="{x:Bind GlassPresenter_24747_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_24747_State.Height, Mode=OneWay}"
@@ -769,6 +772,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_24747_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_24747_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_24747_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_24747_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -810,20 +814,21 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_25630_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_25630}"
                                                     DataContext="{x:Bind GlassPresenter_25630.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     IsEnabled="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.IsBackdropSelectionEnabled, Mode=OneWay}"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.BackdropTypes, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_25630}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedBackdropType, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_25630_StateGlass"
                                                     Width="{x:Bind GlassPresenter_25630_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_25630_State.Height, Mode=OneWay}"
@@ -832,6 +837,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_25630_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_25630_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_25630_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_25630_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -873,19 +879,20 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_26488_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_26488}"
                                                     DataContext="{x:Bind GlassPresenter_26488.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.LazyElementThemes.Value, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_26488}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedElementTheme, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_26488_StateGlass"
                                                     Width="{x:Bind GlassPresenter_26488_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_26488_State.Height, Mode=OneWay}"
@@ -894,6 +901,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_26488_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_26488_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_26488_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_26488_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -925,13 +933,15 @@
                                     <shuxc:SizeRestrictedContentControl>
                                         <cwc:SwitchPresenter Value="{x:Bind shuxcth:MaterialBindingSource.Current.ComboBoxMaterial, Mode=OneWay}">
                                             <cwc:Case Value="{shuxm:Int32 Value=0}">
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.ControlMaterials, Mode=OneWay}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedControlMaterial, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case Value="{shuxm:Int32 Value=1}">
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.ControlMaterials, Mode=OneWay}"
@@ -970,19 +980,20 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_36087_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_36087}"
                                                     DataContext="{x:Bind GlassPresenter_36087.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.BackgroundImageTypes, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_36087}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedBackgroundImageType, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_36087_StateGlass"
                                                     Width="{x:Bind GlassPresenter_36087_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_36087_State.Height, Mode=OneWay}"
@@ -991,6 +1002,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_36087_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_36087_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_36087_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_36087_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -1058,19 +1070,20 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_39530_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_39530}"
                                                     DataContext="{x:Bind GlassPresenter_39530.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.BackgroundMediaTypes, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_39530}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedBackgroundMediaType, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_39530_StateGlass"
                                                     Width="{x:Bind GlassPresenter_39530_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_39530_State.Height, Mode=OneWay}"
@@ -1079,6 +1092,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_39530_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_39530_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_39530_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_39530_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -1180,19 +1194,20 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_42518_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_42518}"
                                                     DataContext="{x:Bind GlassPresenter_42518.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.AppOptions.LastWindowCloseBehaviors, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_42518}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Appearance.SelectedLastWindowCloseBehavior, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_42518_StateGlass"
                                                     Width="{x:Bind GlassPresenter_42518_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_42518_State.Height, Mode=OneWay}"
@@ -1201,6 +1216,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_42518_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_42518_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_42518_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_42518_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -1277,19 +1293,20 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_44665_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_44665}"
                                                     DataContext="{x:Bind GlassPresenter_44665.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).AppOptions.ServerDomainModes, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_44665}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).SelectedServerDomainMode, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_44665_StateGlass"
                                                     Width="{x:Bind GlassPresenter_44665_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_44665_State.Height, Mode=OneWay}"
@@ -1298,6 +1315,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_44665_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_44665_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_44665_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_44665_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -1566,10 +1584,10 @@
                                                                             x:Name="GlassPresenter_55151_State"
                                                                             MinWidth="64"
                                                                             VerticalAlignment="Center"
+                                                                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_55151}"
                                                                             Content="Win"
                                                                             DataContext="{x:Bind GlassPresenter_55151.DataContext, Mode=OneWay}"
-                                                                            IsEnabled="False"
-                                                                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_55151}"/>
+                                                                            IsEnabled="False"/>
                                                                     </cwc:Case>
                                                                     <cwc:Case>
                                                                         <cwc:Case.Value>
@@ -1733,10 +1751,10 @@
                                                                             x:Name="GlassPresenter_55151Glass_State"
                                                                             MinWidth="64"
                                                                             VerticalAlignment="Center"
+                                                                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_55151Glass}"
                                                                             Content="Win"
                                                                             DataContext="{x:Bind GlassPresenter_55151Glass.DataContext, Mode=OneWay}"
-                                                                            IsEnabled="False"
-                                                                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_55151Glass}"/>
+                                                                            IsEnabled="False"/>
                                                                     </cwc:Case>
                                                                     <cwc:Case>
                                                                         <cwc:Case.Value>
@@ -1878,21 +1896,22 @@
                                                     <cwc:Case.Value>
                                                         <x:Int32>0</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <ComboBox
                                                         x:Name="GlassPresenter_57268_State"
                                                         MinWidth="120"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_57268}"
                                                         DataContext="{x:Bind GlassPresenter_57268.DataContext, Mode=OneWay}"
                                                         DisplayMemberPath="Name"
                                                         ItemsSource="{x:Bind shuih:HotKeyOptions.VirtualKeys}"
-                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_57268}"
                                                         SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.MouseClickRepeatForeverKeyCombination.KeyNameValue, Mode=TwoWay}"/>
                                                 </cwc:Case>
                                                 <cwc:Case>
                                                     <cwc:Case.Value>
                                                         <x:Int32>1</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <wl:LiquidGlassComboBox
                                                         x:Name="GlassPresenter_57268_StateGlass"
                                                         Width="{x:Bind GlassPresenter_57268_State.Width, Mode=OneWay}"
                                                         Height="{x:Bind GlassPresenter_57268_State.Height, Mode=OneWay}"
@@ -1902,6 +1921,7 @@
                                                         MaxHeight="{x:Bind GlassPresenter_57268_State.MaxHeight, Mode=OneWay}"
                                                         Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_57268_State.Padding), Mode=OneWay}"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_57268_State, Mode=OneWay}"
                                                         shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -2006,10 +2026,10 @@
                                                                             x:Name="GlassPresenter_60093_State"
                                                                             MinWidth="64"
                                                                             VerticalAlignment="Center"
+                                                                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_60093}"
                                                                             Content="Win"
                                                                             DataContext="{x:Bind GlassPresenter_60093.DataContext, Mode=OneWay}"
-                                                                            IsEnabled="False"
-                                                                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_60093}"/>
+                                                                            IsEnabled="False"/>
                                                                     </cwc:Case>
                                                                     <cwc:Case>
                                                                         <cwc:Case.Value>
@@ -2173,10 +2193,10 @@
                                                                             x:Name="GlassPresenter_60093Glass_State"
                                                                             MinWidth="64"
                                                                             VerticalAlignment="Center"
+                                                                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_60093Glass}"
                                                                             Content="Win"
                                                                             DataContext="{x:Bind GlassPresenter_60093Glass.DataContext, Mode=OneWay}"
-                                                                            IsEnabled="False"
-                                                                            shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_60093Glass}"/>
+                                                                            IsEnabled="False"/>
                                                                     </cwc:Case>
                                                                     <cwc:Case>
                                                                         <cwc:Case.Value>
@@ -2318,21 +2338,22 @@
                                                     <cwc:Case.Value>
                                                         <x:Int32>0</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <ComboBox
                                                         x:Name="GlassPresenter_62204_State"
                                                         MinWidth="120"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_62204}"
                                                         DataContext="{x:Bind GlassPresenter_62204.DataContext, Mode=OneWay}"
                                                         DisplayMemberPath="Name"
                                                         ItemsSource="{x:Bind shuih:HotKeyOptions.VirtualKeys}"
-                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_62204}"
                                                         SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.HotKeyOptions.KeyPressRepeatForeverKeyCombination.KeyNameValue, Mode=TwoWay}"/>
                                                 </cwc:Case>
                                                 <cwc:Case>
                                                     <cwc:Case.Value>
                                                         <x:Int32>1</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <wl:LiquidGlassComboBox
                                                         x:Name="GlassPresenter_62204_StateGlass"
                                                         Width="{x:Bind GlassPresenter_62204_State.Width, Mode=OneWay}"
                                                         Height="{x:Bind GlassPresenter_62204_State.Height, Mode=OneWay}"
@@ -2342,6 +2363,7 @@
                                                         MaxHeight="{x:Bind GlassPresenter_62204_State.MaxHeight, Mode=OneWay}"
                                                         Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_62204_State.Padding), Mode=OneWay}"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_62204_State, Mode=OneWay}"
                                                         shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -2425,21 +2447,22 @@
                                                     <cwc:Case.Value>
                                                         <x:Int32>0</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <ComboBox
                                                         x:Name="GlassPresenter_64634_State"
                                                         MinWidth="120"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_64634}"
                                                         DataContext="{x:Bind GlassPresenter_64634.DataContext, Mode=OneWay}"
                                                         DisplayMemberPath="Name"
                                                         ItemsSource="{x:Bind shuil:LowLevelKeyOptions.VirtualKeys}"
-                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_64634}"
                                                         SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.LowLevelKeyOptions.WebView2VideoPlayPauseKey, Mode=TwoWay}"/>
                                                 </cwc:Case>
                                                 <cwc:Case>
                                                     <cwc:Case.Value>
                                                         <x:Int32>1</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <wl:LiquidGlassComboBox
                                                         x:Name="GlassPresenter_64634_StateGlass"
                                                         Width="{x:Bind GlassPresenter_64634_State.Width, Mode=OneWay}"
                                                         Height="{x:Bind GlassPresenter_64634_State.Height, Mode=OneWay}"
@@ -2449,6 +2472,7 @@
                                                         MaxHeight="{x:Bind GlassPresenter_64634_State.MaxHeight, Mode=OneWay}"
                                                         Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_64634_State.Padding), Mode=OneWay}"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_64634_State, Mode=OneWay}"
                                                         shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -2513,21 +2537,22 @@
                                                     <cwc:Case.Value>
                                                         <x:Int32>0</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <ComboBox
                                                         x:Name="GlassPresenter_67550_State"
                                                         MinWidth="120"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_67550}"
                                                         DataContext="{x:Bind GlassPresenter_67550.DataContext, Mode=OneWay}"
                                                         DisplayMemberPath="Name"
                                                         ItemsSource="{x:Bind shuil:LowLevelKeyOptions.VirtualKeys}"
-                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_67550}"
                                                         SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.LowLevelKeyOptions.WebView2VideoFastForwardKey, Mode=TwoWay}"/>
                                                 </cwc:Case>
                                                 <cwc:Case>
                                                     <cwc:Case.Value>
                                                         <x:Int32>1</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <wl:LiquidGlassComboBox
                                                         x:Name="GlassPresenter_67550_StateGlass"
                                                         Width="{x:Bind GlassPresenter_67550_State.Width, Mode=OneWay}"
                                                         Height="{x:Bind GlassPresenter_67550_State.Height, Mode=OneWay}"
@@ -2537,6 +2562,7 @@
                                                         MaxHeight="{x:Bind GlassPresenter_67550_State.MaxHeight, Mode=OneWay}"
                                                         Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_67550_State.Padding), Mode=OneWay}"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_67550_State, Mode=OneWay}"
                                                         shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -2583,21 +2609,22 @@
                                                     <cwc:Case.Value>
                                                         <x:Int32>0</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <ComboBox
                                                         x:Name="GlassPresenter_69008_State"
                                                         MinWidth="120"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_69008}"
                                                         DataContext="{x:Bind GlassPresenter_69008.DataContext, Mode=OneWay}"
                                                         DisplayMemberPath="Name"
                                                         ItemsSource="{x:Bind shuil:LowLevelKeyOptions.VirtualKeys}"
-                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_69008}"
                                                         SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.LowLevelKeyOptions.WebView2VideoRewindKey, Mode=TwoWay}"/>
                                                 </cwc:Case>
                                                 <cwc:Case>
                                                     <cwc:Case.Value>
                                                         <x:Int32>1</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <wl:LiquidGlassComboBox
                                                         x:Name="GlassPresenter_69008_StateGlass"
                                                         Width="{x:Bind GlassPresenter_69008_State.Width, Mode=OneWay}"
                                                         Height="{x:Bind GlassPresenter_69008_State.Height, Mode=OneWay}"
@@ -2607,6 +2634,7 @@
                                                         MaxHeight="{x:Bind GlassPresenter_69008_State.MaxHeight, Mode=OneWay}"
                                                         Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_69008_State.Padding), Mode=OneWay}"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_69008_State, Mode=OneWay}"
                                                         shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -2653,21 +2681,22 @@
                                                     <cwc:Case.Value>
                                                         <x:Int32>0</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <ComboBox
                                                         x:Name="GlassPresenter_70447_State"
                                                         MinWidth="120"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_70447}"
                                                         DataContext="{x:Bind GlassPresenter_70447.DataContext, Mode=OneWay}"
                                                         DisplayMemberPath="Name"
                                                         ItemsSource="{x:Bind shuil:LowLevelKeyOptions.VirtualKeys}"
-                                                        shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_70447}"
                                                         SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.LowLevelKeyOptions.WebView2HideKey, Mode=TwoWay}"/>
                                                 </cwc:Case>
                                                 <cwc:Case>
                                                     <cwc:Case.Value>
                                                         <x:Int32>1</x:Int32>
                                                     </cwc:Case.Value>
-                                                    <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    <wl:LiquidGlassComboBox
                                                         x:Name="GlassPresenter_70447_StateGlass"
                                                         Width="{x:Bind GlassPresenter_70447_State.Width, Mode=OneWay}"
                                                         Height="{x:Bind GlassPresenter_70447_State.Height, Mode=OneWay}"
@@ -2677,6 +2706,7 @@
                                                         MaxHeight="{x:Bind GlassPresenter_70447_State.MaxHeight, Mode=OneWay}"
                                                         Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_70447_State.Padding), Mode=OneWay}"
                                                         VerticalAlignment="Center"
+                                                        shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                         shuxcth:ControlMaterialState.IsManaged="True"
                                                         shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_70447_State, Mode=OneWay}"
                                                         shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -2806,19 +2836,20 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_76282_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_76282}"
                                                     DataContext="{x:Bind GlassPresenter_76282.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Home.AppOptions.LazyCalendarServerTimeZoneOffsets.Value, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_76282}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Home.SelectedCalendarServerTimeZoneOffset, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_76282_StateGlass"
                                                     Width="{x:Bind GlassPresenter_76282_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_76282_State.Height, Mode=OneWay}"
@@ -2827,6 +2858,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_76282_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_76282_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_76282_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_76282_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -2868,19 +2900,20 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_77216_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_77216}"
                                                     DataContext="{x:Bind GlassPresenter_77216.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).Home.AppOptions.LazyRegions.Value, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_77216}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).Home.SelectedRegion, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_77216_StateGlass"
                                                     Width="{x:Bind GlassPresenter_77216_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_77216_State.Height, Mode=OneWay}"
@@ -2889,6 +2922,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_77216_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_77216_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_77216_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_77216_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -3238,12 +3272,13 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_87865_State"
                                                     MinWidth="100"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_87865}"
                                                     DataContext="{x:Bind GlassPresenter_87865.DataContext, Mode=OneWay}"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).GachaLog.UIGFVersions, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_87865}"
                                                     SelectedIndex="{x:Bind ((shvs:SettingViewModel)DataContext).GachaLog.SelectedUIGFVersionIndex, Mode=TwoWay}">
                                                     <ComboBox.ItemTemplate>
                                                         <DataTemplate x:DataType="shsu:UIGFVersion">
@@ -3256,7 +3291,7 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_87865_StateGlass"
                                                     Width="{x:Bind GlassPresenter_87865_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_87865_State.Height, Mode=OneWay}"
@@ -3265,6 +3300,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_87865_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_87865_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_87865_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_87865_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
@@ -3375,19 +3411,20 @@
                                                 <cwc:Case.Value>
                                                     <x:Int32>0</x:Int32>
                                                 </cwc:Case.Value>
-                                                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <ComboBox
                                                     x:Name="GlassPresenter_90428_State"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_90428}"
                                                     DataContext="{x:Bind GlassPresenter_90428.DataContext, Mode=OneWay}"
                                                     DisplayMemberPath="Name"
                                                     ItemsSource="{x:Bind ((shvs:SettingViewModel)DataContext).WebView.AppOptions.BridgeShareSaveTypes, Mode=OneWay}"
-                                                    shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_90428}"
                                                     SelectedItem="{x:Bind ((shvs:SettingViewModel)DataContext).WebView.SelectedShareSaveType, Mode=TwoWay}"/>
                                             </cwc:Case>
                                             <cwc:Case>
                                                 <cwc:Case.Value>
                                                     <x:Int32>1</x:Int32>
                                                 </cwc:Case.Value>
-                                                <wl:LiquidGlassComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                                                <wl:LiquidGlassComboBox
                                                     x:Name="GlassPresenter_90428_StateGlass"
                                                     Width="{x:Bind GlassPresenter_90428_State.Width, Mode=OneWay}"
                                                     Height="{x:Bind GlassPresenter_90428_State.Height, Mode=OneWay}"
@@ -3396,6 +3433,7 @@
                                                     MaxWidth="{x:Bind GlassPresenter_90428_State.MaxWidth, Mode=OneWay}"
                                                     MaxHeight="{x:Bind GlassPresenter_90428_State.MaxHeight, Mode=OneWay}"
                                                     Padding="{x:Bind shuxcth:ControlMaterialState.ComboBoxPadding(GlassPresenter_90428_State.Padding), Mode=OneWay}"
+                                                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                                                     shuxcth:ControlMaterialState.IsManaged="True"
                                                     shuxcth:ControlMaterialState.NativeControl="{x:Bind GlassPresenter_90428_State, Mode=OneWay}"
                                                     shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"

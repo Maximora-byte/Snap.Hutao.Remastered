@@ -23,8 +23,9 @@
             Margin="24,12,24,16"
             Spacing="12">
             <TextBlock Text="{shuxm:ResourceString Name=GlassControlsIntro}" TextWrapping="Wrap"/>
-            <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+            <ComboBox
                 MinWidth="220"
+                shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                 SelectedIndex="{x:Bind Settings.Value, Mode=OneWay}"
                 SelectionChanged="MaterialChanged">
                 <ComboBoxItem Content="{shuxm:ResourceString Name=GlassNativeMaterial}"/>
@@ -52,9 +53,10 @@
             </ScrollViewer>
             <StackPanel Grid.Column="1" Spacing="12">
                 <TextBlock Style="{ThemeResource SubtitleTextBlockStyle}" Text="{shuxm:ResourceString Name=GlassPreviewHeading}"/>
-                <ComboBox shuxcth:ComboBoxPopupLifetime.IsManaged="True"
+                <ComboBox
                     x:Name="TypeSelector"
                     MinWidth="230"
+                    shuxcth:ComboBoxPopupLifetime.IsManaged="True"
                     ItemsSource="{x:Bind Profiles}"
                     Loaded="SelectorLoaded"
                     SelectionChanged="TypeChanged">
