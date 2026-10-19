@@ -3935,6 +3935,12 @@ Space Available: {2}</value>
   <data name="ViewTitleUpdatePackageAvailableTitle" xml:space="preserve">
     <value>Snap Hutao {0} is now available</value>
   </data>
+  <data name="ViewTitleUpdatePackageSkipVersionButtonText" xml:space="preserve">
+    <value>Skip this version</value>
+  </data>
+  <data name="ViewTitleUpdatePackageSkipVersionInfoBarMessage" xml:space="preserve">
+    <value>Version {0} has been skipped. It will no longer be prompted automatically on startup, but you can still check for updates manually in Settings</value>
+  </data>
   <data name="ViewToolHeader" xml:space="preserve">
     <value>Tools</value>
   </data>
@@ -4330,6 +4336,12 @@ Space Available: {2}</value>
   </data>
   <data name="ViewPageLaunchGameIslandFastSkipTalkDescription" xml:space="preserve">
     <value>Remove the cooldown after skipping dialogue</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineHeader" xml:space="preserve">
+    <value>Catherine Redirect</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineDescription" xml:space="preserve">
+    <value>Change the Catherine entry for Daily Commissions in the Adventurer Handbook to directly open Catherine's commission reward confirmation dialog</value>
   </data>
   <data name="ViewDialogFastSkipTalkConfirmTitle" xml:space="preserve">
     <value>Remove Dialogue Skip Cooldown</value>
@@ -5439,6 +5451,12 @@ Space Available: {2}</value>
   <data name="GlassProfileTabBar" xml:space="preserve">
     <value>Tab Bar</value>
   </data>
+  <data name="GlassParameterSwitchScale" xml:space="preserve">
+    <value>Switch size scale</value>
+  </data>
+  <data name="GlassParameterSwitchScaleDescription" xml:space="preserve">
+    <value>Proportionally adjusts the size of the switch graphic without changing the font size. Changes take effect immediately.</value>
+  </data>
   <data name="GlassParameterBlurRadius" xml:space="preserve">
     <value>Blur radius</value>
   </data>
@@ -5561,5 +5579,23 @@ Space Available: {2}</value>
   </data>
   <data name="RepositoryServerReconnecting" xml:space="preserve">
     <value>Offline Mode · Reconnecting</value>
+  </data>
+  <data name="ViewModelGuideResourceDownloadIncomplete" xml:space="preserve">
+    <value>Some image resources failed to download. Please retry or choose to skip the download.</value>
+  </data>
+  <data name="ServiceAchievementImportSummary" xml:space="preserve">
+    <value>The current save has completed {0} achievements. Import record (including incomplete or unlisted items): added {1}, updated {2}, removed {3}.</value>
+  </data>
+  <data name="GlassParameterLightAngle" xml:space="preserve">
+    <value>Static light source angle (radians)</value>
+  </data>
+  <data name="GlassPointerLighting" xml:space="preserve">
+    <value>Highlight direction follows mouse</value>
+  </data>
+  <data name="GlassPointerLightingDescription" xml:space="preserve">
+    <value>Controls the light direction of the glass edge highlight. Highlight intensity controls brightness, and highlight saturation controls color; a follow level of 0 keeps the static light source direction, while 1 fully follows the mouse. The glass's own local interaction highlight is still preserved.</value>
+  </data>
+  <data name="GlassPointerLightInfluence" xml:space="preserve">
+    <value>Light follow level</value>
   </data>
 </root>

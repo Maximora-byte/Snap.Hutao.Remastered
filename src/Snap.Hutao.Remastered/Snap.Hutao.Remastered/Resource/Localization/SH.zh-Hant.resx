@@ -3936,6 +3936,12 @@
   <data name="ViewTitleUpdatePackageAvailableTitle" xml:space="preserve">
     <value>胡桃 {0} 版本現已可用</value>
   </data>
+  <data name="ViewTitleUpdatePackageSkipVersionButtonText" xml:space="preserve">
+    <value>跳過此版本</value>
+  </data>
+  <data name="ViewTitleUpdatePackageSkipVersionInfoBarMessage" xml:space="preserve">
+    <value>已跳過版本 {0}，啟動時將不再自動提示該版本，你仍可在設定中手動檢查更新</value>
+  </data>
   <data name="ViewToolHeader" xml:space="preserve">
     <value>工具</value>
   </data>
@@ -4331,6 +4337,12 @@
   </data>
   <data name="ViewPageLaunchGameIslandFastSkipTalkDescription" xml:space="preserve">
     <value>移除對話跳過後的冷卻時間</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineHeader" xml:space="preserve">
+    <value>凱瑟琳重新導向</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineDescription" xml:space="preserve">
+    <value>把冒險之證中跳轉凱瑟琳的每日委託入口，改為直接開啟凱瑟琳的委託獎勵確認彈窗</value>
   </data>
   <data name="ViewDialogFastSkipTalkConfirmTitle" xml:space="preserve">
     <value>移除對話跳過冷卻</value>
@@ -5440,6 +5452,12 @@
   <data name="GlassProfileTabBar" xml:space="preserve">
     <value>標籤列</value>
   </data>
+  <data name="GlassParameterSwitchScale" xml:space="preserve">
+    <value>開關大小比例</value>
+  </data>
+  <data name="GlassParameterSwitchScaleDescription" xml:space="preserve">
+    <value>等比例調整開關圖形大小，不改變文字字號。修改立即生效。</value>
+  </data>
   <data name="GlassParameterBlurRadius" xml:space="preserve">
     <value>模糊半徑</value>
   </data>
@@ -5562,5 +5580,23 @@
   </data>
   <data name="RepositoryServerReconnecting" xml:space="preserve">
     <value>離線模式 · 正在重新連線</value>
+  </data>
+  <data name="ViewModelGuideResourceDownloadIncomplete" xml:space="preserve">
+    <value>部分圖片資源未下載成功，請重試或選擇跳過下載。</value>
+  </data>
+  <data name="ServiceAchievementImportSummary" xml:space="preserve">
+    <value>目前存檔已完成 {0} 項成就。匯入記錄（包含未完成或未收錄項目）：新增 {1}，更新 {2}，移除 {3}。</value>
+  </data>
+  <data name="GlassParameterLightAngle" xml:space="preserve">
+    <value>靜態光源角度（弧度）</value>
+  </data>
+  <data name="GlassPointerLighting" xml:space="preserve">
+    <value>高光方向跟隨滑鼠</value>
+  </data>
+  <data name="GlassPointerLightingDescription" xml:space="preserve">
+    <value>控制玻璃邊緣高光的光照方向。高光強度控制亮度，高光飽和度控制色彩；跟隨程度為 0 時保持靜態光源方向，為 1 時完全跟隨滑鼠。玻璃自身的局部互動高光仍會保留。</value>
+  </data>
+  <data name="GlassPointerLightInfluence" xml:space="preserve">
+    <value>光源跟隨程度</value>
   </data>
 </root>

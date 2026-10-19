@@ -3935,6 +3935,12 @@ Espaço disponível: {2}</value>
   <data name="ViewTitleUpdatePackageAvailableTitle" xml:space="preserve">
     <value>A versão {0} do Snap Hutao está pronta</value>
   </data>
+  <data name="ViewTitleUpdatePackageSkipVersionButtonText" xml:space="preserve">
+    <value>Ignorar esta versão</value>
+  </data>
+  <data name="ViewTitleUpdatePackageSkipVersionInfoBarMessage" xml:space="preserve">
+    <value>A versão {0} foi ignorada. Ela não será mais sugerida automaticamente na inicialização; você ainda pode verificar atualizações manualmente nas configurações</value>
+  </data>
   <data name="ViewToolHeader" xml:space="preserve">
     <value>Ferramentas</value>
   </data>
@@ -4330,6 +4336,12 @@ Espaço disponível: {2}</value>
   </data>
   <data name="ViewPageLaunchGameIslandFastSkipTalkDescription" xml:space="preserve">
     <value>Remover o tempo de recarga após saltar o diálogo</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineHeader" xml:space="preserve">
+    <value>Redirecionamento da Katheryne</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineDescription" xml:space="preserve">
+    <value>Altera a entrada de Comissões Diárias que leva à Katheryne no Manual do Aventureiro para abrir diretamente a janela de confirmação de recompensas de comissões da Katheryne</value>
   </data>
   <data name="ViewDialogFastSkipTalkConfirmTitle" xml:space="preserve">
     <value>Remover o tempo de recarga do salto de diálogo</value>
@@ -5435,6 +5447,12 @@ Espaço disponível: {2}</value>
   <data name="GlassProfileTabBar" xml:space="preserve">
     <value>Barra de abas</value>
   </data>
+  <data name="GlassParameterSwitchScale" xml:space="preserve">
+    <value>Proporção do tamanho do interruptor</value>
+  </data>
+  <data name="GlassParameterSwitchScaleDescription" xml:space="preserve">
+    <value>Ajusta proporcionalmente o tamanho do gráfico do interruptor sem alterar o tamanho da fonte do texto. As alterações entram em vigor imediatamente.</value>
+  </data>
   <data name="GlassParameterBlurRadius" xml:space="preserve">
     <value>Raio do desfoque</value>
   </data>
@@ -5557,5 +5575,23 @@ Espaço disponível: {2}</value>
   </data>
   <data name="RepositoryServerReconnecting" xml:space="preserve">
     <value>Modo offline · Reconectando</value>
+  </data>
+  <data name="ViewModelGuideResourceDownloadIncomplete" xml:space="preserve">
+    <value>Alguns recursos de imagem não foram baixados com êxito. Tente novamente ou escolha pular o download.</value>
+  </data>
+  <data name="ServiceAchievementImportSummary" xml:space="preserve">
+    <value>O save atual concluiu {0} conquistas. Registro de importação (incluindo itens não concluídos ou não registrados): {1} adicionados, {2} atualizados, {3} removidos.</value>
+  </data>
+  <data name="GlassParameterLightAngle" xml:space="preserve">
+    <value>Ângulo da luz estática (radianos)</value>
+  </data>
+  <data name="GlassPointerLighting" xml:space="preserve">
+    <value>Direção do realce seguir o mouse</value>
+  </data>
+  <data name="GlassPointerLightingDescription" xml:space="preserve">
+    <value>Controla a direção da iluminação do realce nas bordas do vidro. A intensidade do realce controla o brilho e a saturação do realce controla a cor; com grau de acompanhamento 0, a direção da luz permanece estática, e com 1, ela segue totalmente o mouse. O realce de interação local do próprio vidro ainda é mantido.</value>
+  </data>
+  <data name="GlassPointerLightInfluence" xml:space="preserve">
+    <value>Grau de acompanhamento da luz</value>
   </data>
 </root>

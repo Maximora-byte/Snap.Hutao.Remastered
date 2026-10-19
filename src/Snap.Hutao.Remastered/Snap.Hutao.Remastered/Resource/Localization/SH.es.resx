@@ -3935,6 +3935,12 @@ Espacio disponible: {2}</value>
   <data name="ViewTitleUpdatePackageAvailableTitle" xml:space="preserve">
     <value>La versión {0} de Hutao ya está disponible</value>
   </data>
+  <data name="ViewTitleUpdatePackageSkipVersionButtonText" xml:space="preserve">
+    <value>Omitir esta versión</value>
+  </data>
+  <data name="ViewTitleUpdatePackageSkipVersionInfoBarMessage" xml:space="preserve">
+    <value>Se ha omitido la versión {0}; al iniciar ya no se avisará automáticamente de esta versión. Aún puedes buscar actualizaciones manualmente en los ajustes</value>
+  </data>
   <data name="ViewToolHeader" xml:space="preserve">
     <value>Herramientas</value>
   </data>
@@ -4330,6 +4336,12 @@ Espacio disponible: {2}</value>
   </data>
   <data name="ViewPageLaunchGameIslandFastSkipTalkDescription" xml:space="preserve">
     <value>Eliminar el tiempo de enfriamiento tras omitir diálogos</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineHeader" xml:space="preserve">
+    <value>Redirección de Katheryne</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineDescription" xml:space="preserve">
+    <value>Cambia la entrada de las comisiones diarias que redirige a Katheryne en el Manual del aventurero para que abra directamente el diálogo de confirmación de recompensas de comisiones de Katheryne</value>
   </data>
   <data name="ViewDialogFastSkipTalkConfirmTitle" xml:space="preserve">
     <value>Eliminar el tiempo de enfriamiento al omitir diálogos</value>
@@ -5435,6 +5447,12 @@ Espacio disponible: {2}</value>
   <data name="GlassProfileTabBar" xml:space="preserve">
     <value>Barra de pestañas</value>
   </data>
+  <data name="GlassParameterSwitchScale" xml:space="preserve">
+    <value>Proporción del tamaño del interruptor</value>
+  </data>
+  <data name="GlassParameterSwitchScaleDescription" xml:space="preserve">
+    <value>Ajusta proporcionalmente el tamaño del gráfico del interruptor sin cambiar el tamaño de la fuente del texto. Los cambios se aplican de inmediato.</value>
+  </data>
   <data name="GlassParameterBlurRadius" xml:space="preserve">
     <value>Radio de desenfoque</value>
   </data>
@@ -5557,5 +5575,23 @@ Espacio disponible: {2}</value>
   </data>
   <data name="RepositoryServerReconnecting" xml:space="preserve">
     <value>Modo sin conexión · Reconectando</value>
+  </data>
+  <data name="ViewModelGuideResourceDownloadIncomplete" xml:space="preserve">
+    <value>Algunos recursos de imagen no se han descargado correctamente. Vuelve a intentarlo u opta por omitir la descarga.</value>
+  </data>
+  <data name="ServiceAchievementImportSummary" xml:space="preserve">
+    <value>La partida guardada actual ha completado {0} logros. Registro de importación (incluye elementos sin completar o no registrados): añadidos {1}, actualizados {2}, eliminados {3}.</value>
+  </data>
+  <data name="GlassParameterLightAngle" xml:space="preserve">
+    <value>Ángulo de la fuente de luz estática (radianes)</value>
+  </data>
+  <data name="GlassPointerLighting" xml:space="preserve">
+    <value>La dirección del brillo sigue al ratón</value>
+  </data>
+  <data name="GlassPointerLightingDescription" xml:space="preserve">
+    <value>Controla la dirección de la iluminación del brillo del borde del cristal. La intensidad del brillo controla la luminosidad y la saturación del brillo controla el color; con un grado de seguimiento de 0 se mantiene la dirección de la fuente de luz estática, y con 1 sigue completamente al ratón. El brillo de interacción local del propio cristal se conserva.</value>
+  </data>
+  <data name="GlassPointerLightInfluence" xml:space="preserve">
+    <value>Grado de seguimiento de la fuente de luz</value>
   </data>
 </root>

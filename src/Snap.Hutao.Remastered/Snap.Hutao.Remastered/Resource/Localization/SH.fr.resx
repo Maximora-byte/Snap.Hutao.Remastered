@@ -3935,6 +3935,12 @@ Espace disponible : {2}</value>
   <data name="ViewTitleUpdatePackageAvailableTitle" xml:space="preserve">
     <value>La version {0} de Hutao est maintenant disponible</value>
   </data>
+  <data name="ViewTitleUpdatePackageSkipVersionButtonText" xml:space="preserve">
+    <value>Ignorer cette version</value>
+  </data>
+  <data name="ViewTitleUpdatePackageSkipVersionInfoBarMessage" xml:space="preserve">
+    <value>Version {0} ignorée. Elle ne sera plus proposée automatiquement au démarrage, mais vous pouvez toujours vérifier les mises à jour manuellement dans les paramètres</value>
+  </data>
   <data name="ViewToolHeader" xml:space="preserve">
     <value>Outils</value>
   </data>
@@ -4330,6 +4336,12 @@ Espace disponible : {2}</value>
   </data>
   <data name="ViewPageLaunchGameIslandFastSkipTalkDescription" xml:space="preserve">
     <value>Supprime le temps de recharge après le saut d'un dialogue</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineHeader" xml:space="preserve">
+    <value>Redirection de Catherine</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineDescription" xml:space="preserve">
+    <value>Remplace l'entrée de commission quotidienne qui redirige vers Catherine dans le Manuel de l'aventurier par l'ouverture directe de la fenêtre de confirmation des récompenses de commission de Catherine</value>
   </data>
   <data name="ViewDialogFastSkipTalkConfirmTitle" xml:space="preserve">
     <value>Supprimer le temps de recharge du saut de dialogue</value>
@@ -5435,6 +5447,12 @@ Espace disponible : {2}</value>
   <data name="GlassProfileTabBar" xml:space="preserve">
     <value>Barre d'onglets</value>
   </data>
+  <data name="GlassParameterSwitchScale" xml:space="preserve">
+    <value>Échelle de taille de l'interrupteur</value>
+  </data>
+  <data name="GlassParameterSwitchScaleDescription" xml:space="preserve">
+    <value>Ajuste proportionnellement la taille du graphique de l'interrupteur sans modifier la taille du texte. Les modifications prennent effet immédiatement.</value>
+  </data>
   <data name="GlassParameterBlurRadius" xml:space="preserve">
     <value>Rayon de flou</value>
   </data>
@@ -5557,5 +5575,23 @@ Espace disponible : {2}</value>
   </data>
   <data name="RepositoryServerReconnecting" xml:space="preserve">
     <value>Mode hors ligne · Reconnexion en cours</value>
+  </data>
+  <data name="ViewModelGuideResourceDownloadIncomplete" xml:space="preserve">
+    <value>Certaines ressources d'images n'ont pas pu être téléchargées. Veuillez réessayer ou choisir d'ignorer le téléchargement.</value>
+  </data>
+  <data name="ServiceAchievementImportSummary" xml:space="preserve">
+    <value>La sauvegarde actuelle contient {0} succès terminés. Enregistrements importés, y compris les éléments non terminés ou non répertoriés : {1} ajoutés, {2} mis à jour, {3} supprimés.</value>
+  </data>
+  <data name="GlassParameterLightAngle" xml:space="preserve">
+    <value>Angle de la source lumineuse statique (radians)</value>
+  </data>
+  <data name="GlassPointerLighting" xml:space="preserve">
+    <value>Suivre la souris pour la direction du reflet</value>
+  </data>
+  <data name="GlassPointerLightingDescription" xml:space="preserve">
+    <value>Contrôle la direction de l'éclairage des reflets sur les bords du verre. L'intensité du reflet contrôle la luminosité et sa saturation contrôle la couleur ; un degré de suivi de 0 conserve la direction statique de la source lumineuse, tandis que 1 suit entièrement la souris. Le reflet d'interaction local du verre lui-même est toujours conservé.</value>
+  </data>
+  <data name="GlassPointerLightInfluence" xml:space="preserve">
+    <value>Degré de suivi de la source lumineuse</value>
   </data>
 </root>

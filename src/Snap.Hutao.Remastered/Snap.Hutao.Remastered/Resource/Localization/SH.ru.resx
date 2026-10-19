@@ -3941,6 +3941,12 @@
   <data name="ViewTitleUpdatePackageAvailableTitle" xml:space="preserve">
     <value>Версия Snap Hutao {0} теперь доступна</value>
   </data>
+  <data name="ViewTitleUpdatePackageSkipVersionButtonText" xml:space="preserve">
+    <value>Пропустить эту версию</value>
+  </data>
+  <data name="ViewTitleUpdatePackageSkipVersionInfoBarMessage" xml:space="preserve">
+    <value>Версия {0} пропущена. При запуске напоминание о ней больше не будет появляться, но вы по-прежнему можете проверить обновления вручную в настройках</value>
+  </data>
   <data name="ViewToolHeader" xml:space="preserve">
     <value>Инструменты</value>
   </data>
@@ -4336,6 +4342,12 @@
   </data>
   <data name="ViewPageLaunchGameIslandFastSkipTalkDescription" xml:space="preserve">
     <value>Убрать задержку после пропуска диалогов</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineHeader" xml:space="preserve">
+    <value>Перенаправление Кэтрин</value>
+  </data>
+  <data name="ViewPageLaunchGameIslandRedirectCatherineDescription" xml:space="preserve">
+    <value>Пункт перехода к Кэтрин в «Руководстве приключенца» теперь будет напрямую открывать окно подтверждения наград за ежедневные поручения Кэтрин</value>
   </data>
   <data name="ViewDialogFastSkipTalkConfirmTitle" xml:space="preserve">
     <value>Убрать задержку пропуска диалогов</value>
@@ -5441,6 +5453,12 @@
   <data name="GlassProfileTabBar" xml:space="preserve">
     <value>Панель вкладок</value>
   </data>
+  <data name="GlassParameterSwitchScale" xml:space="preserve">
+    <value>Масштаб размера переключателя</value>
+  </data>
+  <data name="GlassParameterSwitchScaleDescription" xml:space="preserve">
+    <value>Пропорционально изменяет размер графики переключателя, не меняя размер текста. Изменения применяются сразу.</value>
+  </data>
   <data name="GlassParameterBlurRadius" xml:space="preserve">
     <value>Радиус размытия</value>
   </data>
@@ -5563,5 +5581,23 @@
   </data>
   <data name="RepositoryServerReconnecting" xml:space="preserve">
     <value>Автономный режим · Переподключение</value>
+  </data>
+  <data name="ViewModelGuideResourceDownloadIncomplete" xml:space="preserve">
+    <value>Некоторые ресурсы изображений не удалось загрузить. Повторите попытку или выберите пропуск загрузки.</value>
+  </data>
+  <data name="ServiceAchievementImportSummary" xml:space="preserve">
+    <value>В текущем сохранении выполнено достижений: {0}. Импорт записей (включая незавершённые и отсутствующие): добавлено {1}, обновлено {2}, удалено {3}.</value>
+  </data>
+  <data name="GlassParameterLightAngle" xml:space="preserve">
+    <value>Угол статического источника света (радианы)</value>
+  </data>
+  <data name="GlassPointerLighting" xml:space="preserve">
+    <value>Направление блика следует за мышью</value>
+  </data>
+  <data name="GlassPointerLightingDescription" xml:space="preserve">
+    <value>Управляет направлением света блика на краях стекла. Интенсивность блика определяет яркость, насыщенность блика — цвет; при степени следования 0 сохраняется направление статического источника света, при 1 — полностью следует за мышью. Локальный блик стекла при взаимодействии сохраняется.</value>
+  </data>
+  <data name="GlassPointerLightInfluence" xml:space="preserve">
+    <value>Степень следования источника света</value>
   </data>
 </root>
