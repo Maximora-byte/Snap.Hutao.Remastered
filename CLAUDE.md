@@ -65,6 +65,12 @@ dotnet test src/Snap.Hutao.Remastered/Snap.Hutao.Remastered.slnx --filter "Fully
 - **Plugin SDK** — has its own solution,
   [`src/Snap.Hutao.Plugin.SDK/Snap.Hutao.Plugin.SDK.slnx`](src/Snap.Hutao.Plugin.SDK/Snap.Hutao.Plugin.SDK.slnx),
   which pulls in the main app project, the SDK project and the `TestPlugin` sample.
+- **ReadyToRun** — enabled by default for every configuration, including Debug. The SDK keeps
+  the IL compiler input in `obj`; `Build/ReadyToRun.targets` delivers the selected R2R images to
+  the runnable bin output. VS MSIX deployment consumes the WinUI SDK's publish-item list. All four
+  Cake entry points use `DotNetPublish` and package its `publish` tree, with final-image validation.
+  See [deployment details and debugger limits](docs/aot-readiness.md). Do not add AnyCPU mappings,
+  force Debug optimization, or mistake a stale `obj/R2R` file for the actual deployed image.
 - **Build quirks (do not "clean up" blindly)**
   - The app csproj contains a `UsePatchedXamlCompiler` target that byte-patches
     `XamlCompiler.exe` on `dotnet build` (MSBuild Core) to work around
@@ -445,6 +451,7 @@ ID — do not "fix" these by documenting them as if they were intended.
 
 | Date | Change |
 |---|---|
+| 2026-10-20 | Enabled default R2R for Debug and Release; connected the SDK-selected images to local runnable output and MSIX deployment, switched all Cake packaging inputs to publish output, and added final-image header validation. |
 | 2026-10-20 | Separated JSON wire policy from reflection, added generated infrastructure/metadata collection contracts, static enum converters, typed ID/HTTP metadata APIs, and finite cultivation navigation. |
 | 2026-10-20 | Adopted source-generated settings/database JSON and EF's compiled model; preserved plugin/script support, storage formats, and migrations. Removed extra experiment scripts; retained optional AOT diagnostics. |
 | 2026-10-18 | Document Canary's explicit trigger-commit merge, ancestry verification and compiled-source summary, including pushes made before a PR exists. |

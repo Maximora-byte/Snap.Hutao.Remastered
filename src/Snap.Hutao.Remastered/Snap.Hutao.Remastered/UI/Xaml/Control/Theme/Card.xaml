@@ -156,6 +156,15 @@
         <Setter Property="shuxcth:MaterialBackground.NativeBrush" Value="{ThemeResource ControlAltFillColorSecondaryBrush}"/>
     </Style>
 
+    <!--
+        Pinned card regions keep their native scrim, but must not cover the
+        card's sole glass surface with another opaque/acrylic layer.
+    -->
+    <Style x:Key="HomeCardOverlayGridStyle" TargetType="Grid">
+        <Setter Property="shuxcth:MaterialBackground.GlassBrush" Value="{ThemeResource ControlAltFillColorTransparentBrush}"/>
+        <Setter Property="shuxcth:MaterialBackground.NativeBrush" Value="{ThemeResource SystemControlChromeMediumAcrylicElementMediumBrush}"/>
+    </Style>
+
     <Style x:Key="SecondaryGridCardStyle" TargetType="Grid">
         <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
