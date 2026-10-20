@@ -1,4 +1,3 @@
-#addin nuget:?package=Cake.Http&version=4.0.0
 
 var target = Argument("target", "BuildAndZip");
 var configuration = Argument("configuration", "Release");

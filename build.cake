@@ -1,5 +1,4 @@
 #tool "nuget:?package=nuget.commandline&version=6.9.1"
-#addin nuget:?package=Cake.Http&version=4.0.0
 
 var target = Argument("target", "Build");
 var configuration = Argument("configuration", "Release");
