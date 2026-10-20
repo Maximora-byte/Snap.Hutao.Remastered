@@ -166,7 +166,7 @@
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="shvc:CalendarMaterial">
                             <cwc:SwitchPresenter
                                 x:Name="GlassPresenter_8182"
                                 VerticalAlignment="Stretch"
@@ -183,13 +183,14 @@
                                         MinWidth="0"
                                         Padding="0"
                                         VerticalAlignment="Stretch"
+                                        DataContext="{x:Bind}"
                                         Background="{Binding Highlight, Converter={ThemeResource BoolToBrushSelector}}"
                                         Style="{ThemeResource ShimmerButtonStyle}">
 
                                         <shuxci:CachedImage
                                             Width="24"
                                             Height="24"
-                                            Source="{Binding Inner.Icon, Converter={StaticResource ItemIconConverter}}"/>
+                                            Source="{x:Bind Inner.Icon, Converter={StaticResource ItemIconConverter}, Mode=OneWay}"/>
                                         <Button.Flyout>
                                             <Flyout FlyoutPresenterStyle="{ThemeResource FlyoutPresenterPadding6Style}">
                                                 <Grid RowSpacing="6">
@@ -245,13 +246,14 @@
                                         MinWidth="0"
                                         Padding="0"
                                         VerticalAlignment="Stretch"
+                                        DataContext="{x:Bind}"
                                         shuxcth:ControlMaterialState.IsManaged="True"
                                         Style="{ThemeResource ShimmerButtonStyle}">
 
                                         <shuxci:CachedImage
                                             Width="24"
                                             Height="24"
-                                            Source="{Binding Inner.Icon, Converter={StaticResource ItemIconConverter}}"/>
+                                            Source="{x:Bind Inner.Icon, Converter={StaticResource ItemIconConverter}, Mode=OneWay}"/>
                                         <wl:LiquidGlassButton.Flyout>
                                             <Flyout FlyoutPresenterStyle="{ThemeResource FlyoutPresenterPadding6Style}">
                                                 <Grid RowSpacing="6">
