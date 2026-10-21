@@ -6186,4 +6186,7 @@ Space Available: {2}</value>
   <data name="ServiceGameIslandVersionConflict" xml:space="preserve">
     <value>The version sources disagree, so Island compatibility cannot be determined. Verify the game, or disable Island for ordinary launch</value>
   </data>
+  <data name="ViewModelSettingStartupRegistrationFailed" xml:space="preserve">
+    <value>Unable to read or update the startup scheduled task. Please make sure the Task Scheduler service is available, then run the app as administrator and try again.</value>
+  </data>
 </root>
