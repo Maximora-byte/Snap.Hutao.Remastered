@@ -21,6 +21,16 @@
     <VerifyHutaoReadyToRunImage FilePath="$(PublishDir)$(TargetFileName)" />
   </Target>
 
+  <!-- These private packages contain runtime payloads. The SDK otherwise treats
+       PrivateAssets=all as Publish=false. Both Cake packagers consume PublishDir. -->
+  <Target Name="VerifyRequiredPublishRuntimeFiles" AfterTargets="Publish">
+    <ItemGroup>
+      <_RequiredHutaoRuntimeFile Include="Snap.Hutao.Remastered.Native.dll;Snap.HPatch.dll;YaeAchievementLib.dll;Snap.Hutao.Remastered.Deployment.exe" />
+    </ItemGroup>
+    <Error Condition="!Exists('$(PublishDir)%(_RequiredHutaoRuntimeFile.Identity)')"
+           Text="Required runtime file is missing from publish output: $(PublishDir)%(_RequiredHutaoRuntimeFile.Identity). Check Publish metadata on its PackageReference before packaging." />
+  </Target>
+
   <!-- Pure PE validation works in both VS MSBuild and dotnet MSBuild without
        restoring a verification tool or loading the application/runtime. -->
   <UsingTask TaskName="VerifyHutaoReadyToRunImage" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">

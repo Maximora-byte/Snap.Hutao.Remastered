@@ -69,6 +69,9 @@ dotnet test src/Snap.Hutao.Remastered/Snap.Hutao.Remastered.slnx --filter "Fully
   the IL compiler input in `obj`; `Build/ReadyToRun.targets` delivers the selected R2R images to
   the runnable bin output. VS MSIX deployment consumes the WinUI SDK's publish-item list. All four
   Cake entry points use `DotNetPublish` and package its `publish` tree, with final-image validation.
+  Private runtime packages explicitly set `Publish=true`: the SDK excludes `PrivateAssets=all`
+  references from publish by default. Publishing also validates the Native, HPatch, Yae and
+  deployment payloads before either Cake packager can consume the output.
   See [deployment details and debugger limits](docs/aot-readiness.md). Do not add AnyCPU mappings,
   force Debug optimization, or mistake a stale `obj/R2R` file for the actual deployed image.
 - **Build quirks (do not "clean up" blindly)**
