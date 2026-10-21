@@ -19,6 +19,24 @@ internal sealed class ObservableSettingsCollection<TItem, TId> : ObservableColle
     private TItem? currentItem;
     private TId? currentItemId;
 
+    public ObservableSettingsCollection()
+    {
+    }
+
+    public ObservableSettingsCollection(IEnumerable<TItem> items)
+        : base(items)
+    {
+        SyncItemSubscriptions();
+    }
+
+    internal void StopObservingItems()
+    {
+        foreach (TItem item in subscribedItems.ToArray())
+        {
+            UnsubscribeItem(item);
+        }
+    }
+
     public TItem? CurrentItem
     {
         get => CoerceCurrentItem();

@@ -193,7 +193,8 @@ internal sealed partial class SettingsModelConfigurationViewModel(IServiceProvid
         try
         {
             IReadOnlyList<ModelProfile> modelProfiles = await modelProfileService.GetModelsAsync(providerProfile, cancellationToken);
-            ModelProfileMerger.Merge(providerProfile.ModelProfiles, modelProfiles);
+            cancellationToken.ThrowIfCancellationRequested();
+            providerProfile.ModelProfiles = ModelProfileMerger.CreateMerged(providerProfile.ModelProfiles, modelProfiles);
 
             SetModelListStatus(InfoBarSeverity.Success, SHName.UIXamlPagesSettingsPageModelListStatusSuccessTitle, StringResourceValue.FromName(SHName.UIXamlPagesSettingsPageModelListStatusSuccessMessage, modelProfiles.Count));
             span.SetData(SentryData.AIModelCount, modelProfiles.Count);

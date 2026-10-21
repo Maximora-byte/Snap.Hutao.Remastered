@@ -32,7 +32,18 @@ internal sealed partial class ModelProviderProfile : ObservableObject, IIdentifi
     [ObservableProperty]
     public partial string? ModelListDocumentationLink { get; set; }
 
-    public ObservableSettingsCollection<ModelProfile, Guid> ModelProfiles { get; set => SetProperty(ref field, value ?? []); } = [];
+    public ObservableSettingsCollection<ModelProfile, Guid> ModelProfiles
+    {
+        get;
+        set
+        {
+            ObservableSettingsCollection<ModelProfile, Guid> previous = field;
+            if (SetProperty(ref field, value ?? []))
+            {
+                previous.StopObservingItems();
+            }
+        }
+    } = [];
 
     public Guid? SelectedModelProfileId
     {

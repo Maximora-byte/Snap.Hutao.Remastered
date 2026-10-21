@@ -25,29 +25,31 @@ public sealed class AgentSettingsSelectionTest
     }
 
     [TestMethod]
-    public void OneRefreshPublishesAllModelsAndRepeatedRefreshKeepsTheirIdentities()
+    public void RepeatedRefreshPublishesOneCompleteSourceAndKeepsSelection()
     {
-        ObservableSettingsCollection<ModelProfile, Guid> source = new();
-        source.CurrentItemId = Guid.NewGuid();
-        using SelectorMirror selector = new(source);
+        ModelProviderProfile provider = new();
+        provider.ModelProfiles.CurrentItemId = Guid.NewGuid();
+        List<int> publishedCounts = [];
+        provider.PropertyChanged += (_, args) =>
+        {
+            if (args.PropertyName == nameof(provider.ModelProfiles))
+            {
+                publishedCounts.Add(provider.ModelProfiles.Count);
+            }
+        };
         ModelProfile[] fetched = Enumerable.Range(0, 178).Select(index => new ModelProfile { ModelId = $"model-{index}" }).ToArray();
-
-        ModelProfileMerger.Merge(source, fetched);
-        Assert.HasCount(178, selector.Items);
-        ModelProfile selected = source[75];
+        provider.ModelProfiles = ModelProfileMerger.CreateMerged(provider.ModelProfiles, fetched);
+        ModelProfile selected = provider.ModelProfiles[75];
         selected.Name = "Custom label";
         selected.AgentOptions.MaxOutputTokens = 2048;
-        source.CurrentItem = selected;
-
+        provider.ModelProfiles.CurrentItem = selected;
         for (int i = 0; i < 3; i++)
         {
-            ModelProfileMerger.Merge(source, fetched);
+            provider.ModelProfiles = ModelProfileMerger.CreateMerged(provider.ModelProfiles, fetched);
         }
 
-        Assert.HasCount(178, source);
-        Assert.HasCount(178, selector.Items);
-        Assert.AreSame(selected, selector.SelectedItem);
-        Assert.AreSame(selected, source.CurrentItem);
+        CollectionAssert.AreEqual(new[] { 178, 178, 178, 178 }, publishedCounts);
+        Assert.AreSame(selected, provider.ModelProfiles.CurrentItem);
         Assert.AreEqual("Custom label", selected.Name);
         Assert.AreEqual(2048, selected.AgentOptions.MaxOutputTokens);
     }

@@ -9,8 +9,14 @@ namespace Snap.Hutao.Remastered.Service.AI.Settings
     internal static class AgentCredentialStore
     {
         public static int SaveCalls;
-        public static void Load(AgentSettings settings) { }
-        public static void Save(AgentSettings settings) => Interlocked.Increment(ref SaveCalls);
+        public static Action? BeforeLoad;
+        public static Action? BeforeSave;
+        public static void Load(AgentSettings settings) { BeforeLoad?.Invoke(); }
+        public static void Save(AgentSettings settings)
+        {
+            Interlocked.Increment(ref SaveCalls);
+            BeforeSave?.Invoke();
+        }
     }
 }
 namespace Sentry { internal enum SpanStatus { Cancelled, FailedPrecondition } }

@@ -91,7 +91,7 @@ internal sealed partial class SelectorSelectedItemBindingWorkaroundBehavior : Be
         using (BooleanTrueScope.Create(ref isUpdatingAssociatedObject))
         {
             AssociatedObject.ItemsSource = ItemsSource;
-            AssociatedObject.SelectedItem = SelectedItem;
+            ApplyAssociatedSelection();
         }
     }
 
@@ -109,7 +109,15 @@ internal sealed partial class SelectorSelectedItemBindingWorkaroundBehavior : Be
 
         using (BooleanTrueScope.Create(ref isUpdatingAssociatedObject))
         {
-            AssociatedObject.SelectedItem = SelectedItem;
+            ApplyAssociatedSelection();
         }
+    }
+
+    private void ApplyAssociatedSelection()
+    {
+        // ItemsSource and SelectedItem bindings can update in either order when
+        // switching a complete source. Keep the requested item until both agree.
+        object? item = SelectedItem;
+        AssociatedObject.SelectedItem = item is null || AssociatedObject.Items.Contains(item) ? item : null;
     }
 }

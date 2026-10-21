@@ -39,7 +39,7 @@ internal class JsonSettingsProvider<TSettings> : ISettingsProvider<TSettings>, I
     private IDisposable? watchRegistration;
 
     private volatile bool disposed;
-    private bool writesEnabled;
+    private volatile bool writesEnabled;
     private long loadRevision;
 
     public JsonSettingsProvider(string fileNameWithoutExtension, JsonSerializerOptions jsonOptions)
@@ -75,6 +75,11 @@ internal class JsonSettingsProvider<TSettings> : ISettingsProvider<TSettings>, I
         {
             if (!self.disposed)
             {
+                // Invalidate queued reads before a lock wait can dispatch UI callbacks.
+                if (self.writesEnabled)
+                {
+                    Interlocked.Increment(ref self.loadRevision);
+                }
                 lock (self.syncRoot)
                 {
                     if (!self.disposed && self.writesEnabled)
@@ -145,10 +150,14 @@ internal class JsonSettingsProvider<TSettings> : ISettingsProvider<TSettings>, I
 
             lock (self.syncRoot)
             {
-                revision = ++self.loadRevision;
+                revision = Interlocked.Increment(ref self.loadRevision);
                 loaded = self.TryLoadCore(newWhenMissing: false, out newValue);
-                // Do not overwrite a file we could not read, or prune its credentials.
-                self.writesEnabled = false;
+                // A valid read must not block newer local edits while its snapshot
+                // waits for the UI thread. Failed reads still protect the file.
+                if (!loaded)
+                {
+                    self.writesEnabled = false;
+                }
             }
 
             if (loaded)
@@ -236,9 +245,15 @@ internal class JsonSettingsProvider<TSettings> : ISettingsProvider<TSettings>, I
             lock (syncRoot)
             {
                 if (disposed || revision != loadRevision) { return; }
+            }
+            // Credential reads can dispatch UI callbacks. Keep observation enabled
+            // until they finish, then reject the snapshot if a local edit occurred.
+            if (value is AgentSettings settings) { AgentCredentialStore.Load(settings); }
+            lock (syncRoot)
+            {
+                if (disposed || revision != loadRevision) { return; }
                 using (BooleanTrueScope.Create(ref changeObserver.Suppressed))
                 {
-                    if (value is AgentSettings settings) { AgentCredentialStore.Load(settings); }
                     changeObserver.Root.CopyFrom(value);
                     changeObserver.Refresh();
                 }
@@ -352,6 +367,9 @@ internal class JsonSettingsProvider<TSettings> : ISettingsProvider<TSettings>, I
 
         try
         {
+            // A file read can win the lock after the local-change notification.
+            // Invalidate it again before credential writes can dispatch callbacks.
+            Interlocked.Increment(ref loadRevision);
             if (value is AgentSettings settings) { AgentCredentialStore.Save(settings); }
             using (FileStream stream = File.Open(tempFile, FileMode.Create, FileAccess.Write, FileShare.None))
             {
