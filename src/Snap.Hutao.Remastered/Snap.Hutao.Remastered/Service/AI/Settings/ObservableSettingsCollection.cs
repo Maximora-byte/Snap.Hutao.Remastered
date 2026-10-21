@@ -122,8 +122,12 @@ internal sealed class ObservableSettingsCollection<TItem, TId> : ObservableColle
     protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
     {
         SyncItemSubscriptions();
-        EnsureCurrentItem();
+        // Capture the intended selection before a selector can write back null
+        // while removing its old item. Publish membership before selecting a new
+        // item: WinUI rejects SelectedItem values it has not observed yet.
+        TItem? nextCurrentItem = CoerceCurrentItem();
         base.OnCollectionChanged(e);
+        SetCurrentItemCore(nextCurrentItem);
     }
 
     private void OnItemPropertyChanged(object? sender, PropertyChangedEventArgs e)

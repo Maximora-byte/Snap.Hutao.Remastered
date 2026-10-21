@@ -5,6 +5,7 @@
     xmlns:cwc="using:CommunityToolkit.WinUI.Controls"
     xmlns:cwconv="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:essential="using:WinUI3Package"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mxi="using:Microsoft.Xaml.Interactivity"
     xmlns:shuxb="using:Snap.Hutao.Remastered.UI.Xaml.Behavior"
@@ -190,7 +191,7 @@
                                             Style="{ThemeResource ShimmerButtonStyle}">
 
                                             <Button.Flyout>
-                                                <Flyout FlyoutPresenterStyle="{ThemeResource FlyoutPresenterPadding6Style}">
+                                                <Flyout essential:FlyoutHelper.AcrylicWorkaround="True" FlyoutPresenterStyle="{ThemeResource FlyoutPresenterPadding6Style}">
                                                     <Grid RowSpacing="6">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="auto"/>
@@ -251,7 +252,7 @@
                                             Style="{ThemeResource ShimmerButtonStyle}">
 
                                             <wl:LiquidGlassButton.Flyout>
-                                                <Flyout FlyoutPresenterStyle="{ThemeResource FlyoutPresenterPadding6Style}">
+                                                <Flyout essential:FlyoutHelper.AcrylicWorkaround="True" FlyoutPresenterStyle="{ThemeResource FlyoutPresenterPadding6Style}">
                                                     <Grid RowSpacing="6">
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="auto"/>

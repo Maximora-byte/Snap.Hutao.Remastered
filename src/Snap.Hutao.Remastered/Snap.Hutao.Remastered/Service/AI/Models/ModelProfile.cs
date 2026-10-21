@@ -11,6 +11,7 @@ using System.Text.Json.Serialization;
 
 namespace Snap.Hutao.Remastered.Service.AI.Models;
 
+[WinRT.GeneratedBindableCustomProperty]
 internal sealed partial class ModelProfile : ObservableObject, IIdentifiable<Guid>, ICopyFrom<ModelProfile>, IObservableChildrenProvider
 {
     [ObservableProperty]

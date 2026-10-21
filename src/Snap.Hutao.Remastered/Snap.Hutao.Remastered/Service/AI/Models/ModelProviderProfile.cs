@@ -10,6 +10,7 @@ using System.ComponentModel;
 
 namespace Snap.Hutao.Remastered.Service.AI.Models;
 
+[WinRT.GeneratedBindableCustomProperty]
 internal sealed partial class ModelProviderProfile : ObservableObject, IIdentifiable<Guid>, ICopyFrom<ModelProviderProfile>, IObservableChildrenProvider
 {
     [ObservableProperty]
