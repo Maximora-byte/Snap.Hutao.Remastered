@@ -29,6 +29,9 @@
     <Compile Include="../Snap.Hutao.Remastered/Service/AI/Models/*.cs" Link="Production/Agent/Models/%(Filename)%(Extension)" />
     <Compile Include="../Snap.Hutao.Remastered/Service/AI/Observables/*.cs" Link="Production/Agent/Observables/%(Filename)%(Extension)" />
     <Compile Include="../Snap.Hutao.Remastered/Service/AI/Compatibility/**/*.cs" Link="Production/Agent/Compatibility/%(Filename)%(Extension)" />
+    <Compile Include="../Snap.Hutao.Remastered/Service/AI/ModelProfileService.cs" Link="Production/Agent/ModelProfileService.cs" />
+    <Compile Include="../Snap.Hutao.Remastered/Service/AI/IModelProfileService.cs" Link="Production/Agent/IModelProfileService.cs" />
+    <Compile Include="../Snap.Hutao.Remastered/Service/AI/ModelProfileMerger.cs" Link="Production/Agent/ModelProfileMerger.cs" />
     <Compile Include="../Snap.Hutao.Remastered/Service/AI/AgentEndpoint.cs" Link="Production/Agent/AgentEndpoint.cs" />
     <Compile Include="../Snap.Hutao.Remastered/Service/AI/ExtendedAgentResponseUpdate.cs" Link="Production/Agent/ExtendedAgentResponseUpdate.cs" />
     <Compile Include="../Snap.Hutao.Remastered/Service/AI/Settings/ObservableSettingsCollection.cs" Link="Production/Agent/ObservableSettingsCollection.cs" />

@@ -14,7 +14,6 @@ using Snap.Hutao.Remastered.Service.AI.Models;
 using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -71,20 +70,6 @@ internal sealed class ModelProfileService : IModelProfileService
 
         IEnumerable<ModelProfile> models = result.Value
             .Where(static model => !string.IsNullOrWhiteSpace(model.Id))
-            .Where(static model =>
-            {
-                IDictionary<string, BinaryData> additionalRawData = GetSerializedAdditionalRawData(model);
-                if (additionalRawData.TryGetValue("status", out BinaryData? statusData))
-                {
-                    string? status = statusData.ToObjectFromJson<string>();
-                    if (status is "Shutdown")
-                    {
-                        return false;
-                    }
-                }
-
-                return true;
-            })
             .Select(ModelProfile.Create);
         return [.. models];
     }
@@ -120,7 +105,4 @@ internal sealed class ModelProfileService : IModelProfileService
         }
     }
 
-    // internal IDictionary<string, BinaryData> SerializedAdditionalRawData
-    [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "get_SerializedAdditionalRawData")]
-    private static extern IDictionary<string, BinaryData> GetSerializedAdditionalRawData(OpenAIModel model);
 }

@@ -34,7 +34,7 @@ internal sealed partial class ModelProfile : ObservableObject, IIdentifiable<Gui
     {
         return new()
         {
-            Name = string.IsNullOrEmpty(model.OwnedBy) ? model.Id : $"{model.OwnedBy}/{model.Id}",
+            Name = model.Id,
             ModelId = model.Id,
         };
     }

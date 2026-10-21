@@ -6141,4 +6141,16 @@ Space Available: {2}</value>
   <data name="UIXamlPagesSettingsPagePlaceholderProviderDefault" xml:space="preserve">
     <value>Provider default</value>
   </data>
+  <data name="UIXamlPagesSettingsPageDescriptionProfileModelId" xml:space="preserve">
+    <value>Required: the exact model identifier supplied by your provider. This value is sent in API requests</value>
+  </data>
+  <data name="UIXamlPagesSettingsPageDescriptionModelDisplayName" xml:space="preserve">
+    <value>Optional display label, never sent to the provider. Leave blank to show the model ID</value>
+  </data>
+  <data name="UIXamlPagesSettingsPagePlaceholderProfileModelId" xml:space="preserve">
+    <value>For example, qwen3.8-flash</value>
+  </data>
+  <data name="UIXamlPagesSettingsPagePlaceholderModelDisplayName" xml:space="preserve">
+    <value>For example, My fast Qwen model (optional)</value>
+  </data>
 </root>

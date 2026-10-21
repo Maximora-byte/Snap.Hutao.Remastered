@@ -33,17 +33,15 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ReasoningContentTemplate" x:DataType="snsao:ObservableTextReasoningContent">
-            <Border
-                Padding="8"
-                Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}"
-                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                BorderThickness="1"
-                CornerRadius="{ThemeResource ControlCornerRadius}">
-                <snuxcc:ChatMarkdownSegmentView
-                    Title="{Binding IsCompleted, Converter={StaticResource ReasoningContentTitleConverter}}"
-                    Markdown="{Binding Text}"
-                    MarkdownOpacity="0.7" />
-            </Border>
+            <Expander
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                Header="{x:Bind IsCompleted, Mode=OneWay, Converter={StaticResource ReasoningContentTitleConverter}}"
+                IsExpanded="{x:Bind IsExpanded, Mode=TwoWay}">
+                <ScrollViewer MaxHeight="320" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <snuxcc:ChatMarkdownSegmentView Markdown="{x:Bind Text, Mode=OneWay}" MarkdownOpacity="0.7" />
+                </ScrollViewer>
+            </Expander>
         </DataTemplate>
 
         <DataTemplate x:Key="ToolCallContentTemplate" x:DataType="snsao:ObservableToolCallContent">

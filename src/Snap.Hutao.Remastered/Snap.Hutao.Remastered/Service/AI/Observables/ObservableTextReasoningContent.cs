@@ -4,11 +4,16 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.AI;
+using System.Text.Json.Serialization;
 
 namespace Snap.Hutao.Remastered.Service.AI.Observables;
 
 internal sealed partial class ObservableTextReasoningContent : ObservableAIContent
 {
+    [ObservableProperty]
+    [JsonIgnore]
+    public partial bool IsExpanded { get; set; }
+
     [ObservableProperty]
     public partial string Text { get; set; }
 

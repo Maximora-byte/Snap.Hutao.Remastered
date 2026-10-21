@@ -24,7 +24,6 @@ namespace Snap.Hutao.Remastered.ViewModel.AI.Settings;
 [Service(ServiceLifetime.Scoped)]
 internal sealed partial class SettingsModelConfigurationViewModel(IServiceProvider serviceProvider) : ObservableObject
 {
-    private const string RemovedModelNameSuffix = " [Removed]";
 
     private readonly IModelProfileService modelProfileService = serviceProvider.GetRequiredService<IModelProfileService>();
 
@@ -64,80 +63,6 @@ internal sealed partial class SettingsModelConfigurationViewModel(IServiceProvid
     public partial InfoBarSeverity ModelListInfoBarSeverity { get; set; } = InfoBarSeverity.Informational;
 
     private bool CanRefreshModels { get => !IsModelListBusy; }
-
-    private static void MergeModelProfiles(ObservableSettingsCollection<ModelProfile, Guid> destination, IReadOnlyList<ModelProfile> source)
-    {
-        // There can potentially be models with the same ModelId, so we didn't use ToDictionary.
-        Dictionary<string, ModelProfile> existingMap = new(StringComparer.Ordinal);
-        foreach (ModelProfile destModelProfile in destination)
-        {
-            if (!string.IsNullOrWhiteSpace(destModelProfile.ModelId))
-            {
-                existingMap.TryAdd(destModelProfile.ModelId, destModelProfile);
-            }
-        }
-
-        HashSet<string> visitedModelIds = new(StringComparer.Ordinal);
-        bool shouldSelectFirstFetched = destination.CurrentItem is null || string.IsNullOrWhiteSpace(destination.CurrentItem.ModelId);
-        ModelProfile? firstFetched = null;
-        int targetIndex = 0;
-
-        foreach (ModelProfile sourceModelProfile in source)
-        {
-            if (string.IsNullOrWhiteSpace(sourceModelProfile.ModelId) || !visitedModelIds.Add(sourceModelProfile.ModelId))
-            {
-                continue;
-            }
-
-            if (!existingMap.TryGetValue(sourceModelProfile.ModelId, out ModelProfile? current))
-            {
-                current = new();
-                destination.Insert(targetIndex, current);
-            }
-            else
-            {
-                int currentIndex = destination.IndexOf(current);
-                if (currentIndex != targetIndex)
-                {
-                    destination.Move(currentIndex, targetIndex);
-                }
-            }
-
-            // Keep Id stable because conversations and selections reference model profiles by Guid.
-            current.Name = sourceModelProfile.Name;
-            current.ModelId = sourceModelProfile.ModelId;
-
-            firstFetched ??= current;
-            targetIndex++;
-        }
-
-        for (int i = targetIndex; i < destination.Count; i++)
-        {
-            ModelProfile modelProfile = destination[i];
-            if (string.IsNullOrWhiteSpace(modelProfile.ModelId) || visitedModelIds.Contains(modelProfile.ModelId))
-            {
-                continue;
-            }
-
-            modelProfile.Name = GetRemovedModelProfileName(modelProfile);
-        }
-
-        if (shouldSelectFirstFetched && firstFetched is not null)
-        {
-            destination.CurrentItem = firstFetched;
-        }
-    }
-
-    private static string GetRemovedModelProfileName(ModelProfile modelProfile)
-    {
-        string name = string.IsNullOrWhiteSpace(modelProfile.Name) ? modelProfile.ModelId : modelProfile.Name;
-        if (name.EndsWith(RemovedModelNameSuffix, StringComparison.Ordinal))
-        {
-            return name;
-        }
-
-        return $"{name}{RemovedModelNameSuffix}";
-    }
 
     [Command("AddProfileCommand")]
     private void AddProfile()
@@ -268,7 +193,7 @@ internal sealed partial class SettingsModelConfigurationViewModel(IServiceProvid
         try
         {
             IReadOnlyList<ModelProfile> modelProfiles = await modelProfileService.GetModelsAsync(providerProfile, cancellationToken);
-            MergeModelProfiles(providerProfile.ModelProfiles, modelProfiles);
+            ModelProfileMerger.Merge(providerProfile.ModelProfiles, modelProfiles);
 
             SetModelListStatus(InfoBarSeverity.Success, SHName.UIXamlPagesSettingsPageModelListStatusSuccessTitle, StringResourceValue.FromName(SHName.UIXamlPagesSettingsPageModelListStatusSuccessMessage, modelProfiles.Count));
             span.SetData(SentryData.AIModelCount, modelProfiles.Count);

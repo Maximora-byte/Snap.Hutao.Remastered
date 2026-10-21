@@ -21,6 +21,7 @@ namespace Snap.Hutao.Remastered.Core.AI.Diagnostics
         public void SetTag(string name, object value) { }
         public void SetData(string name, object value) { }
         public void Finish(Sentry.SpanStatus status) { }
+        public void Finish(Exception exception) { }
         public void Dispose() { }
     }
     internal static class SentryDiagnostics

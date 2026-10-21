@@ -2,6 +2,7 @@
     x:Class="Snap.Hutao.Remastered.UI.Xaml.Control.AgentWorkspaceView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:aimodel="using:Snap.Hutao.Remastered.Service.AI.Models"
     xmlns:cw="using:CommunityToolkit.WinUI"
     xmlns:cwc="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -18,6 +19,12 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
+        <DataTemplate x:Key="ModelDisplayTemplate" x:DataType="aimodel:ModelProfile">
+            <TextBlock Text="{x:Bind DisplayName, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+        </DataTemplate>
+        <DataTemplate x:Key="ProviderDisplayTemplate" x:DataType="aimodel:ModelProviderProfile">
+            <TextBlock Text="{x:Bind Name, Mode=OneWay}" TextTrimming="CharacterEllipsis" />
+        </DataTemplate>
         <cwc:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <snuxd:EmptyObjectToVisibilityConverter x:Key="ToolApprovalRequestVisibilityConverter" />
 
@@ -192,7 +199,7 @@
                                                         <snuxc:SizeRestrictedContentControl>
                                                             <ComboBox
                                                                 HorizontalAlignment="Stretch"
-                                                                DisplayMemberPath="Name"
+                                                                ItemTemplate="{StaticResource ProviderDisplayTemplate}"
                                                                 Header="{snuxm:ResourceString Name=UIXamlPagesAgentPageLabelModelProviderProfile}">
                                                                 <mxi:Interaction.Behaviors>
                                                                     <snuxb:SelectorSelectedItemBindingWorkaroundBehavior ItemsSource="{Binding Settings.ModelProviderProfiles}" SelectedItem="{Binding Conversations.CurrentItem.ModelProviderProfile, Mode=TwoWay}" />
@@ -203,7 +210,7 @@
                                                         <snuxc:SizeRestrictedContentControl>
                                                             <ComboBox
                                                                 HorizontalAlignment="Stretch"
-                                                                DisplayMemberPath="DisplayName"
+                                                                ItemTemplate="{StaticResource ModelDisplayTemplate}"
                                                                 Header="{snuxm:ResourceString Name=UIXamlPagesAgentPageLabelModelProfile}">
                                                                 <mxi:Interaction.Behaviors>
                                                                     <snuxb:SelectorSelectedItemBindingWorkaroundBehavior ItemsSource="{Binding Conversations.CurrentItem.ModelProviderProfile.ModelProfiles, Mode=OneWay}" SelectedItem="{Binding Conversations.CurrentItem.ModelProfile, Mode=TwoWay}" />

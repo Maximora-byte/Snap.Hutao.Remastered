@@ -6145,4 +6145,16 @@
   <data name="UIXamlPagesSettingsPagePlaceholderProviderDefault" xml:space="preserve">
     <value>提供商默认值</value>
   </data>
+  <data name="UIXamlPagesSettingsPageDescriptionProfileModelId" xml:space="preserve">
+    <value>必填，填写服务商提供的精确模型标识。请求接口时使用此值</value>
+  </data>
+  <data name="UIXamlPagesSettingsPageDescriptionModelDisplayName" xml:space="preserve">
+    <value>可选，仅用于列表显示，不会发送给服务商；留空时显示模型 ID</value>
+  </data>
+  <data name="UIXamlPagesSettingsPagePlaceholderProfileModelId" xml:space="preserve">
+    <value>例如 qwen3.8-flash</value>
+  </data>
+  <data name="UIXamlPagesSettingsPagePlaceholderModelDisplayName" xml:space="preserve">
+    <value>例如 千问快速模型（可留空）</value>
+  </data>
 </root>
