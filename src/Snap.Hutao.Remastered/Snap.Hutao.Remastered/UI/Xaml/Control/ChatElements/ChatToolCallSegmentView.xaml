@@ -256,15 +256,15 @@
                         Grid.Column="1"
                         Opacity="0.8"
                         Style="{ThemeResource CaptionTextBlockStyle}"
-                        Text="{Binding DisplayName}"
+                        Text="{x:Bind DisplayName, Mode=OneWay}"
                         TextTrimming="CharacterEllipsis" />
                     <TextBlock
                         Grid.Column="2"
                         Opacity="0.6"
                         Style="{ThemeResource CaptionTextBlockStyle}"
-                        Text="{Binding DisplayArguments}"
+                        Text="{x:Bind DisplayArguments, Mode=OneWay}"
                         TextWrapping="WrapWholeWords"
-                        Visibility="{Binding DisplayArguments, Converter={StaticResource TextVisibilityConverter}}" />
+                        Visibility="{x:Bind DisplayArguments, Mode=OneWay, Converter={StaticResource TextVisibilityConverter}}" />
                 </Grid>
             </Border>
         </DataTemplate>
@@ -281,6 +281,7 @@
 
     <ContentControl
         HorizontalContentAlignment="Stretch"
-        Content="{x:Bind ToolCall, Mode=OneWay}"
-        ContentTemplateSelector="{StaticResource ToolCallTemplateSelector}" />
+        Content="{Binding}"
+        ContentTemplateSelector="{StaticResource ToolCallTemplateSelector}"
+        DataContext="{x:Bind ToolCall, Mode=OneWay}" />
 </UserControl>

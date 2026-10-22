@@ -24,9 +24,9 @@
 
         <DataTemplate x:Key="ToolApprovalRequestTemplate" x:DataType="snv:AgentConversationViewModel">
             <snuxcc:ChatToolApprovalRequestSegmentView
-                ApproveCommand="{Binding ApproveToolApprovalCommand}"
-                DenyCommand="{Binding DenyToolApprovalCommand}"
-                ToolApprovalRequest="{Binding ToolApprovalRequest}"/>
+                ApproveCommand="{x:Bind ApproveToolApprovalCommand, Mode=OneWay}"
+                DenyCommand="{x:Bind DenyToolApprovalCommand, Mode=OneWay}"
+                ToolApprovalRequest="{x:Bind ToolApprovalRequest, Mode=OneWay}"/>
         </DataTemplate>
 
         <Style
@@ -552,9 +552,10 @@
                     Spacing="8">
                     <ContentControl
                         HorizontalContentAlignment="Stretch"
-                        Content="{Binding Conversations.CurrentItem}"
+                        Content="{Binding}"
                         ContentTemplate="{StaticResource ToolApprovalRequestTemplate}"
-                        Visibility="{Binding Conversations.CurrentItem.ToolApprovalRequest, Converter={StaticResource ToolApprovalRequestVisibilityConverter}}"/>
+                        DataContext="{Binding Conversations.CurrentItem}"
+                        Visibility="{Binding ToolApprovalRequest, Converter={StaticResource ToolApprovalRequestVisibilityConverter}}"/>
 
                     <TextBox
                         MaxHeight="240"
