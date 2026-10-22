@@ -59,22 +59,38 @@
                         x:Name="GenerateButton"
                         Content="{shuxm:ResourceString Name=ViewDialogAccountInsightsGenerate}"
                         IsEnabled="False"/>
-                    <Button x:Name="AgentSettingsButton" Content="{shuxm:ResourceString Name=ViewDialogAccountInsightsModelSettings}">
+                    <Button x:Name="AgentSettingsButton">
                         <Button.Flyout>
                             <Flyout essential:FlyoutHelper.AcrylicWorkaround="True" Placement="BottomEdgeAlignedRight">
                                 <Flyout.FlyoutPresenterStyle>
                                     <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
                                         <Setter Property="Background" Value="Transparent"/>
-                                        <Setter Property="MaxHeight" Value="720"/>
-                                        <Setter Property="MaxWidth" Value="1000"/>
+                                        <Setter Property="MaxHeight" Value="Infinity"/>
+                                        <Setter Property="MaxWidth" Value="Infinity"/>
                                     </Style>
                                 </Flyout.FlyoutPresenterStyle>
                                 <shuxc:AgentSettingsView
                                     x:Name="AgentSettingsEditor"
-                                    Width="840"
-                                    Height="600"/>
+                                    MaxWidth="1200"
+                                    MaxHeight="Infinity"/>
                             </Flyout>
                         </Button.Flyout>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <FontIcon
+                                Grid.Column="0"
+                                Margin="4,0,0,0"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Glyph="&#xE713;"/>
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="{shuxm:ResourceString Name=ViewDialogAccountInsightsModelSettings}"/>
+                        </Grid>
                     </Button>
                 </StackPanel>
                 <TeachingTip

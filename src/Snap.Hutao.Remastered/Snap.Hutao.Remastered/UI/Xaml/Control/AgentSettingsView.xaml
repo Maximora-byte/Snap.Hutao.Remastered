@@ -157,7 +157,7 @@
                                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                 BorderThickness="0,1,1,1"
                                 CornerRadius="0,4,4,0">
-                                <ScrollViewer MaxHeight="640">
+                                <ScrollViewer MaxHeight="Infinity">
                                     <Grid Margin="16">
                                         <StackPanel Spacing="16" Visibility="{Binding Settings.ModelProviderProfiles.CurrentItem, Converter={StaticResource ModelProviderProfileEditorVisibilityConverter}}">
                                             <TextBox
@@ -221,8 +221,11 @@
                                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                             Command="{Binding DeleteModelCommand}">
                                                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                                                <FontIcon FontSize="16" Glyph="&#xE74D;"/>
-                                                                <TextBlock Text="{snuxm:ResourceString Name=UIXamlPagesSettingsPageLabelDeleteModel}"/>
+                                                                <FontIcon
+                                                                    FontSize="16"
+                                                                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                                                    Glyph="&#xE74D;"/>
+                                                                <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="{snuxm:ResourceString Name=UIXamlPagesSettingsPageLabelDeleteModel}"/>
                                                             </StackPanel>
                                                         </Button>
                                                         <Button
@@ -231,8 +234,11 @@
                                                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                                             Command="{Binding ClearModelsCommand}">
                                                             <StackPanel Orientation="Horizontal" Spacing="8">
-                                                                <FontIcon FontSize="16" Glyph="&#xE894;"/>
-                                                                <TextBlock Text="{snuxm:ResourceString Name=UIXamlPagesSettingsPageLabelClearModels}"/>
+                                                                <FontIcon
+                                                                    FontSize="16"
+                                                                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                                                    Glyph="&#xE894;"/>
+                                                                <TextBlock Foreground="{ThemeResource SystemFillColorCriticalBrush}" Text="{snuxm:ResourceString Name=UIXamlPagesSettingsPageLabelClearModels}"/>
                                                             </StackPanel>
                                                         </Button>
                                                     </StackPanel>
