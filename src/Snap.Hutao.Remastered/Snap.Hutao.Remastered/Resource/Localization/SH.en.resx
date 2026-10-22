@@ -6202,4 +6202,10 @@ After updating through another launcher, select Refresh installation to read the
 
 Ordinary launch does not require Island support. Compatibility is checked separately when Island enhancements are enabled.</value>
   </data>
+  <data name="ServiceUpdateOpenStoreContent" xml:space="preserve">
+    <value>Open Microsoft Store to get the update? This version updates through the Store. If the release is still under review or rolling out, the update may not be available yet. Please try again later.</value>
+  </data>
+  <data name="ServiceUpdateOpenStoreFailed" xml:space="preserve">
+    <value>Unable to open Microsoft Store or the product web page. Search for Snap Hutao Remastered in Microsoft Store and check for updates.</value>
+  </data>
 </root>

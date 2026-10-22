@@ -6203,4 +6203,10 @@
 
 普通启动不受 Island 版本支持限制；启用 Island 增强功能时会单独检查兼容性。</value>
   </data>
+  <data name="ServiceUpdateOpenStoreContent" xml:space="preserve">
+    <value>是否打开 Microsoft Store 获取更新？此版本通过商店更新。如果新版仍在审核或分批发布，商店可能暂时不提供更新，请稍后重试。</value>
+  </data>
+  <data name="ServiceUpdateOpenStoreFailed" xml:space="preserve">
+    <value>无法打开 Microsoft Store 或产品网页。请在 Microsoft Store 中搜索 Snap Hutao Remastered 并检查更新。</value>
+  </data>
 </root>

@@ -10,4 +10,6 @@ public interface IUpdateService
     ValueTask<CheckUpdateResult> CheckUpdateAsync(CancellationToken token = default);
 
     ValueTask TriggerUpdateAsync(CheckUpdateResult result, bool isAutomatic = false, CancellationToken token = default);
+
+    ValueTask OpenStoreAsync();
 }
