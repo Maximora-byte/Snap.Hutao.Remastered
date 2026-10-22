@@ -403,7 +403,6 @@
                                                         <TeachingTip
                                                             x:Name="GameInstallationInfoTeachingTip"
                                                             Title="{shuxm:ResourceString Name=ViewPageGameInstallationInfoTitle}"
-                                                            essential:TeachingTipHelper.AcrylicWorkaround="True"
                                                             IsLightDismissEnabled="True"
                                                             Subtitle="{shuxm:ResourceString Name=ViewPageGameInstallationInfoDescription}"
                                                             Target="{x:Bind GameInstallationInfoButton}"/>
@@ -2166,7 +2165,6 @@
                                         Title="{shuxm:ResourceString Name=ViewPageLaunchGameTargetFpsTeachingTipTitle}"
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        essential:TeachingTipHelper.AcrylicWorkaround="True"
                                         IsLightDismissEnabled="True"
                                         Subtitle="{shuxm:ResourceString Name=ViewPageLaunchGameTargetFpsTeachingTipSubtitle}"
                                         Target="{x:Bind GlassPresenter_128983}"/>
@@ -2409,7 +2407,6 @@
                                         Title="{shuxm:ResourceString Name=ViewPageLaunchGameHideQuestBannerHotSwitchHeader}"
                                         Grid.Row="2"
                                         Grid.Column="0"
-                                        essential:TeachingTipHelper.AcrylicWorkaround="True"
                                         IsLightDismissEnabled="True"
                                         Subtitle="{shuxm:ResourceString Name=ViewPageLaunchGameHideQuestBannerHotSwitchDescription}"
                                         Target="{x:Bind GlassPresenter_138209}">
@@ -2728,7 +2725,6 @@
                                         Title="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCombineEntryHeader}"
                                         Grid.Row="3"
                                         Grid.Column="2"
-                                        essential:TeachingTipHelper.AcrylicWorkaround="True"
                                         IsLightDismissEnabled="True"
                                         Subtitle="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCombineEntryDescription}"
                                         Target="{x:Bind GlassPresenter_153403}">
