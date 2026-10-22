@@ -2531,6 +2531,7 @@
                                         <NumberBox
                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
                                             VerticalAlignment="Center"
+                                            essential:NumberBoxHelper.AcrylicWorkaround="True"
                                             AcceptsExpression="False"
                                             Value="{x:Bind ((shvs:SettingViewModel)DataContext).HotKey.VideoSeekSeconds, Mode=TwoWay}"/>
                                         <TextBlock VerticalAlignment="Center" Text="秒"/>
@@ -2765,6 +2766,7 @@
                                         <NumberBox
                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
                                             VerticalAlignment="Center"
+                                            essential:NumberBoxHelper.AcrylicWorkaround="True"
                                             AcceptsExpression="False"
                                             LargeChange="10"
                                             Maximum="100"
@@ -3089,6 +3091,7 @@
                                         <NumberBox
                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth}"
                                             VerticalAlignment="Center"
+                                            essential:NumberBoxHelper.AcrylicWorkaround="True"
                                             AcceptsExpression="False"
                                             Value="{x:Bind ((shvs:SettingViewModel)DataContext).Game.AppOptions.DownloadSpeedLimitPerSecondInKiloByte.Value, Mode=TwoWay}"/>
                                         <TextBlock VerticalAlignment="Center" Text="KB/s (1MB = 1024KB)"/>

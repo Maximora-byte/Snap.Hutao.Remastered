@@ -7,6 +7,7 @@
     xmlns:cwcont="using:CommunityToolkit.WinUI.Controls"
     xmlns:cwconv="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:essential="using:WinUI3Package"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mxi="using:Microsoft.Xaml.Interactivity"
     xmlns:snuxb="using:Snap.Hutao.Remastered.UI.Xaml.Behavior.AI"
@@ -60,6 +61,7 @@
                             </cwcont:SettingsCard>
                             <cwcont:SettingsCard Description="{snuxm:ResourceString Name=UIXamlPagesSettingsPageDescriptionAgentMaximumIterationsPerRequest}" Header="{snuxm:ResourceString Name=UIXamlPagesSettingsPageLabelAgentMaximumIterationsPerRequest}">
                                 <NumberBox
+                                    essential:NumberBoxHelper.AcrylicWorkaround="True"
                                     LargeChange="1"
                                     Maximum="2147483647"
                                     Minimum="1"
@@ -273,6 +275,7 @@
                                                         <cwcont:SettingsExpander.Items>
                                                             <cwcont:SettingsCard Padding="16,8,44,8" Header="{snuxm:ResourceString Name=UIXamlPagesSettingsPageLabelModelTemperature}">
                                                                 <NumberBox
+                                                                    essential:NumberBoxHelper.AcrylicWorkaround="True"
                                                                     LargeChange="0.5"
                                                                     Maximum="2"
                                                                     Minimum="0"
@@ -283,6 +286,7 @@
                                                             </cwcont:SettingsCard>
                                                             <cwcont:SettingsCard Padding="16,8,44,8" Header="{snuxm:ResourceString Name=UIXamlPagesSettingsPageLabelModelTopP}">
                                                                 <NumberBox
+                                                                    essential:NumberBoxHelper.AcrylicWorkaround="True"
                                                                     LargeChange="0.1"
                                                                     Maximum="1"
                                                                     Minimum="0"
@@ -315,6 +319,7 @@
                                                             </cwcont:SettingsCard>
                                                             <cwcont:SettingsCard Padding="16,8,44,8" Header="{snuxm:ResourceString Name=UIXamlPagesSettingsPageLabelModelMaxContextWindowTokens}">
                                                                 <NumberBox
+                                                                    essential:NumberBoxHelper.AcrylicWorkaround="True"
                                                                     LargeChange="1024"
                                                                     Maximum="2147483647"
                                                                     Minimum="0"
@@ -325,6 +330,7 @@
                                                             </cwcont:SettingsCard>
                                                             <cwcont:SettingsCard Padding="16,8,44,8" Header="{snuxm:ResourceString Name=UIXamlPagesSettingsPageLabelModelMaxInputTokens}">
                                                                 <NumberBox
+                                                                    essential:NumberBoxHelper.AcrylicWorkaround="True"
                                                                     LargeChange="1024"
                                                                     Maximum="2147483647"
                                                                     Minimum="0"
@@ -335,6 +341,7 @@
                                                             </cwcont:SettingsCard>
                                                             <cwcont:SettingsCard Padding="16,8,44,8" Header="{snuxm:ResourceString Name=UIXamlPagesSettingsPageLabelModelMaxOutputTokens}">
                                                                 <NumberBox
+                                                                    essential:NumberBoxHelper.AcrylicWorkaround="True"
                                                                     LargeChange="1024"
                                                                     Maximum="2147483647"
                                                                     Minimum="0"

@@ -96,6 +96,7 @@
                 <TeachingTip
                     x:Name="PrivacyTeachingTip"
                     Title="{shuxm:ResourceString Name=ViewDialogAccountInsightsPrivacyTitle}"
+                    essential:TeachingTipHelper.AcrylicWorkaround="True"
                     IsLightDismissEnabled="True"
                     Subtitle="{shuxm:ResourceString Name=ViewDialogAccountInsightsChatPrivacyBody}"
                     Target="{x:Bind PrivacyInfoButton}"/>

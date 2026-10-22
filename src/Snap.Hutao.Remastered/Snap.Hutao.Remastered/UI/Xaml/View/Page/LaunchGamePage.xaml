@@ -5,6 +5,7 @@
     xmlns:cw="using:CommunityToolkit.WinUI"
     xmlns:cwc="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:essential="using:WinUI3Package"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mxi="using:Microsoft.Xaml.Interactivity"
     xmlns:shas="using:Snap.Hutao.Remastered.Service.Game.AdvancedStart.Model"
@@ -402,6 +403,7 @@
                                                         <TeachingTip
                                                             x:Name="GameInstallationInfoTeachingTip"
                                                             Title="{shuxm:ResourceString Name=ViewPageGameInstallationInfoTitle}"
+                                                            essential:TeachingTipHelper.AcrylicWorkaround="True"
                                                             IsLightDismissEnabled="True"
                                                             Subtitle="{shuxm:ResourceString Name=ViewPageGameInstallationInfoDescription}"
                                                             Target="{x:Bind GameInstallationInfoButton}"/>
@@ -1040,6 +1042,7 @@
                                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth2}"
                                                             Padding="12,6,0,0"
                                                             VerticalAlignment="Center"
+                                                            essential:NumberBoxHelper.AcrylicWorkaround="True"
                                                             IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsScreenWidthEnabled.Value, Mode=OneWay}"
                                                             Value="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.ScreenWidth.Value, Mode=TwoWay}"/>
                                                         <cwc:SwitchPresenter
@@ -1073,6 +1076,7 @@
                                                             MinWidth="{ThemeResource SettingsCardContentControlMinWidth2}"
                                                             Padding="12,6,0,0"
                                                             VerticalAlignment="Center"
+                                                            essential:NumberBoxHelper.AcrylicWorkaround="True"
                                                             IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsScreenHeightEnabled.Value, Mode=OneWay}"
                                                             Value="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.ScreenHeight.Value, Mode=TwoWay}"/>
                                                         <cwc:SwitchPresenter
@@ -1721,6 +1725,7 @@
                                                                 MinWidth="36"
                                                                 Margin="0,0,18,0"
                                                                 VerticalAlignment="Center"
+                                                                essential:NumberBoxHelper.AcrylicWorkaround="True"
                                                                 Value="{x:Bind DelaySeconds, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                                         </cwc:DataRow>
                                                     </DataTemplate>
@@ -1946,6 +1951,7 @@
                                         Grid.Row="0"
                                         Grid.Column="1"
                                         Padding="10,8,6,6"
+                                        essential:NumberBoxHelper.AcrylicWorkaround="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameTargetFovHeader}"
                                         IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsSetFieldOfViewEnabled.Value, Mode=OneWay}"
                                         LargeChange="10"
@@ -2160,6 +2166,7 @@
                                         Title="{shuxm:ResourceString Name=ViewPageLaunchGameTargetFpsTeachingTipTitle}"
                                         Grid.Row="1"
                                         Grid.Column="0"
+                                        essential:TeachingTipHelper.AcrylicWorkaround="True"
                                         IsLightDismissEnabled="True"
                                         Subtitle="{shuxm:ResourceString Name=ViewPageLaunchGameTargetFpsTeachingTipSubtitle}"
                                         Target="{x:Bind GlassPresenter_128983}"/>
@@ -2168,6 +2175,7 @@
                                         Grid.Row="1"
                                         Grid.Column="1"
                                         Padding="10,8,6,6"
+                                        essential:NumberBoxHelper.AcrylicWorkaround="True"
                                         Header="{shuxm:ResourceString Name=ViewPageLaunchGameTargetFpsHeader}"
                                         IsEnabled="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.IsSetTargetFrameRateEnabled.Value, Mode=OneWay}"
                                         Maximum="2000"
@@ -2401,6 +2409,7 @@
                                         Title="{shuxm:ResourceString Name=ViewPageLaunchGameHideQuestBannerHotSwitchHeader}"
                                         Grid.Row="2"
                                         Grid.Column="0"
+                                        essential:TeachingTipHelper.AcrylicWorkaround="True"
                                         IsLightDismissEnabled="True"
                                         Subtitle="{shuxm:ResourceString Name=ViewPageLaunchGameHideQuestBannerHotSwitchDescription}"
                                         Target="{x:Bind GlassPresenter_138209}">
@@ -2719,6 +2728,7 @@
                                         Title="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCombineEntryHeader}"
                                         Grid.Row="3"
                                         Grid.Column="2"
+                                        essential:TeachingTipHelper.AcrylicWorkaround="True"
                                         IsLightDismissEnabled="True"
                                         Subtitle="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCombineEntryDescription}"
                                         Target="{x:Bind GlassPresenter_153403}">

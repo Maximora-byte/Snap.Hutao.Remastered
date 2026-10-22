@@ -374,7 +374,7 @@
                             essential:FlyoutHelper.AcrylicWorkaround="True"
                             FlyoutPresenterStyle="{ThemeResource FlyoutPresenterPadding0Style}"
                             LightDismissOverlayMode="On"
-                            Placement="Right">
+                            Placement="RightEdgeAlignedBottom">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
@@ -608,7 +608,7 @@
                             essential:FlyoutHelper.AcrylicWorkaround="True"
                             FlyoutPresenterStyle="{ThemeResource FlyoutPresenterPadding0Style}"
                             LightDismissOverlayMode="On"
-                            Placement="LeftEdgeAlignedBottom">
+                            Placement="RightEdgeAlignedBottom">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
