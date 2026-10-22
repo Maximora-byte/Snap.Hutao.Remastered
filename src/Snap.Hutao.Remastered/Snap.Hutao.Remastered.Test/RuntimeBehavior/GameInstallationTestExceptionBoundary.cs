@@ -6,6 +6,11 @@ namespace Snap.Hutao.Remastered.Core.ExceptionService;
 
 internal static class HutaoException
 {
+    public static InvalidOperationException InvalidOperation(string message)
+    {
+        return new(message);
+    }
+
     public static NotSupportedException NotSupported()
     {
         return new();

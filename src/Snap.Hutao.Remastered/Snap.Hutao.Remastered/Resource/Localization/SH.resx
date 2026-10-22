@@ -1059,6 +1059,9 @@
   <data name="ServiceGameLaunchExecutionGameRunningKillFailed" xml:space="preserve">
     <value>结束进程失败</value>
   </data>
+  <data name="ServiceGameStopProcessAccessDenied" xml:space="preserve">
+    <value>没有权限结束游戏进程，请以管理员身份运行胡桃后重试</value>
+  </data>
   <data name="ServiceGameLaunchPhaseProcessExited" xml:space="preserve">
     <value>游戏进程已退出</value>
   </data>
