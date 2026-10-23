@@ -25,7 +25,8 @@ public static class StaticResourcesEndpoints
 
     public static string StaticZip(string fileName)
     {
-        return $"{Root}/static/zip/{fileName}.zip";
+        string host = new Uri(ServerDomainService.Current.GetRootDomain()).Host;
+        return $"https://static.{host}/static/zip/{fileName}.zip";
     }
 
     public static string StaticSize()

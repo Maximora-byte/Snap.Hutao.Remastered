@@ -464,4 +464,5 @@
     <ProjectCapability Include="Msix" />
   </ItemGroup>
   <Import Project="Build\ReadyToRun.targets" />
+  <Import Project="Build\BundledImages.targets" />
 </Project>

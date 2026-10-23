@@ -9,6 +9,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Prepare optional bundled image snapshot
+        shell: pwsh
+        run: ./scripts/Get-BundledImages.ps1
+        env:
+          BUNDLED_IMAGES_URL: ${{ vars.BUNDLED_IMAGES_URL }}
+          BUNDLED_IMAGES_VERSION: ${{ vars.BUNDLED_IMAGES_VERSION }}
+          BUNDLED_IMAGES_SHA256: ${{ vars.BUNDLED_IMAGES_SHA256 }}
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v6
         with:
@@ -29,6 +37,24 @@ jobs:
         env:
           PUBLISH_CERT: ${{ secrets.PUBLISH_CERT }}
           PUBLISH_PW: ${{ secrets.PUBLISH_PW }}
+
+      - name: Create Store upload
+        shell: pwsh
+        run: |
+          $symbols = Get-ChildItem src/Snap.Hutao.Remastered/Snap.Hutao.Remastered/bin/x64/Release -Recurse -Filter Snap.Hutao.Remastered.pdb |
+            Where-Object { $_.Directory.Name -eq 'publish' } | Select-Object -First 1
+          Get-ChildItem src/output -Filter *.msix | ForEach-Object {
+            $arguments = @{ PackagePath = $_.FullName }
+            if ($symbols) { $arguments.SymbolsPath = $symbols.FullName }
+            ./scripts/New-MsixUpload.ps1 @arguments
+          }
+
+      - name: Upload Store submission files
+        uses: actions/upload-artifact@v7
+        with:
+          name: Snap.Hutao.Remastered-Store-upload
+          path: ${{ github.workspace }}/src/output/*.msixupload
+          if-no-files-found: error
 
       - name: Upload MSIX
         uses: actions/upload-artifact@v7

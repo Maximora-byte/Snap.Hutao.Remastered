@@ -220,6 +220,11 @@ Task("Compile installer")
     var p = StartProcess(iscc, new ProcessSettings { Arguments = $"/dMyAppVersion=\"{version}\" \"{iss}\"", WorkingDirectory = repoDir });
 
     if (p != 0) { throw new InvalidOperationException($"Inno Setup failed ({p})"); }
+    if (System.IO.File.Exists(System.IO.Path.Combine(repoDir, "Installer", "Publish", "BundledImages", "manifest.json")))
+    {
+        p = StartProcess(iscc, new ProcessSettings { Arguments = $"/dIncludeBundledImages=1 /dMyAppVersion=\"{version}\" \"{iss}\"", WorkingDirectory = repoDir });
+        if (p != 0) { throw new InvalidOperationException($"Cache installer failed ({p})"); }
+    }
     Information("Installer compiled.");
 
     if (GitHubActions.IsRunningOnGitHubActions)
@@ -228,7 +233,7 @@ Task("Compile installer")
         var installer = System.IO.Directory.GetFiles(installerDir, "Snap.Hutao.Remastered-*.exe").FirstOrDefault();
         if (installer != null)
         {
-            GitHubActions.Commands.SetOutputParameter("installer-path", installer);
+            GitHubActions.Commands.SetOutputParameter("installer-path", System.IO.Path.Combine(installerDir, "Snap.Hutao.Remastered-*.exe"));
         }
     }
 });

@@ -1454,6 +1454,11 @@
                                     </cwc:SettingsExpander.Content>
                                     <cwc:SettingsExpander.Items>
                                         <cwc:SettingsCard
+                                            Command="{x:Bind ((shvs:SettingViewModel)DataContext).Storage.RemoveDuplicateImagesCommand, Mode=OneWay}"
+                                            Description="{shuxm:ResourceString Name=ViewSettingImageDuplicatesDescription}"
+                                            Header="{shuxm:ResourceString Name=ViewSettingImageDuplicatesHeader}"
+                                            IsClickEnabled="True"/>
+                                        <cwc:SettingsCard
                                             ActionIcon="{shuxm:FontIcon Glyph=&#xE76C;}"
                                             ActionIconToolTip="{shuxm:ResourceString Name=ViewPageSettingResetAction}"
                                             Command="{x:Bind ((shvs:SettingViewModel)DataContext).Storage.ResetStaticResourceCommand, Mode=OneWay}"

@@ -6209,4 +6209,28 @@
   <data name="ServiceUpdateOpenStoreFailed" xml:space="preserve">
     <value>无法打开 Microsoft Store 或产品网页。请在 Microsoft Store 中搜索 Snap Hutao Remastered 并检查更新。</value>
   </data>
+  <data name="ViewGuideBundledImagesHeader" xml:space="preserve">
+    <value>图片资源</value>
+  </data>
+  <data name="ViewGuideBundledImagesAvailable" xml:space="preserve">
+    <value>安装包附带 {0} 版图片，共 {1} 张，直接从安装目录读取，不复制到缓存。将跳过整包下载；缺少的图片会按需下载，已有缓存继续使用。可在设置的缓存目录中清理与随包图片相同的重复缓存。</value>
+  </data>
+  <data name="ViewGuideBundledImagesUnavailable" xml:space="preserve">
+    <value>此安装包未附带图片，接下来可预下载图片整包，也可跳过并在使用时按需下载。</value>
+  </data>
+  <data name="ViewGuideBundledImagesOnDemand" xml:space="preserve">
+    <value>此商店安装包未附带图片快照，将跳过整包下载。图片会在使用时按需下载到缓存。</value>
+  </data>
+  <data name="ViewSettingImageDuplicatesHeader" xml:space="preserve">
+    <value>清理重复图片缓存</value>
+  </data>
+  <data name="ViewSettingImageDuplicatesDescription" xml:space="preserve">
+    <value>仅删除与安装目录随包图片内容完全相同的缓存。保留不同内容、其他版本及明暗主题派生图片，不修改安装目录。</value>
+  </data>
+  <data name="ViewSettingImageDuplicatesProgress" xml:space="preserve">
+    <value>正在比较并清理重复图片缓存…</value>
+  </data>
+  <data name="ViewSettingImageDuplicatesResult" xml:space="preserve">
+    <value>已清理 {0} 个重复图片缓存，释放 {1}。</value>
+  </data>
 </root>

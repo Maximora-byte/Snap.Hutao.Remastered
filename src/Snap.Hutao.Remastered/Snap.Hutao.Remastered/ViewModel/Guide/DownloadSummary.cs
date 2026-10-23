@@ -158,7 +158,7 @@ public sealed partial class DownloadSummary : ObservableObject
 
                                         token.ThrowIfCancellationRequested();
 
-                                        await ExtractFilesAsync(tempStream).ConfigureAwait(false);
+                                        await ExtractFilesAsync(tempStream, token).ConfigureAwait(false);
 
                                         await taskContext.SwitchToMainThreadAsync();
                                         ProgressValue = 1;
@@ -217,22 +217,19 @@ public sealed partial class DownloadSummary : ObservableObject
         Speed = string.Format(SH.ViewModelWelcomeDownloadSummarySpeed, Converters.ToFileSizeString(status.BytesReadSinceLastReport));
     }
 
-    private async ValueTask ExtractFilesAsync(Stream stream)
+    private async ValueTask ExtractFilesAsync(Stream stream, CancellationToken token)
     {
         using (ZipArchive archive = await ZipArchive.CreateAsync(stream, ZipArchiveMode.Read, false, default))
         {
             foreach (ZipArchiveEntry entry in archive.Entries)
             {
-                string destPath = imageCache.GetFileFromCategoryAndName(FileName, entry.FullName);
+                if (string.IsNullOrEmpty(entry.Name))
+                {
+                    continue;
+                }
 
-                try
-                {
-                    await entry.ExtractToFileAsync(destPath, true).ConfigureAwait(false);
-                }
-                catch
-                {
-                    // Ignored
-                }
+                using Stream source = entry.Open();
+                await imageCache.StoreFileAsync(FileName, entry.FullName, source, token).ConfigureAwait(false);
             }
         }
     }

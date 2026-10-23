@@ -98,6 +98,12 @@ dotnet test src/Snap.Hutao.Remastered/Snap.Hutao.Remastered.slnx --filter "Fully
 
 ## 3. Repository Layout
 
+Optional image snapshots are prepared by `scripts/Prepare-BundledImages.ps1` and
+included through `Build/BundledImages.targets` using `BundledImagesSource`.
+MSIX and Setup with bundled images skip resource preloading; Setup without images
+retains the existing ZIP guide. See [bundled image distribution](docs/bundled-images.md)
+for the immutable installation/writable cache rules and CI variables.
+
 ```
 .github/                       Issue templates, 8 workflows (alpha/canary/publish/signpath/…), dependabot.yml,
                                copilot-instructions.md
