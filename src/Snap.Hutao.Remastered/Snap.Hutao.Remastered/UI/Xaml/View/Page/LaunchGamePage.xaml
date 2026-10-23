@@ -2513,7 +2513,7 @@
                                     </cwc:SwitchPresenter>
 
                                     <cwc:SwitchPresenter
-                                        x:Name="GlassPresenter_84718"
+                                        x:Name="GlassPresenter_98621"
                                         Grid.Row="3"
                                         Grid.Column="1"
                                         HorizontalContentAlignment="Stretch"
@@ -2526,25 +2526,167 @@
                                                 <x:Int32>0</x:Int32>
                                             </cwc:Case.Value>
                                             <ToggleSwitch
-                                                Header="{shuxm:ResourceString Name=ViewOverlayDisableShowDamageTextToolTip}"
-                                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DisableShowDamageText.Value, Mode=TwoWay}"
-                                                OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
-                                                OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"
-                                                ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameHotSwitchDescription}"/>
+                                                x:Name="RedirectCatherineToggleSwitch"
+                                                shuxcth:ThemeSynchronization.Source="{x:Bind GlassPresenter_98621}"
+                                                DataContext="{x:Bind GlassPresenter_98621.DataContext, Mode=OneWay}"
+                                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.RedirectCatherine.Value, Mode=TwoWay}"
+                                                ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineDescription}">
+                                                <mxi:Interaction.Behaviors>
+                                                    <shuxb:ToggleSwitchHeaderHitTestVisibleBehavior/>
+                                                </mxi:Interaction.Behaviors>
+                                                <ToggleSwitch.Header>
+                                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                                        <TextBlock Text="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineHeader}"/>
+                                                        <cwc:SwitchPresenter
+                                                            x:Name="GlassPresenter_98622"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalContentAlignment="Stretch"
+                                                            VerticalContentAlignment="Stretch"
+                                                            IsTabStop="False"
+                                                            Tag="LiquidGlass:Button"
+                                                            Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
+                                                            <cwc:Case>
+                                                                <cwc:Case.Value>
+                                                                    <x:Int32>0</x:Int32>
+                                                                </cwc:Case.Value>
+                                                                <Button Padding="1,1,0.5,0.5" VerticalAlignment="Center">
+                                                                    <mxi:Interaction.Behaviors>
+                                                                        <mxi:EventTriggerBehavior EventName="Click">
+                                                                            <mxi:EventTriggerBehavior.Actions>
+                                                                                <shuxba:ShowTeachingTipAction TeachingTip="{x:Bind RedirectCatherineTeachingTip}"/>
+                                                                            </mxi:EventTriggerBehavior.Actions>
+                                                                        </mxi:EventTriggerBehavior>
+                                                                    </mxi:Interaction.Behaviors>
+                                                                    <FontIcon
+                                                                        FontSize="12"
+                                                                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                                                        Glyph="&#xE946;"/>
+                                                                </Button>
+                                                            </cwc:Case>
+                                                            <cwc:Case>
+                                                                <cwc:Case.Value>
+                                                                    <x:Int32>1</x:Int32>
+                                                                </cwc:Case.Value>
+                                                                <wl:LiquidGlassButton
+                                                                    Padding="1,1,0.5,0.5"
+                                                                    VerticalAlignment="Center"
+                                                                    shuxcth:ControlMaterialState.IsManaged="True">
+                                                                    <mxi:Interaction.Behaviors>
+                                                                        <mxi:EventTriggerBehavior EventName="Click">
+                                                                            <mxi:EventTriggerBehavior.Actions>
+                                                                                <shuxba:ShowTeachingTipAction TeachingTip="{x:Bind RedirectCatherineTeachingTip}"/>
+                                                                            </mxi:EventTriggerBehavior.Actions>
+                                                                        </mxi:EventTriggerBehavior>
+                                                                    </mxi:Interaction.Behaviors>
+                                                                    <FontIcon
+                                                                        FontSize="12"
+                                                                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                                                        Glyph="&#xE946;"/>
+                                                                </wl:LiquidGlassButton>
+                                                            </cwc:Case>
+                                                        </cwc:SwitchPresenter>
+                                                    </StackPanel>
+                                                </ToggleSwitch.Header>
+                                            </ToggleSwitch>
                                         </cwc:Case>
                                         <cwc:Case>
                                             <cwc:Case.Value>
                                                 <x:Int32>1</x:Int32>
                                             </cwc:Case.Value>
                                             <wl:LiquidGlassToggleSwitch
+                                                x:Name="RedirectCatherineToggleSwitchGlass"
+                                                Width="{x:Bind RedirectCatherineToggleSwitch.Width, Mode=OneWay}"
+                                                MinWidth="{x:Bind RedirectCatherineToggleSwitch.MinWidth, Mode=OneWay}"
+                                                MinHeight="{x:Bind RedirectCatherineToggleSwitch.MinHeight, Mode=OneWay}"
+                                                MaxWidth="{x:Bind RedirectCatherineToggleSwitch.MaxWidth, Mode=OneWay}"
+                                                MaxHeight="{x:Bind RedirectCatherineToggleSwitch.MaxHeight, Mode=OneWay}"
+                                                Padding="{x:Bind RedirectCatherineToggleSwitch.Padding, Mode=OneWay}"
                                                 shuxcth:ControlMaterialState.IsManaged="True"
-                                                Header="{shuxm:ResourceString Name=ViewOverlayDisableShowDamageTextToolTip}"
-                                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DisableShowDamageText.Value, Mode=TwoWay}"
-                                                OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
-                                                OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"
-                                                ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameHotSwitchDescription}"/>
+                                                shuxcth:ControlMaterialState.NativeControl="{x:Bind RedirectCatherineToggleSwitch, Mode=OneWay}"
+                                                shuxcth:ControlMaterialState.UsesCompiledEnabledBinding="True"
+                                                BorderThickness="{x:Bind RedirectCatherineToggleSwitch.BorderThickness, Mode=OneWay}"
+                                                FlowDirection="{x:Bind RedirectCatherineToggleSwitch.FlowDirection, Mode=OneWay}"
+                                                FontFamily="{x:Bind RedirectCatherineToggleSwitch.FontFamily, Mode=OneWay}"
+                                                FontSize="{x:Bind RedirectCatherineToggleSwitch.FontSize, Mode=OneWay}"
+                                                FontStyle="{x:Bind RedirectCatherineToggleSwitch.FontStyle, Mode=OneWay}"
+                                                FontWeight="{x:Bind RedirectCatherineToggleSwitch.FontWeight, Mode=OneWay}"
+                                                HeaderTemplate="{x:Bind RedirectCatherineToggleSwitch.HeaderTemplate, Mode=OneWay}"
+                                                IsEnabled="{x:Bind RedirectCatherineToggleSwitch.IsEnabled, Mode=OneWay}"
+                                                IsOn="{x:Bind RedirectCatherineToggleSwitch.IsOn, Mode=TwoWay}"
+                                                OffContent="{x:Bind RedirectCatherineToggleSwitch.OffContent, Mode=OneWay}"
+                                                OffContentTemplate="{x:Bind RedirectCatherineToggleSwitch.OffContentTemplate, Mode=OneWay}"
+                                                OnContent="{x:Bind RedirectCatherineToggleSwitch.OnContent, Mode=OneWay}"
+                                                OnContentTemplate="{x:Bind RedirectCatherineToggleSwitch.OnContentTemplate, Mode=OneWay}"
+                                                ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineDescription}">
+                                                <mxi:Interaction.Behaviors/>
+                                                <wl:LiquidGlassToggleSwitch.Header>
+                                                    <StackPanel Orientation="Horizontal" Spacing="4">
+                                                        <TextBlock Text="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineHeader}"/>
+                                                        <cwc:SwitchPresenter
+                                                            x:Name="GlassPresenter_98622Glass"
+                                                            VerticalAlignment="Center"
+                                                            HorizontalContentAlignment="Stretch"
+                                                            VerticalContentAlignment="Stretch"
+                                                            IsTabStop="False"
+                                                            Tag="LiquidGlass:Button"
+                                                            Value="{x:Bind shuxcth:MaterialBindingSource.Current.ButtonMaterial, Mode=OneWay}">
+                                                            <cwc:Case>
+                                                                <cwc:Case.Value>
+                                                                    <x:Int32>0</x:Int32>
+                                                                </cwc:Case.Value>
+                                                                <Button Padding="1,1,0.5,0.5" VerticalAlignment="Center">
+                                                                    <mxi:Interaction.Behaviors>
+                                                                        <mxi:EventTriggerBehavior EventName="Click">
+                                                                            <mxi:EventTriggerBehavior.Actions>
+                                                                                <shuxba:ShowTeachingTipAction TeachingTip="{x:Bind RedirectCatherineTeachingTip}"/>
+                                                                            </mxi:EventTriggerBehavior.Actions>
+                                                                        </mxi:EventTriggerBehavior>
+                                                                    </mxi:Interaction.Behaviors>
+                                                                    <FontIcon
+                                                                        FontSize="12"
+                                                                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                                                        Glyph="&#xE946;"/>
+                                                                </Button>
+                                                            </cwc:Case>
+                                                            <cwc:Case>
+                                                                <cwc:Case.Value>
+                                                                    <x:Int32>1</x:Int32>
+                                                                </cwc:Case.Value>
+                                                                <wl:LiquidGlassButton
+                                                                    Padding="1,1,0.5,0.5"
+                                                                    VerticalAlignment="Center"
+                                                                    shuxcth:ControlMaterialState.IsManaged="True">
+                                                                    <mxi:Interaction.Behaviors>
+                                                                        <mxi:EventTriggerBehavior EventName="Click">
+                                                                            <mxi:EventTriggerBehavior.Actions>
+                                                                                <shuxba:ShowTeachingTipAction TeachingTip="{x:Bind RedirectCatherineTeachingTip}"/>
+                                                                            </mxi:EventTriggerBehavior.Actions>
+                                                                        </mxi:EventTriggerBehavior>
+                                                                    </mxi:Interaction.Behaviors>
+                                                                    <FontIcon
+                                                                        FontSize="12"
+                                                                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                                                        Glyph="&#xE946;"/>
+                                                                </wl:LiquidGlassButton>
+                                                            </cwc:Case>
+                                                        </cwc:SwitchPresenter>
+                                                    </StackPanel>
+                                                </wl:LiquidGlassToggleSwitch.Header>
+                                            </wl:LiquidGlassToggleSwitch>
                                         </cwc:Case>
                                     </cwc:SwitchPresenter>
+                                    <TeachingTip
+                                        x:Name="RedirectCatherineTeachingTip"
+                                        Title="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineHeader}"
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        IsLightDismissEnabled="True"
+                                        Subtitle="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineTeachingTipSubtitle}"
+                                        Target="{x:Bind GlassPresenter_98621}">
+                                        <TeachingTip.HeroContent>
+                                            <Image Source="ms-appx:///Resource/TeachingTip/LaunchGameIslandRedirectCatherine.gif"/>
+                                        </TeachingTip.HeroContent>
+                                    </TeachingTip>
                                     <cwc:SwitchPresenter
                                         x:Name="GlassPresenter_153403"
                                         Grid.Row="3"
@@ -3357,7 +3499,7 @@
                                         </cwc:Case>
                                     </cwc:SwitchPresenter>
                                     <cwc:SwitchPresenter
-                                        x:Name="GlassPresenter_98621"
+                                        x:Name="GlassPresenter_84718"
                                         Grid.Row="9"
                                         Grid.Column="0"
                                         HorizontalContentAlignment="Stretch"
@@ -3370,9 +3512,11 @@
                                                 <x:Int32>0</x:Int32>
                                             </cwc:Case.Value>
                                             <ToggleSwitch
-                                                Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineHeader}"
-                                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.RedirectCatherine.Value, Mode=TwoWay}"
-                                                ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineDescription}"/>
+                                                Header="{shuxm:ResourceString Name=ViewOverlayDisableShowDamageTextToolTip}"
+                                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DisableShowDamageText.Value, Mode=TwoWay}"
+                                                OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
+                                                OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"
+                                                ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameHotSwitchDescription}"/>
                                         </cwc:Case>
                                         <cwc:Case>
                                             <cwc:Case.Value>
@@ -3380,9 +3524,11 @@
                                             </cwc:Case.Value>
                                             <wl:LiquidGlassToggleSwitch
                                                 shuxcth:ControlMaterialState.IsManaged="True"
-                                                Header="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineHeader}"
-                                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.RedirectCatherine.Value, Mode=TwoWay}"
-                                                ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameIslandRedirectCatherineDescription}"/>
+                                                Header="{shuxm:ResourceString Name=ViewOverlayDisableShowDamageTextToolTip}"
+                                                IsOn="{x:Bind ((shvg:LaunchGameViewModel)DataContext).LaunchOptions.DisableShowDamageText.Value, Mode=TwoWay}"
+                                                OffContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOff}"
+                                                OnContent="{shuxm:ResourceString Name=ViewPageLaunchGameDisableFogOn}"
+                                                ToolTipService.ToolTip="{shuxm:ResourceString Name=ViewPageLaunchGameHotSwitchDescription}"/>
                                         </cwc:Case>
                                     </cwc:SwitchPresenter>
 
