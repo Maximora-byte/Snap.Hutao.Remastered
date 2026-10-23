@@ -735,10 +735,6 @@
                             Description="{Binding RuntimeOptions.DataFolder}"
                             Header="{shuxm:ResourceString Name=ViewPageSettingSetDataFolderHeader}"
                             IsClickEnabled="{Binding IsSetDataFolderEnabled}"/>
-                        <cwc:SettingsCard
-                            MaxWidth="720"
-                            Description="{Binding StaticResourceOptions.BundledImagesDescription, Mode=OneWay}"
-                            Header="{shuxm:ResourceString Name=ViewGuideBundledImagesHeader}"/>
                     </StackPanel>
 
                     <TextBlock
@@ -1192,7 +1188,11 @@
                                 ItemsSource="{Binding StaticResourceOptions.ImageArchives}"
                                 SelectedItem="{Binding StaticResourceOptions.ImageArchive, Mode=TwoWay}"/>
                             <TextBlock Margin="0,16,0,0" Text="{Binding StaticResourceOptions.SizeInformationText, Mode=OneWay}"/>
-                            <TextBlock Margin="0,16,0,0" Text="{Binding StaticResourceOptions.BundledImagesDescription, Mode=OneWay}" TextWrapping="Wrap"/>
+                            <cwc:SettingsCard
+                                MaxWidth="720"
+                                Margin="0,16,0,0"
+                                Description="{Binding StaticResourceOptions.BundledImagesDescription, Mode=OneWay}"
+                                Header="{shuxm:ResourceString Name=ViewGuideBundledImagesHeader}"/>
                         </StackPanel>
                     </Grid>
 
