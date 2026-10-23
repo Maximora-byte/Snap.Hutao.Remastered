@@ -4,6 +4,13 @@
 
 ## Store submission output
 
+Formal Publish/SignPath packaging keeps the Store Publisher. When the configured
+certificate subject differs from that known Store Publisher, it skips MSIX signing,
+exports `msix-signed=false` and labels the artifact `unsigned-store-only`. Setup
+signing continues with the existing certificate. This unsigned MSIX is a Store
+submission payload, not an installable sideload package. Other identity mismatches
+remain errors; the Store manifest is never rewritten to match an old certificate.
+
 All four MSIX workflows also run `scripts/New-MsixUpload.ps1` after packaging/signing.
 It creates a ZIP-format `.msixupload` containing the original MSIX and, when the
 application PDB is available, a nested `.appxsym` symbol archive. Missing symbols
@@ -91,6 +98,11 @@ Set these GitHub repository **variables** together:
 - `BUNDLED_IMAGES_URL`: immutable HTTPS URL to the versioned 7z archive.
 - `BUNDLED_IMAGES_VERSION`: e.g. `7.1`.
 - `BUNDLED_IMAGES_SHA256`: SHA256 of that exact archive.
+
+Prefer the complete file URL, e.g. `https://static.snaphutaorp.org/static/raw/7.1.7z`.
+For compatibility, a URL ending in `/static/raw` or `/static/raw/` is resolved to
+`<directory>/<BUNDLED_IMAGES_VERSION>.7z` with a warning. It does not download a
+directory listing or omit archive hash validation.
 
 Alpha, Canary, Publish and SignPath workflows run `Get-BundledImages.ps1`, verify
 the archive hash, extract with 7-Zip, prepare a manifest and export

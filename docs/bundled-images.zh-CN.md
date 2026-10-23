@@ -1,4 +1,4 @@
-# 把图片资源放进安装包：操作指南
+﻿# 把图片资源放进安装包：操作指南
 
 [English](bundled-images.md)
 
@@ -63,7 +63,7 @@ CI 接受下面两种结构。任选一种即可：
 https://static.snaphutaorp.org/static/snapshots/7.1.7z
 ```
 
-**上面只是地址设计示例，本次代码没有创建或上传这个文件。** 不要填写 `/static/raw/` 目录地址，也不要填写 `/static/zip/AvatarIcon.zip` 等单分类包地址。
+**上面只是地址设计示例，本次代码没有创建或上传这个文件。** 建议直接填写完整文件地址，例如 `https://static.snaphutaorp.org/static/raw/7.1.7z`。兼容旧配置时，脚本也接受 `/static/raw` 或 `/static/raw/` 目录地址，按资源版本补成 `/static/raw/7.1.7z` 并输出提示。不要填写 `/static/zip/AvatarIcon.zip` 等单分类包地址。
 
 同一版本地址的内容应保持不变。资源更新时发布新地址，例如 `7.2.7z`。
 
@@ -90,6 +90,8 @@ https://static.snaphutaorp.org/static/snapshots/7.1.7z
 | `BUNDLED_IMAGES_URL` | 第 3 步得到的完整 HTTPS 文件下载地址 |
 | `BUNDLED_IMAGES_VERSION` | `7.1`，不带引号，不填应用版本 |
 | `BUNDLED_IMAGES_SHA256` | 第 4 步输出的 64 位哈希，不带空格或引号 |
+- URL：决定下载哪个文件。
+- VERSION：写入随包资源清单，标明资源版本，供客户端显示。
 
 不用创建 `BundledImagesSource` 变量，CI 会在解压和校验完成后自动设置它。
 
@@ -113,7 +115,7 @@ CI 会下载 7z、验证压缩包 SHA256、解压并生成图片清单，再将�
 
 | 文件 | 用途 |
 | --- | --- |
-| `Snap.Hutao.Remastered-<应用版本>.msix` | 本地旁加载安装测试 |
+| `Snap.Hutao.Remastered-<应用版本>.msix` | 已签名时可旁加载；未签名时仅作商店上传载荷 |
 | `Snap.Hutao.Remastered-<应用版本>.msixupload` | 上传到 Microsoft Partner Center |
 | `Snap.Hutao.Remastered-<应用版本>-Setup.exe` | 普通安装包，不附带图片 |
 | `Snap.Hutao.Remastered-<应用版本>-Setup-cache.exe` | 附带图片的安装包 |
@@ -135,6 +137,8 @@ Store ID:  9P1LDJFJFJQQ
 ```
 
 在 Partner Center 打开对应产品，新建或编辑提交，在 Packages 页面上传 `.msixupload`，按商店反馈完成检查。**CI 不会替你自动提交或发布商店版本。**
+
+MSIX 的 Publisher 必须与旁加载证书的 Subject 一致。现有 `CN=SnapHutaoRemasteringProject` 证书可继续签名 Setup，但与商店 Publisher 不匹配。因此正式 CI 会保留商店 MSIX 未签名，工件标注 `unsigned-store-only`，继续生成 `.msixupload`，由商店在发布时签名。此未签名包不能直接旁加载；不要为了迁就旧证书修改商店包标识。需要旁加载的正式 MSIX 时，应提供 Subject 匹配的可信证书。Alpha/Canary 测试包的原签名流程不变。
 
 ## 五、图片到底放在哪里，什么时候生效？
 

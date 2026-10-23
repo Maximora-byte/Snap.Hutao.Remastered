@@ -59,7 +59,7 @@ jobs:
       - name: Upload MSIX
         uses: actions/upload-artifact@v7
         with:
-          name: Snap.Hutao.Remastered-${{ steps.publish.outputs.version }}
+          name: Snap.Hutao.Remastered-${{ steps.publish.outputs.version }}-MSIX-${{ steps.publish.outputs.msix-signed == 'true' && 'signed' || 'unsigned-store-only' }}
           path: ${{ github.workspace }}/src/output/Snap.Hutao.Remastered-${{ steps.publish.outputs.version }}.msix
 
       - name: Upload installer
@@ -83,9 +83,10 @@ jobs:
           - **Version:** ${{ steps.publish.outputs.version }}
           - **MSIX:** Snap.Hutao.Remastered-${{ steps.publish.outputs.version }}.msix
           - **Installer:** Snap.Hutao.Remastered-${{ steps.publish.outputs.version }}-Setup.exe
-          - **Signed:** Yes
+          - **MSIX signed:** ${{ steps.publish.outputs.msix-signed }}
+          - **Installer signed:** Yes
 
           > [!IMPORTANT]
-          > 这是正式发布版本，已签名，可直接安装使用。
+          > MSIX 未签名时仅用于商店提交，不可直接旁加载；请提交 Store-upload 工件内的 .msixupload。Setup 安装包仍已签名，可直接安装。
           "@
           echo $summary >> $Env:GITHUB_STEP_SUMMARY
