@@ -2,9 +2,6 @@
 // Licensed under the MIT license.
 // Adapted from Snap.Nicole.
 
-using Sentry;
-using System.Collections.Generic;
-
 namespace Snap.Hutao.Remastered.Core.AI.Diagnostics;
 
 internal static class SentryDiagnostics

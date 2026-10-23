@@ -8,9 +8,7 @@ using Snap.Hutao.Remastered.Core.AI.Text.Json;
 using Snap.Hutao.Remastered.Service.AI.Models;
 using Snap.Hutao.Remastered.Service.AI.Migration;
 using Snap.Hutao.Remastered.Service.AI.Settings;
-using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 
 namespace Snap.Hutao.Remastered.Service.AI;
 

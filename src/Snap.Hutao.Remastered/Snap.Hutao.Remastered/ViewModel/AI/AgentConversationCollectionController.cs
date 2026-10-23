@@ -5,8 +5,6 @@
 using Snap.Hutao.Remastered.Core.AI.Collections.ObjectModel;
 using Snap.Hutao.Remastered.Core.AI.Diagnostics;
 using Snap.Hutao.Remastered.Service.AI.Models;
-using System.Linq;
-using System.Threading;
 
 namespace Snap.Hutao.Remastered.ViewModel.AI;
 

@@ -2,10 +2,6 @@
 // Licensed under the MIT license.
 // Adapted from Snap.Nicole.
 
-using Sentry;
-using System.Collections.Generic;
-using System.Threading;
-
 namespace Snap.Hutao.Remastered.Core.AI.Diagnostics;
 
 internal sealed class SentryDiagnosticSpan(ISpan span) : IDisposable

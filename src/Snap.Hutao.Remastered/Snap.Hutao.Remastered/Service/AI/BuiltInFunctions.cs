@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 // Adapted from Snap.Nicole.
 
-using System.ComponentModel;
 using Snap.Hutao.Remastered.Core.AI.Diagnostics;
 
 namespace Snap.Hutao.Remastered.Service.AI;

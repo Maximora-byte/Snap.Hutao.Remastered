@@ -5,20 +5,12 @@
 using Microsoft.Agents.AI;
 using Snap.Hutao.Remastered.Core.AI.Threading;
 using Microsoft.Extensions.AI;
-using System.Collections.Generic;
-using System.Linq;
-using Sentry;
 using Snap.Hutao.Remastered.Core.AI.Diagnostics;
 using Snap.Hutao.Remastered.Core.AI.Text.Json;
-using Snap.Hutao.Remastered.Resource.Localization.AI;
 using Snap.Hutao.Remastered.Service.AI;
 using Snap.Hutao.Remastered.Service.AI.Models;
 using Snap.Hutao.Remastered.Service.AI.Observables;
 using Snap.Hutao.Remastered.Service.AI.Settings;
-using System.Runtime.Serialization;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Snap.Hutao.Remastered.ViewModel.AI;
 

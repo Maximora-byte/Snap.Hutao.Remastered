@@ -5,15 +5,11 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.AI;
-using System.Collections.Generic;
-using System.Linq;
 using Snap.Hutao.Remastered.Core.AI.Diagnostics;
 using Snap.Hutao.Remastered.Resource.Localization.AI;
 using Snap.Hutao.Remastered.Service.AI.Models;
 using Snap.Hutao.Remastered.Service.AI.Observables;
 using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Snap.Hutao.Remastered.ViewModel.AI;
 

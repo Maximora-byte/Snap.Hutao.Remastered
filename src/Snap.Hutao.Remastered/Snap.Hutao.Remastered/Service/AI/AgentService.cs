@@ -4,17 +4,11 @@
 
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
-using Sentry;
 using Snap.Hutao.Remastered.Core.AI.Diagnostics;
 using Snap.Hutao.Remastered.Core.AI.Text.Json;
 using Snap.Hutao.Remastered.Core.AI.Threading;
 using Snap.Hutao.Remastered.Service.AI.Models;
 using Snap.Hutao.Remastered.Service.AI.Observables;
-using Snap.Hutao.Remastered.ViewModel.AI;
-using System.Collections.Generic;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Snap.Hutao.Remastered.Service.AI;
 

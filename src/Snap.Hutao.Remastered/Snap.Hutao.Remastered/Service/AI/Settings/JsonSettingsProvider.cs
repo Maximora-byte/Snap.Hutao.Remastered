@@ -3,19 +3,14 @@
 // Adapted from Snap.Nicole.
 
 using Microsoft.Extensions.FileProviders;
-using Sentry;
 using Snap.Hutao.Remastered.Core.AI;
 using Snap.Hutao.Remastered.Core.AI.Diagnostics;
 using Snap.Hutao.Remastered.Core.AI.IO;
 using Snap.Hutao.Remastered.Core.AI.Threading;
 using Snap.Hutao.Remastered.Service.AI.Migration;
 using Snap.Hutao.Remastered.Core.Setting;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
-using System.Text.Json;
-using System.Threading;
 
 namespace Snap.Hutao.Remastered.Service.AI.Settings;
 
