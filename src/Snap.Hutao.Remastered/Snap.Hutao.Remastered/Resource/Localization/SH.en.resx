@@ -6232,4 +6232,7 @@ Ordinary launch does not require Island support. Compatibility is checked separa
   <data name="ViewSettingImageDuplicatesResult" xml:space="preserve">
     <value>Removed {0} duplicate cached images, freeing {1}.</value>
   </data>
+  <data name="ServiceGameIslandVerificationUnavailable" xml:space="preserve">
+    <value>The Island account check service is temporarily unavailable. This check could not be completed; the game will keep running. Try again when the connection is restored.</value>
+  </data>
 </root>

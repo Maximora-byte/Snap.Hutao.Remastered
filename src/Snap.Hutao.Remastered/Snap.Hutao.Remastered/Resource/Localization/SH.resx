@@ -6233,4 +6233,7 @@
   <data name="ViewSettingImageDuplicatesResult" xml:space="preserve">
     <value>已清理 {0} 个重复图片缓存，释放 {1}。</value>
   </data>
+  <data name="ServiceGameIslandVerificationUnavailable" xml:space="preserve">
+    <value>暂时无法连接 Island 账户检查服务，本次检查未完成，游戏将继续运行。请在网络恢复后重试。</value>
+  </data>
 </root>
