@@ -339,6 +339,14 @@ the build fails with `CS9275`); write a normal constructor in that case.
   `PluginsChanged` event (raised on the UI thread), because a page may be open before the background
   scan finishes. `GetAllPluginInfos()` = installed (enabled and disabled);
   `GetAllPlugins()` = live instances only.
+- **Enable/disable commits after the plugin hook** — `OnEnable`/`OnDisable` run *before* the package
+  move and before `PluginInfo.IsEnabled` changes, so a hook that throws leaves the plugin exactly as
+  the manager describes it (enabled and loaded) instead of half-applied. `PluginInfo` is an
+  `ObservableObject` bound by `PluginPage`, so its observable properties (`IsEnabled`, `IconPath`)
+  are only written on the main thread — `SetPluginEnabledAsync`/`SetPluginIconPathAsync` — because
+  enabling runs past `await … ConfigureAwait(false)`; assigning them there raised `PropertyChanged`
+  on a pool thread and faulted the binding (review N1 in
+  [`docs/code-review-contributors-2026-10.md`](docs/code-review-contributors-2026-10.md)).
 - Plugins receive the **root** service provider through `PluginContext` (full trust — document it
   when writing plugin docs).
 - The SDK ships as a NuGet package built from
@@ -463,6 +471,9 @@ ID — do not "fix" these by documenting them as if they were intended.
 
 | Date | Change |
 |---|---|
+| 2026-10-24 | Plugin enable/disable now commits after the plugin hook (`OnEnable`/`OnDisable` → package move → `IsEnabled`), and every `PluginInfo` observable write goes through a main-thread helper; documented the contract in §5.6 (review N1). |
+| 2026-10-24 | Replaced the cwc:SwitchPresenter material trees (317 blocks) with single glass instances plus MaterialAppearance/MaterialNative.xaml style-and-background switching; MaterialSwap for slider/password/search; documented the glass-brush, caller-background and ToggleSwitch/behavior rules in §5.3. |
+| 2026-10-24 | Removed the 921 `x:Bind ((vm:Type)DataContext)` casts: every binding view now declares one typed `DataContext` shadow property (§6); documented that `DataContext` stays a dependency property so one-way tracking is unchanged. |
 | 2026-10-20 | Enabled default R2R for Debug and Release; connected the SDK-selected images to local runnable output and MSIX deployment, switched all Cake packaging inputs to publish output, and added final-image header validation. |
 | 2026-10-20 | Separated JSON wire policy from reflection, added generated infrastructure/metadata collection contracts, static enum converters, typed ID/HTTP metadata APIs, and finite cultivation navigation. |
 | 2026-10-20 | Adopted source-generated settings/database JSON and EF's compiled model; preserved plugin/script support, storage formats, and migrations. Removed extra experiment scripts; retained optional AOT diagnostics. |
