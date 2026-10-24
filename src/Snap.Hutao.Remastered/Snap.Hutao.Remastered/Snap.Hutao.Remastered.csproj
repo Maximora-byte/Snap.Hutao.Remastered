@@ -393,9 +393,9 @@
     <PackageReference Include="Google.Protobuf" Version="3.36.2" />
     <PackageReference Include="JetBrains.Annotations" Version="2026.2.0" />
     <PackageReference Include="Lib.Harmony" Version="3.0.0-rc.3" />
-    <PackageReference Include="Microsoft.Agents.AI.Anthropic" Version="1.25.0" />
-    <PackageReference Include="Microsoft.Agents.AI.Harness" Version="1.25.0" />
-    <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.25.0" />
+    <PackageReference Include="Microsoft.Agents.AI.Anthropic" Version="1.26.0" />
+    <PackageReference Include="Microsoft.Agents.AI.Harness" Version="1.26.0" />
+    <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.26.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" Version="5.6.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -417,7 +417,7 @@
     <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.4.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="4.0.1-preview" />
     <PackageReference Include="Microsoft.VisualStudio.Validation" Version="17.13.22" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4312-prerelease" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4314.35" />
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.3.1" />
     <!-- Keep Store-bound PRI generation on a stable SDK toolset; preview makepri versions can be rejected. -->
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2705" />
