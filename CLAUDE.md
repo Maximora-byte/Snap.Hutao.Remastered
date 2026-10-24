@@ -386,6 +386,14 @@ the build fails with `CS9275`); write a normal constructor in that case.
 - **MVVM first** — UI logic in ViewModels; code-behind only for view mechanics. No business
   decisions in `Page`/`Window` code-behind (`CODE_REVIEW.md#ARCH-04`).
 - **Async for I/O**, no UI-thread blocking, no `.Result`/`.Wait()` without a timeout.
+- **Replacing a persisted collection is parse-first and transactional** — build the complete new
+  row set first, then swap it in one transaction
+  ([`BackpackRepository.ReplaceBackpackItemRangeByArchiveId`](src/Snap.Hutao.Remastered/Snap.Hutao.Remastered/Service/Backpack/BackpackRepository.cs)
+  is the template). Never delete and insert through separate scopes: a failure in between leaves the
+  user with an empty or partial collection and no error. A refresh that replaces stored data must
+  also return a truthful result when its source cannot be read — `RefreshByEmbeddedYae` parses the
+  Yae packet first and returns `false` (UI warning, old archive intact) instead of persisting a
+  partial parse (review N3).
 - **Guard clauses** — `ArgumentNullException.ThrowIfNull(x)` (237 uses) and
   `Verify.Operation(condition, "why")` (14 uses; `Verify`/`Requires` come from
   `Microsoft.VisualStudio.Validation` via `global using Microsoft;`). Prefer these over `!`,
@@ -466,11 +474,13 @@ ID — do not "fix" these by documenting them as if they were intended.
 | 16 | Legacy scope plumbing: 272 constructors/partial ctors take `IServiceProvider`, 171 `CreateScope()` calls, 4 `*ScopeContext` bags, 12 `Ioc.Default` uses | repo-wide | ARCH-01, ARCH-02 |
 | 17 | `.github/copilot-instructions.md` and `CONTRIBUTING.md` had pre-rename paths / wrong branch names (`src/Snap.Hutao`, `Snap.Hutao.sln`, `develop`, `dev-master`); corrected on 2026-10-11, keep them in sync | `.github/copilot-instructions.md`, `CONTRIBUTING.md` | ENG-10 |
 | 18 | `global.json` (the SDK pin referenced in §1) and `CODE_REVIEW.md` exist only as untracked files in the working tree — commit them, otherwise the pin and this review trail do not exist for a clean clone | `global.json`, `CODE_REVIEW.md` | — |
+| 19 | Inventory refresh still replaces its rows through two separate repository calls (`RemoveInventoryItemRangeByProjectId` then `AddInventoryItemRangeByProjectId`, no transaction) and treats only a parse *exception* as failure, not a zero-item parse — the backpack path was fixed for N3, inventory was not | `Service/Inventory/InventoryService.cs` | N3 |
 
 ## 9. Changelog of this document
 
 | Date | Change |
 |---|---|
+| 2026-10-24 | Backpack refresh now parses before it writes, reports a parse failure as `false` (warning + untouched archive) instead of success, and replaces stored items in one transaction; documented the parse-first/transactional rule in §6 (review N3). |
 | 2026-10-24 | Plugin enable/disable now commits after the plugin hook (`OnEnable`/`OnDisable` → package move → `IsEnabled`), and every `PluginInfo` observable write goes through a main-thread helper; documented the contract in §5.6 (review N1). |
 | 2026-10-24 | Replaced the cwc:SwitchPresenter material trees (317 blocks) with single glass instances plus MaterialAppearance/MaterialNative.xaml style-and-background switching; MaterialSwap for slider/password/search; documented the glass-brush, caller-background and ToggleSwitch/behavior rules in §5.3. |
 | 2026-10-24 | Removed the 921 `x:Bind ((vm:Type)DataContext)` casts: every binding view now declares one typed `DataContext` shadow property (§6); documented that `DataContext` stays a dependency property so one-way tracking is unchanged. |
