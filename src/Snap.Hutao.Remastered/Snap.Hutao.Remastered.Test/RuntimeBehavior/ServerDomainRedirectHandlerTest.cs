@@ -92,7 +92,8 @@ public sealed class ServerDomainRedirectHandlerTest
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            Targets.Add(request.RequestUri!.AbsoluteUri);
+            ArgumentNullException.ThrowIfNull(request.RequestUri);
+            Targets.Add(request.RequestUri.AbsoluteUri);
             HttpResponseMessage response = new(Targets.Count is 1 || repeat || (Targets.Count is 2 && nextLocation is not null) ? status : HttpStatusCode.OK);
             string? currentLocation = Targets.Count is 2 && nextLocation is not null ? nextLocation : location;
             if (currentLocation is not null)
