@@ -1,0 +1,9 @@
+version: 1
+ai:
+  enabled: true
+  codeReviewEnabled: true
+  allowPrivateRepositoryContent: false
+  publishAnalysis: true
+workflow:
+  enabled: false
+  requireExplicitApproval: true
